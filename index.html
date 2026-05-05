@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CTWA & CAPI Onboarding Playbook</title>
+<title>Pancake Onboarding Playbook</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -31,10 +31,9 @@
     padding: 20px;
   }
 
-  .container {
-    max-width: 920px;
-    margin: 0 auto;
-  }
+  .container { max-width: 920px; margin: 0 auto; }
+
+  .hidden { display: none !important; }
 
   /* Header */
   .header {
@@ -50,49 +49,236 @@
     gap: 16px;
   }
 
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
+  .brand { display: flex; align-items: center; gap: 14px; }
 
   .brand-logo {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
+    width: 44px; height: 44px; border-radius: 12px;
     background: linear-gradient(135deg, var(--primary), var(--accent));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: 700;
-    font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700; font-size: 20px;
   }
 
-  .brand-text h1 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text);
-  }
+  .brand-text h1 { font-size: 18px; font-weight: 700; color: var(--text); }
+  .brand-text p { font-size: 13px; color: var(--text-muted); }
 
-  .brand-text p {
-    font-size: 13px;
-    color: var(--text-muted);
-  }
+  .step-counter { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-muted); font-weight: 500; }
+  .step-counter strong { color: var(--primary); font-weight: 700; font-size: 16px; }
 
-  .step-counter {
+  /* Selection chips */
+  .selection-chips {
     display: flex;
     align-items: center;
     gap: 8px;
+    font-size: 13px;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .chip .x {
+    cursor: pointer;
+    opacity: 0.6;
     font-size: 14px;
+    line-height: 1;
+  }
+
+  .chip .x:hover { opacity: 1; }
+
+  /* Picker screens */
+  .picker-card {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 48px 40px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .picker-eyebrow {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+
+  .picker-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .picker-subtitle {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .country-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .country-card {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-family: inherit;
+    color: var(--text);
+  }
+
+  .country-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    background: var(--surface);
+  }
+
+  .country-flag {
+    font-size: 48px;
+    line-height: 1;
+  }
+
+  .country-name {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .country-code {
+    font-size: 12px;
     color: var(--text-muted);
     font-weight: 500;
   }
 
-  .step-counter strong {
-    color: var(--primary);
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .platform-card {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    font-family: inherit;
+    color: var(--text);
+    text-align: center;
+    position: relative;
+  }
+
+  .platform-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    background: var(--surface);
+  }
+
+  .platform-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+  }
+
+  .platform-icon.messenger {
+    background: linear-gradient(135deg, #00B2FF 0%, #006AFF 50%, #FF5050 100%);
+  }
+
+  .platform-icon.instagram {
+    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  }
+
+  .platform-icon.whatsapp {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  }
+
+  .platform-name {
+    font-size: 18px;
     font-weight: 700;
-    font-size: 16px;
+  }
+
+  .platform-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .platform-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #f59e0b;
+    color: white;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .platform-badge.ready {
+    background: var(--success);
+  }
+
+  /* Coming soon screen */
+  .coming-soon-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 50px;
+  }
+
+  .coming-soon-icon.messenger {
+    background: linear-gradient(135deg, #00B2FF 0%, #006AFF 50%, #FF5050 100%);
+  }
+
+  .coming-soon-icon.instagram {
+    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   }
 
   /* Progress */
@@ -104,101 +290,33 @@
     box-shadow: var(--shadow);
   }
 
-  .progress-track {
-    height: 8px;
-    background: #e2e8f0;
-    border-radius: 999px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    border-radius: 999px;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 0%;
-  }
-
-  .progress-info {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-
-  .progress-section {
-    color: var(--primary);
-    font-weight: 600;
-  }
+  .progress-track { height: 8px; background: #e2e8f0; border-radius: 999px; overflow: hidden; position: relative; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 999px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); width: 0%; }
+  .progress-info { display: flex; justify-content: space-between; margin-top: 12px; font-size: 13px; color: var(--text-muted); }
+  .progress-section { color: var(--primary); font-weight: 600; }
 
   /* Section pills */
-  .section-pills {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-  }
-
+  .section-pills { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
   .section-pill {
-    padding: 8px 16px;
-    border-radius: 999px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    padding: 8px 16px; border-radius: 999px; background: var(--surface);
+    border: 1px solid var(--border); font-size: 13px; font-weight: 500;
+    color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 8px;
   }
-
   .section-pill .num {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: #e2e8f0;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
+    width: 22px; height: 22px; border-radius: 50%; background: #e2e8f0;
+    color: var(--text-muted); display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
   }
-
-  .section-pill.active {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .section-pill.active .num {
-    background: rgba(255,255,255,0.25);
-    color: white;
-  }
-
-  .section-pill.completed {
-    background: var(--primary-light);
-    color: var(--primary);
-    border-color: var(--primary-light);
-  }
-
-  .section-pill.completed .num {
-    background: var(--primary);
-    color: white;
-  }
+  .section-pill.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: var(--shadow-lg); }
+  .section-pill.active .num { background: rgba(255,255,255,0.25); color: white; }
+  .section-pill.completed { background: var(--primary-light); color: var(--primary); border-color: var(--primary-light); }
+  .section-pill.completed .num { background: var(--primary); color: white; }
 
   /* Step Card */
   .step-card {
-    background: var(--surface);
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: var(--shadow);
-    margin-bottom: 24px;
+    background: var(--surface); border-radius: 20px; padding: 40px;
+    box-shadow: var(--shadow); margin-bottom: 24px;
     animation: fadeIn 0.4s ease-out;
   }
 
@@ -208,366 +326,117 @@
   }
 
   .step-section-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--primary-light);
-    color: var(--primary);
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--primary-light); color: var(--primary);
+    padding: 6px 12px; border-radius: 999px; font-size: 12px;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
     margin-bottom: 16px;
   }
 
-  .step-title {
-    font-size: 28px;
-    font-weight: 800;
-    color: var(--text);
-    margin-bottom: 12px;
-    line-height: 1.25;
-  }
+  .step-title { font-size: 28px; font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.25; }
+  .step-subtitle { font-size: 16px; color: var(--text-muted); margin-bottom: 24px; }
 
-  .step-subtitle {
-    font-size: 16px;
-    color: var(--text-muted);
-    margin-bottom: 24px;
-  }
-
-  .step-content {
-    font-size: 15px;
-    color: var(--text);
-    line-height: 1.7;
-  }
-
+  .step-content { font-size: 15px; color: var(--text); line-height: 1.7; }
   .step-content p { margin-bottom: 14px; }
   .step-content strong { color: var(--text); font-weight: 600; }
   .step-content code {
-    background: #f1f5f9;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: 'SF Mono', Monaco, monospace;
-    font-size: 13px;
-    color: var(--accent);
+    background: #f1f5f9; padding: 2px 6px; border-radius: 4px;
+    font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: var(--accent);
   }
-  .step-content a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 500;
-    border-bottom: 1px dashed var(--primary);
-  }
+  .step-content a { color: var(--primary); text-decoration: none; font-weight: 500; border-bottom: 1px dashed var(--primary); }
   .step-content a:hover { border-bottom-style: solid; }
 
-  .step-content ul {
-    margin: 14px 0;
-    padding-left: 0;
-    list-style: none;
-  }
-
-  .step-content ul li {
-    padding: 10px 0 10px 32px;
-    position: relative;
-    border-bottom: 1px dashed var(--border);
-  }
-
+  .step-content ul { margin: 14px 0; padding-left: 0; list-style: none; }
+  .step-content ul li { padding: 10px 0 10px 32px; position: relative; border-bottom: 1px dashed var(--border); }
   .step-content ul li:last-child { border-bottom: none; }
-
   .step-content ul li::before {
-    content: "";
-    position: absolute;
-    left: 8px;
-    top: 18px;
-    width: 8px;
-    height: 8px;
-    background: var(--primary);
-    border-radius: 50%;
+    content: ""; position: absolute; left: 8px; top: 18px;
+    width: 8px; height: 8px; background: var(--primary); border-radius: 50%;
   }
 
   /* Callout box */
   .callout {
-    border-radius: 12px;
-    padding: 16px 20px;
-    margin: 20px 0;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    border-left: 4px solid;
+    border-radius: 12px; padding: 16px 20px; margin: 20px 0;
+    display: flex; gap: 14px; align-items: flex-start; border-left: 4px solid;
   }
+  .callout-icon { font-size: 20px; line-height: 1; margin-top: 2px; }
+  .callout.info { background: #eff6ff; border-color: var(--primary); color: #1e40af; }
+  .callout.warning { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+  .callout.success { background: #d1fae5; border-color: var(--success); color: #065f46; }
+  .callout.tip { background: #f5f3ff; border-color: var(--accent); color: #5b21b6; }
 
-  .callout-icon {
-    font-size: 20px;
-    line-height: 1;
-    margin-top: 2px;
-  }
-
-  .callout.info {
-    background: #eff6ff;
-    border-color: var(--primary);
-    color: #1e40af;
-  }
-
-  .callout.warning {
-    background: #fef3c7;
-    border-color: #f59e0b;
-    color: #92400e;
-  }
-
-  .callout.success {
-    background: #d1fae5;
-    border-color: var(--success);
-    color: #065f46;
-  }
-
-  .callout.tip {
-    background: #f5f3ff;
-    border-color: var(--accent);
-    color: #5b21b6;
-  }
-
-  /* Action highlight */
   .action-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--text);
-    color: white;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 600;
-    font-family: 'SF Mono', Monaco, monospace;
-    margin: 0 2px;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--text); color: white; padding: 4px 10px;
+    border-radius: 6px; font-size: 13px; font-weight: 600;
+    font-family: 'SF Mono', Monaco, monospace; margin: 0 2px;
   }
+
+  /* Screenshot */
+  .screenshot { margin: 20px 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #f8fafc; box-shadow: var(--shadow); }
+  .screenshot img { width: 100%; display: block; height: auto; }
+  .screenshot-grid { display: grid; gap: 12px; margin: 20px 0; grid-template-columns: 1fr; }
+  @media (min-width: 700px) { .screenshot-grid.two-col { grid-template-columns: 1fr 1fr; } }
+
+  /* Mock UI */
+  .ui-mock { background: #f1f5f9; border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin: 16px 0; font-size: 13px; color: var(--text-muted); }
 
   /* Navigation */
-  .nav-buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    margin-top: 16px;
-  }
+  .nav-buttons { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 16px; }
 
   .btn {
-    border: none;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 14px 28px;
-    border-radius: 12px;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: inherit;
+    border: none; cursor: pointer; font-size: 15px; font-weight: 600;
+    padding: 14px 28px; border-radius: 12px; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px; font-family: inherit;
   }
 
   .btn-primary {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    box-shadow: 0 4px 14px rgba(37,99,235,0.35);
+    color: white; box-shadow: 0 4px 14px rgba(37,99,235,0.35);
   }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,99,235,0.45); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(37,99,235,0.45);
-  }
+  .btn-ghost { background: var(--surface); color: var(--text-muted); border: 1px solid var(--border); }
+  .btn-ghost:hover { background: #f8fafc; color: var(--text); }
+  .btn-ghost:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  .btn-primary:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none;
-  }
-
-  .btn-ghost {
-    background: var(--surface);
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-  }
-
-  .btn-ghost:hover {
-    background: #f8fafc;
-    color: var(--text);
-  }
-
-  .btn-ghost:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
-  /* Completion screen */
-  .completion {
-    text-align: center;
-    padding: 40px 20px;
-  }
-
+  /* Completion */
+  .completion { text-align: center; padding: 40px 20px; }
   .completion-icon {
-    width: 100px;
-    height: 100px;
+    width: 100px; height: 100px;
     background: linear-gradient(135deg, var(--success), #059669);
-    border-radius: 50%;
-    margin: 0 auto 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 50px;
-    color: white;
+    border-radius: 50%; margin: 0 auto 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 50px; color: white;
     box-shadow: 0 10px 40px rgba(16,185,129,0.35);
     animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
-
-  @keyframes pop {
-    0% { transform: scale(0); }
-    100% { transform: scale(1); }
-  }
+  @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
 
   .resources-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 12px;
-    margin-top: 24px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px; margin-top: 24px;
   }
-
   .resource-card {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    text-decoration: none;
-    color: var(--text);
-    transition: all 0.2s;
-    display: block;
-    text-align: left;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px; text-decoration: none; color: var(--text);
+    transition: all 0.2s; display: block; text-align: left;
   }
+  .resource-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .resource-card .label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .resource-card .title { font-size: 14px; font-weight: 600; color: var(--primary); }
 
-  .resource-card:hover {
-    border-color: var(--primary);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow);
-  }
+  .kbd-hint { text-align: center; margin-top: 16px; font-size: 12px; color: var(--text-muted); }
+  .kbd { display: inline-block; padding: 2px 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; box-shadow: 0 1px 0 var(--border); }
 
-  .resource-card .label {
-    font-size: 12px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px;
-  }
-
-  .resource-card .title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--primary);
-  }
-
-  /* Screenshot */
-  .screenshot {
-    margin: 20px 0;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    background: #f8fafc;
-    box-shadow: var(--shadow);
-  }
-
-  .screenshot img {
-    width: 100%;
-    display: block;
-    height: auto;
-  }
-
-  .screenshot-grid {
-    display: grid;
-    gap: 12px;
-    margin: 20px 0;
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 700px) {
-    .screenshot-grid.two-col {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  .screenshot-caption {
-    font-size: 12px;
-    color: var(--text-muted);
-    text-align: center;
-    padding: 8px 12px;
-    background: #f1f5f9;
-    border-top: 1px solid var(--border);
-  }
-
-  /* Mock UI illustrations */
-  .ui-mock {
-    background: #f1f5f9;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px 20px;
-    margin: 16px 0;
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-
-  .mock-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: #1877f2;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 13px;
-  }
-
-  .mock-button.primary { background: var(--primary); }
-  .mock-button.toggle {
-    background: var(--success);
-    border-radius: 999px;
-    padding: 4px 6px 4px 26px;
-    position: relative;
-  }
-  .mock-button.toggle::before {
-    content: "";
-    position: absolute;
-    left: 4px;
-    top: 4px;
-    width: 16px;
-    height: 16px;
-    background: white;
-    border-radius: 50%;
-    transform: translateX(14px);
-  }
-
-  /* Responsive */
   @media (max-width: 640px) {
     body { padding: 12px; }
-    .step-card { padding: 24px 20px; }
-    .step-title { font-size: 22px; }
+    .step-card, .picker-card { padding: 24px 20px; }
+    .step-title, .picker-title { font-size: 22px; }
     .header { padding: 20px; }
     .btn { padding: 12px 20px; font-size: 14px; }
-  }
-
-  /* Keyboard hint */
-  .kbd-hint {
-    text-align: center;
-    margin-top: 16px;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
-  .kbd {
-    display: inline-block;
-    padding: 2px 8px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    font-family: 'SF Mono', Monaco, monospace;
-    font-size: 11px;
-    box-shadow: 0 1px 0 var(--border);
+    .country-flag { font-size: 36px; }
   }
 </style>
 </head>
@@ -580,68 +449,167 @@
     <div class="brand">
       <div class="brand-logo">P</div>
       <div class="brand-text">
-        <h1>CTWA &amp; CAPI Onboarding</h1>
-        <p>Pancake Ecosystem · Interactive Playbook</p>
+        <h1>Pancake Onboarding</h1>
+        <p>Interactive setup playbook</p>
       </div>
     </div>
-    <div class="step-counter">
-      Step <strong id="currentStep">1</strong> of <span id="totalSteps">28</span>
+    <div id="headerRight">
+      <!-- updated by JS: chips during picker, step counter during flow -->
     </div>
   </div>
 
-  <!-- Progress -->
-  <div class="progress-bar">
-    <div class="progress-track">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-    <div class="progress-info">
-      <span class="progress-section" id="progressSection">Section 1 · Pancake Ecosystem Onboarding</span>
-      <span id="progressPercent">0% complete</span>
+  <!-- SCREEN: Country picker -->
+  <div id="screen-country" class="picker-card">
+    <span class="picker-eyebrow">Step 1 of 2</span>
+    <h2 class="picker-title">Where are you from?</h2>
+    <p class="picker-subtitle">Pick your region so we can tailor the onboarding flow.</p>
+    <div class="country-grid">
+      <button class="country-card" data-country="VN" data-name="Vietnam">
+        <span class="country-flag">🇻🇳</span>
+        <span class="country-name">Vietnam</span>
+        <span class="country-code">VN</span>
+      </button>
+      <button class="country-card" data-country="ID" data-name="Indonesia">
+        <span class="country-flag">🇮🇩</span>
+        <span class="country-name">Indonesia</span>
+        <span class="country-code">ID</span>
+      </button>
+      <button class="country-card" data-country="TH" data-name="Thailand">
+        <span class="country-flag">🇹🇭</span>
+        <span class="country-name">Thailand</span>
+        <span class="country-code">TH</span>
+      </button>
+      <button class="country-card" data-country="PH" data-name="Philippines">
+        <span class="country-flag">🇵🇭</span>
+        <span class="country-name">Philippines</span>
+        <span class="country-code">PH</span>
+      </button>
+      <button class="country-card" data-country="LATAM" data-name="LATAM">
+        <span class="country-flag">🇨🇴</span>
+        <span class="country-name">LATAM</span>
+        <span class="country-code">Latin America</span>
+      </button>
     </div>
   </div>
 
-  <!-- Section Pills -->
-  <div class="section-pills">
-    <div class="section-pill active" data-section="1">
-      <span class="num">01</span>
-      <span>Ecosystem Onboarding</span>
+  <!-- SCREEN: Platform picker -->
+  <div id="screen-platform" class="picker-card hidden">
+    <span class="picker-eyebrow">Step 2 of 2</span>
+    <h2 class="picker-title">Which platform do you use most with clients?</h2>
+    <p class="picker-subtitle">Choose the messaging channel that drives most of your customer conversations.</p>
+    <div class="platform-grid">
+      <button class="platform-card" data-platform="messenger" data-name="Messenger">
+        <div class="platform-icon messenger">💬</div>
+        <div class="platform-name">Messenger</div>
+        <div class="platform-desc">Facebook Messenger conversations</div>
+        <span class="platform-badge">Coming soon</span>
+      </button>
+      <button class="platform-card" data-platform="instagram" data-name="Instagram">
+        <div class="platform-icon instagram">📷</div>
+        <div class="platform-name">Instagram</div>
+        <div class="platform-desc">Instagram DMs and story replies</div>
+        <span class="platform-badge">Coming soon</span>
+      </button>
+      <button class="platform-card" data-platform="whatsapp" data-name="WhatsApp">
+        <div class="platform-icon whatsapp">📱</div>
+        <div class="platform-name">WhatsApp</div>
+        <div class="platform-desc">WhatsApp Business API &amp; CAPI</div>
+        <span class="platform-badge ready">Ready</span>
+      </button>
     </div>
-    <div class="section-pill" data-section="2">
-      <span class="num">02</span>
-      <span>WhatsApp API &amp; CAPI</span>
-    </div>
-    <div class="section-pill" data-section="3">
-      <span class="num">03</span>
-      <span>CTWA Campaign</span>
+    <div style="margin-top: 28px;">
+      <button class="btn btn-ghost" onclick="goToCountry()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        Back
+      </button>
     </div>
   </div>
 
-  <!-- Step Card -->
-  <div class="step-card" id="stepCard">
-    <!-- Content injected by JS -->
+  <!-- SCREEN: Coming soon -->
+  <div id="screen-coming-soon" class="picker-card hidden">
+    <div id="comingSoonIcon" class="coming-soon-icon"></div>
+    <h2 class="picker-title" id="comingSoonTitle">Coming soon</h2>
+    <p class="picker-subtitle" id="comingSoonSubtitle">We're putting the finishing touches on this onboarding flow.</p>
+    <div class="callout info" style="text-align: left; max-width: 560px; margin: 0 auto;">
+      <div class="callout-icon">📨</div>
+      <div>In the meantime, contact your Pancake account manager for setup help — or pick a different platform below.</div>
+    </div>
+    <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+      <button class="btn btn-ghost" onclick="goToPlatform()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        Choose a different platform
+      </button>
+      <button class="btn btn-primary" onclick="startWhatsAppFlow()">
+        Try WhatsApp instead
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
   </div>
 
-  <!-- Navigation -->
-  <div class="nav-buttons">
-    <button class="btn btn-ghost" id="prevBtn" onclick="prevStep()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-      Back
-    </button>
-    <button class="btn btn-primary" id="nextBtn" onclick="nextStep()">
-      Next Step
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-    </button>
-  </div>
+  <!-- SCREEN: Flow (WhatsApp playbook) -->
+  <div id="screen-flow" class="hidden">
+    <!-- Progress -->
+    <div class="progress-bar">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-info">
+        <span class="progress-section" id="progressSection">Section 1 · Pancake Ecosystem Onboarding</span>
+        <span id="progressPercent">0% complete</span>
+      </div>
+    </div>
 
-  <div class="kbd-hint">
-    Tip: use <span class="kbd">←</span> <span class="kbd">→</span> arrow keys to navigate
+    <!-- Section Pills -->
+    <div class="section-pills">
+      <div class="section-pill active" data-section="1">
+        <span class="num">01</span>
+        <span>Ecosystem Onboarding</span>
+      </div>
+      <div class="section-pill" data-section="2">
+        <span class="num">02</span>
+        <span>WhatsApp API &amp; CAPI</span>
+      </div>
+      <div class="section-pill" data-section="3">
+        <span class="num">03</span>
+        <span>CTWA Campaign</span>
+      </div>
+    </div>
+
+    <!-- Step Card -->
+    <div class="step-card" id="stepCard"></div>
+
+    <!-- Navigation -->
+    <div class="nav-buttons">
+      <button class="btn btn-ghost" id="prevBtn" onclick="prevStep()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        Back
+      </button>
+      <button class="btn btn-primary" id="nextBtn" onclick="nextStep()">
+        Next Step
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="kbd-hint">
+      Tip: use <span class="kbd">←</span> <span class="kbd">→</span> arrow keys to navigate
+    </div>
   </div>
 
 </div>
 
 <script>
-const steps = [
-  // ============ SECTION 1: PANCAKE ECOSYSTEM ONBOARDING ============
+// =============== STATE ===============
+const state = {
+  screen: 'country', // 'country' | 'platform' | 'coming-soon' | 'flow'
+  country: null,
+  countryName: null,
+  platform: null,
+  platformName: null,
+  flowIndex: 0
+};
+
+// =============== WHATSAPP FLOW STEPS ===============
+const whatsappSteps = [
   {
     section: 1,
     sectionLabel: "Section 01 · Getting Started",
@@ -669,9 +637,7 @@ const steps = [
     content: `
       <p>Head to <a href="https://pancake.biz" target="_blank">https://pancake.biz</a> and click the <strong>Sign In</strong> button in the top-right corner.</p>
       <div class="screenshot"><img src="assets/img-002.png" alt="pancake.biz homepage" loading="lazy"></div>
-      <div class="ui-mock">
-        Action: <span class="action-tag">Sign In</span> button on the top right of the homepage.
-      </div>
+      <div class="ui-mock">Action: <span class="action-tag">Sign In</span> button on the top right of the homepage.</div>
       <div class="callout tip">
         <div class="callout-icon">💡</div>
         <div>Pancake is the omnichannel messaging platform that unifies all customer conversations across Facebook, Instagram, WhatsApp, and more.</div>
@@ -719,9 +685,7 @@ const steps = [
     content: `
       <p>From the Pancake Dashboard, click the <strong>Connect</strong> button to activate your Facebook and Instagram pages.</p>
       <div class="screenshot"><img src="assets/img-004.png" alt="Pancake dashboard - no pages activated yet" loading="lazy"></div>
-      <div class="ui-mock">
-        Action: <span class="action-tag">+ Connect</span> button on the top right of the dashboard.
-      </div>
+      <div class="ui-mock">Action: <span class="action-tag">+ Connect</span> button on the top right of the dashboard.</div>
       <div class="callout success">
         <div class="callout-icon">✅</div>
         <div>If you see "No pages have been activated yet" — that's normal. Clicking Connect will pull in the assets you authorized in the previous step.</div>
@@ -790,7 +754,7 @@ const steps = [
     `
   },
 
-  // ============ SECTION 2: CONNECTING WHATSAPP API & CAPI ============
+  // ============ SECTION 2: WHATSAPP API & CAPI ============
   {
     section: 2,
     sectionLabel: "Section 02 · WhatsApp API",
@@ -799,9 +763,7 @@ const steps = [
     content: `
       <p>From the Pancake Dashboard, click the <strong>Connect</strong> button (top right).</p>
       <div class="screenshot"><img src="assets/img-010.png" alt="Pancake dashboard with Connect button highlighted" loading="lazy"></div>
-      <div class="ui-mock">
-        Action: <span class="action-tag">+ Connect</span> on the dashboard header.
-      </div>
+      <div class="ui-mock">Action: <span class="action-tag">+ Connect</span> on the dashboard header.</div>
     `
   },
   {
@@ -975,9 +937,7 @@ const steps = [
     content: `
       <p>In the conversation view, click <strong>Orders</strong> in the top navigation. This takes you to the Pancake POS view, where CAPI is configured.</p>
       <div class="screenshot"><img src="assets/img-020.png" alt="Conversation view with Orders tab highlighted" loading="lazy"></div>
-      <div class="ui-mock">
-        Top nav: Conversations · <span class="action-tag">Orders</span> · Analytics · Settings
-      </div>
+      <div class="ui-mock">Top nav: Conversations · <span class="action-tag">Orders</span> · Analytics · Settings</div>
     `
   },
   {
@@ -988,9 +948,7 @@ const steps = [
     content: `
       <p>In the POS view, click the <strong>Settings</strong> (gear) icon in the left sidebar, then select <strong>Conversion event</strong> under the General → Shop section.</p>
       <div class="screenshot"><img src="assets/img-021.png" alt="Configuration page with Conversion event highlighted" loading="lazy"></div>
-      <div class="ui-mock">
-        Path: Settings → General → Shop → <span class="action-tag">Conversion event</span>
-      </div>
+      <div class="ui-mock">Path: Settings → General → Shop → <span class="action-tag">Conversion event</span></div>
     `
   },
   {
@@ -1139,12 +1097,105 @@ const steps = [
   }
 ];
 
-let currentIndex = 0;
-const totalSteps = steps.length;
-document.getElementById('totalSteps').textContent = totalSteps;
+// =============== SCREEN MANAGEMENT ===============
+function showScreen(name) {
+  state.screen = name;
+  ['country', 'platform', 'coming-soon', 'flow'].forEach(s => {
+    document.getElementById('screen-' + s).classList.toggle('hidden', s !== name);
+  });
+  updateHeader();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-function render() {
-  const step = steps[currentIndex];
+function updateHeader() {
+  const right = document.getElementById('headerRight');
+  if (state.screen === 'flow') {
+    right.innerHTML = `
+      <div class="step-counter">
+        ${state.country ? `<span class="chip">${flagFor(state.country)} ${state.countryName} <span class="x" onclick="goToCountry()" title="Change country">×</span></span>` : ''}
+        Step <strong id="currentStep">${state.flowIndex + 1}</strong> of <span>${whatsappSteps.length}</span>
+      </div>
+    `;
+  } else if (state.screen === 'platform') {
+    right.innerHTML = state.country
+      ? `<div class="selection-chips"><span class="chip">${flagFor(state.country)} ${state.countryName} <span class="x" onclick="goToCountry()" title="Change country">×</span></span></div>`
+      : '';
+  } else if (state.screen === 'coming-soon') {
+    right.innerHTML = `<div class="selection-chips">
+      ${state.country ? `<span class="chip">${flagFor(state.country)} ${state.countryName}</span>` : ''}
+      ${state.platform ? `<span class="chip">${state.platformName}</span>` : ''}
+    </div>`;
+  } else {
+    right.innerHTML = '';
+  }
+}
+
+function flagFor(code) {
+  const map = { VN: '🇻🇳', ID: '🇮🇩', TH: '🇹🇭', PH: '🇵🇭', LATAM: '🇨🇴' };
+  return map[code] || '';
+}
+
+// =============== NAVIGATION ===============
+function goToCountry() {
+  state.country = null;
+  state.platform = null;
+  state.flowIndex = 0;
+  showScreen('country');
+}
+
+function goToPlatform() {
+  state.platform = null;
+  state.flowIndex = 0;
+  showScreen('platform');
+}
+
+function startWhatsAppFlow() {
+  state.platform = 'whatsapp';
+  state.platformName = 'WhatsApp';
+  state.flowIndex = 0;
+  showScreen('flow');
+  renderStep();
+}
+
+function showComingSoon(platform, name) {
+  state.platform = platform;
+  state.platformName = name;
+  showScreen('coming-soon');
+  const icon = document.getElementById('comingSoonIcon');
+  icon.className = 'coming-soon-icon ' + platform;
+  icon.textContent = platform === 'messenger' ? '💬' : '📷';
+  document.getElementById('comingSoonTitle').textContent = `${name} flow — coming soon`;
+  document.getElementById('comingSoonSubtitle').textContent = `We're putting the finishing touches on the ${name} onboarding playbook. Check back shortly.`;
+}
+
+// =============== COUNTRY/PLATFORM CLICK HANDLERS ===============
+document.querySelectorAll('.country-card').forEach(card => {
+  card.addEventListener('click', () => {
+    state.country = card.dataset.country;
+    state.countryName = card.dataset.name;
+    showScreen('platform');
+  });
+});
+
+document.querySelectorAll('.platform-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const platform = card.dataset.platform;
+    const name = card.dataset.name;
+    if (platform === 'whatsapp') {
+      state.platform = platform;
+      state.platformName = name;
+      state.flowIndex = 0;
+      showScreen('flow');
+      renderStep();
+    } else {
+      showComingSoon(platform, name);
+    }
+  });
+});
+
+// =============== FLOW RENDER ===============
+function renderStep() {
+  const step = whatsappSteps[state.flowIndex];
   const card = document.getElementById('stepCard');
 
   card.innerHTML = `
@@ -1154,15 +1205,12 @@ function render() {
     <div class="step-content">${step.content}</div>
   `;
 
-  // Update step counter
-  document.getElementById('currentStep').textContent = currentIndex + 1;
+  updateHeader();
 
-  // Update progress
-  const percent = Math.round(((currentIndex + 1) / totalSteps) * 100);
+  const percent = Math.round(((state.flowIndex + 1) / whatsappSteps.length) * 100);
   document.getElementById('progressFill').style.width = percent + '%';
   document.getElementById('progressPercent').textContent = percent + '% complete';
 
-  // Update section label
   const sectionNames = {
     1: 'Section 1 · Pancake Ecosystem Onboarding',
     2: 'Section 2 · Connecting WhatsApp API & CAPI',
@@ -1170,44 +1218,41 @@ function render() {
   };
   document.getElementById('progressSection').textContent = sectionNames[step.section];
 
-  // Update section pills
   document.querySelectorAll('.section-pill').forEach(pill => {
     const s = parseInt(pill.dataset.section);
     pill.classList.remove('active', 'completed');
-    if (s === step.section) {
-      pill.classList.add('active');
-    } else if (s < step.section) {
-      pill.classList.add('completed');
-    }
+    if (s === step.section) pill.classList.add('active');
+    else if (s < step.section) pill.classList.add('completed');
   });
 
-  // Buttons
-  document.getElementById('prevBtn').disabled = currentIndex === 0;
+  document.getElementById('prevBtn').disabled = false; // Back always works (goes to platform on first step)
   const nextBtn = document.getElementById('nextBtn');
-  if (currentIndex === totalSteps - 1) {
+  if (state.flowIndex === whatsappSteps.length - 1) {
     nextBtn.innerHTML = `Restart <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 4v5h5"/></svg>`;
   } else {
     nextBtn.innerHTML = `Next Step <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
   }
 
-  // Scroll to top of card
-  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  document.getElementById('stepCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function nextStep() {
-  if (currentIndex < totalSteps - 1) {
-    currentIndex++;
-    render();
+  if (state.flowIndex < whatsappSteps.length - 1) {
+    state.flowIndex++;
+    renderStep();
   } else {
-    currentIndex = 0;
-    render();
+    state.flowIndex = 0;
+    renderStep();
   }
 }
 
 function prevStep() {
-  if (currentIndex > 0) {
-    currentIndex--;
-    render();
+  if (state.flowIndex > 0) {
+    state.flowIndex--;
+    renderStep();
+  } else {
+    // On first step, "Back" returns to platform picker
+    showScreen('platform');
   }
 }
 
@@ -1215,22 +1260,23 @@ function prevStep() {
 document.querySelectorAll('.section-pill').forEach(pill => {
   pill.addEventListener('click', () => {
     const s = parseInt(pill.dataset.section);
-    const firstStepOfSection = steps.findIndex(step => step.section === s);
+    const firstStepOfSection = whatsappSteps.findIndex(step => step.section === s);
     if (firstStepOfSection !== -1) {
-      currentIndex = firstStepOfSection;
-      render();
+      state.flowIndex = firstStepOfSection;
+      renderStep();
     }
   });
 });
 
-// Keyboard navigation
+// Keyboard navigation (only in flow screen)
 document.addEventListener('keydown', (e) => {
+  if (state.screen !== 'flow') return;
   if (e.key === 'ArrowRight') nextStep();
   if (e.key === 'ArrowLeft') prevStep();
 });
 
-// Initial render
-render();
+// Initial
+showScreen('country');
 </script>
 
 </body>
