@@ -430,6 +430,457 @@
   .kbd-hint { text-align: center; margin-top: 16px; font-size: 12px; color: var(--text-muted); }
   .kbd { display: inline-block; padding: 2px 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; box-shadow: 0 1px 0 var(--border); }
 
+  /* ===== Vertical picker ===== */
+  .vertical-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .vertical-card {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    font-family: inherit;
+    color: var(--text);
+  }
+
+  .vertical-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    background: var(--surface);
+  }
+
+  .vertical-icon {
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .vertical-name {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .vertical-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ===== Recommendation screen ===== */
+  .recommendation-card {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .rec-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .rec-chips {
+    display: inline-flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .rec-title {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--text) 40%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .rec-sub {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .rec-meta {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin: 20px 0 32px;
+    padding: 16px 20px;
+    background: var(--bg);
+    border-radius: 12px;
+    flex-wrap: wrap;
+  }
+
+  .rec-meta-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .rec-meta-item .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  .rec-meta-item .value {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--primary);
+  }
+
+  .rec-section-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .rec-section {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .rec-section:hover {
+    border-color: var(--primary);
+    background: var(--surface);
+  }
+
+  .rec-section-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .rec-section.essential .rec-section-num { background: var(--primary); }
+  .rec-section.recommended .rec-section-num { background: var(--accent); }
+  .rec-section.optional .rec-section-num { background: var(--text-muted); }
+
+  .rec-section-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .rec-section-info .name {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .rec-section-info .desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .rec-section-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+  }
+  .rec-section.essential .rec-section-badge { background: #dbeafe; color: var(--primary); }
+  .rec-section.recommended .rec-section-badge { background: #ede9fe; color: var(--accent); }
+  .rec-section.optional .rec-section-badge { background: #f1f5f9; color: var(--text-muted); }
+
+  .rec-addons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .rec-addon {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .rec-cta {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  /* ===== Resources screen ===== */
+  .resources-card {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .res-section {
+    margin-bottom: 28px;
+  }
+  .res-section h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .res-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+  }
+
+  .res-link {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .res-link:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+  }
+  .res-link-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .res-link-text { flex: 1; min-width: 0; }
+  .res-link-text .title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .res-link-text .url {
+    font-size: 12px;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ===== Edit Mode ===== */
+  body.editing .step-title,
+  body.editing .step-subtitle {
+    outline: 2px dashed transparent;
+    outline-offset: 4px;
+    border-radius: 6px;
+    transition: outline-color 0.15s, background 0.15s;
+    cursor: text;
+  }
+  body.editing .step-title:hover,
+  body.editing .step-subtitle:hover {
+    outline-color: var(--primary);
+    background: rgba(37, 99, 235, 0.04);
+  }
+  body.editing .step-title:focus,
+  body.editing .step-subtitle:focus {
+    outline-color: var(--primary);
+    outline-style: solid;
+    background: rgba(37, 99, 235, 0.06);
+  }
+  body.editing [contenteditable="true"]:empty::before {
+    content: attr(data-placeholder);
+    color: var(--text-muted);
+    opacity: 0.5;
+  }
+
+  .edit-content-btn {
+    margin-top: 12px;
+    background: var(--surface);
+    border: 1px dashed var(--primary);
+    color: var(--primary);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .edit-content-btn:hover { background: var(--primary-light); }
+  body:not(.editing) .edit-content-btn { display: none; }
+
+  .edit-toolbar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    display: none;
+    align-items: center;
+    gap: 8px;
+    z-index: 1000;
+    flex-wrap: wrap;
+    max-width: calc(100vw - 32px);
+  }
+  body.editing .edit-toolbar { display: flex; }
+  .edit-toolbar .ed-label {
+    font-size: 13px;
+    color: #cbd5e1;
+    padding-right: 8px;
+    border-right: 1px solid #334155;
+    margin-right: 4px;
+    font-weight: 500;
+  }
+  .edit-toolbar .ed-label strong { color: white; font-weight: 700; }
+  .edit-toolbar button {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .edit-toolbar button:hover { background: rgba(255,255,255,0.2); }
+  .edit-toolbar button.danger { background: rgba(239,68,68,0.2); color: #fca5a5; }
+  .edit-toolbar button.danger:hover { background: rgba(239,68,68,0.35); color: white; }
+  .edit-toolbar button.primary { background: var(--primary); color: white; }
+  .edit-toolbar button.primary:hover { background: var(--primary-dark); }
+
+  .edit-saved-toast {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background: var(--success);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(16,185,129,0.35);
+    z-index: 1001;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.2s;
+    pointer-events: none;
+  }
+  .edit-saved-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .edit-modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(15,23,42,0.6);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+    padding: 20px;
+  }
+  .edit-modal-backdrop.show { display: flex; }
+  .edit-modal {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .edit-modal h3 { font-size: 18px; font-weight: 700; }
+  .edit-modal p { font-size: 13px; color: var(--text-muted); }
+  .edit-modal textarea {
+    flex: 1;
+    min-height: 360px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'SF Mono', Monaco, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    resize: vertical;
+    background: var(--bg);
+  }
+  .edit-modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  .edit-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--text);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    font-size: 20px;
+    transition: all 0.2s;
+  }
+  .edit-fab:hover { transform: scale(1.08); background: var(--primary); }
+  body.editing .edit-fab { display: none; }
+
   @media (max-width: 640px) {
     body { padding: 12px; }
     .step-card, .picker-card { padding: 24px 20px; }
@@ -551,6 +1002,156 @@
     </div>
   </div>
 
+  <!-- SCREEN: Vertical picker -->
+  <div id="screen-vertical" class="picker-card hidden">
+    <span class="picker-eyebrow">Step 3 of 3</span>
+    <h2 class="picker-title">What kind of business do you run?</h2>
+    <p class="picker-subtitle">We'll suggest a Pancake solution bundle tailored to your industry.</p>
+    <div class="vertical-grid" id="verticalGrid"></div>
+    <div style="margin-top: 28px;">
+      <button class="btn btn-ghost" onclick="goToPlatform()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        Back
+      </button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Recommendation -->
+  <div id="screen-recommendation" class="hidden">
+    <div class="recommendation-card">
+      <div class="rec-header">
+        <div class="rec-chips" id="recChips"></div>
+        <h2 class="rec-title">Your recommended setup</h2>
+        <p class="rec-sub" id="recSub">Based on your business, here's the Pancake bundle we suggest. Tap any section to jump straight into it.</p>
+      </div>
+
+      <div class="rec-meta">
+        <div class="rec-meta-item">
+          <span class="label">Sections</span>
+          <span class="value" id="recCountSections">—</span>
+        </div>
+        <div class="rec-meta-item">
+          <span class="label">Essential steps</span>
+          <span class="value" id="recCountSteps">—</span>
+        </div>
+        <div class="rec-meta-item">
+          <span class="label">Est. time</span>
+          <span class="value" id="recCountTime">—</span>
+        </div>
+      </div>
+
+      <div id="recAddons" style="margin-bottom: 24px;"></div>
+
+      <div class="rec-section-list" id="recSectionList"></div>
+
+      <div class="rec-cta">
+        <button class="btn btn-ghost" onclick="goToVertical()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          Change business
+        </button>
+        <button class="btn btn-primary" onclick="startWhatsAppFlow()">
+          Start onboarding
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Resources -->
+  <div id="screen-resources" class="hidden">
+    <div class="resources-card">
+      <div style="text-align: center; margin-bottom: 32px;">
+        <div style="font-size: 56px; margin-bottom: 12px;">🎉</div>
+        <h2 class="rec-title">You finished the playbook</h2>
+        <p class="rec-sub">Your Pancake ecosystem is set up, WhatsApp Business API is connected, and CAPI is sending purchase signals back to Meta.</p>
+      </div>
+
+      <div class="res-section">
+        <h3>📞 Your local support</h3>
+        <div class="res-links" id="resContactLinks"></div>
+      </div>
+
+      <div class="res-section">
+        <h3>📚 Documentation</h3>
+        <div class="res-links">
+          <a href="https://docs.pancake.biz/?lang=en" target="_blank" class="res-link">
+            <span class="res-link-icon">📖</span>
+            <div class="res-link-text">
+              <div class="title">Full Pancake docs</div>
+              <div class="url">docs.pancake.biz</div>
+            </div>
+          </a>
+          <a href="https://docs.pancake.biz/pos/st-f2/st-p1?lang=en" target="_blank" class="res-link">
+            <span class="res-link-icon">🛒</span>
+            <div class="res-link-text">
+              <div class="title">Pancake POS — Warehouse setup</div>
+              <div class="url">docs.pancake.biz/pos</div>
+            </div>
+          </a>
+          <a href="https://docs.pancake.biz/pos/st-f2/st-p3/st-s1/st-ss5?lang=en" target="_blank" class="res-link">
+            <span class="res-link-icon">🔗</span>
+            <div class="res-link-text">
+              <div class="title">Connect Shopify</div>
+              <div class="url">docs.pancake.biz/pos</div>
+            </div>
+          </a>
+          <a href="https://docs.pancake.biz/botcake/st-f4/st-p5" target="_blank" class="res-link">
+            <span class="res-link-icon">🤖</span>
+            <div class="res-link-text">
+              <div class="title">Botcake AI guide</div>
+              <div class="url">docs.pancake.biz/botcake</div>
+            </div>
+          </a>
+          <a href="https://pke.gg/xk458ra6" target="_blank" class="res-link">
+            <span class="res-link-icon">⚡</span>
+            <div class="res-link-text">
+              <div class="title">Automation guide</div>
+              <div class="url">pke.gg/xk458ra6</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="res-section">
+        <h3>🚀 Pancake products</h3>
+        <div class="res-links">
+          <a href="https://pancake.biz" target="_blank" class="res-link">
+            <span class="res-link-icon">💬</span>
+            <div class="res-link-text">
+              <div class="title">Pancake</div>
+              <div class="url">pancake.biz</div>
+            </div>
+          </a>
+          <a href="https://pos.pancake.biz" target="_blank" class="res-link">
+            <span class="res-link-icon">🛍️</span>
+            <div class="res-link-text">
+              <div class="title">Pancake POS</div>
+              <div class="url">pos.pancake.biz</div>
+            </div>
+          </a>
+          <a href="https://botcake.io" target="_blank" class="res-link">
+            <span class="res-link-icon">🤖</span>
+            <div class="res-link-text">
+              <div class="title">Botcake</div>
+              <div class="url">botcake.io</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="rec-cta">
+        <button class="btn btn-ghost" onclick="state.flowIndex = 0; showScreen('flow'); renderStep();">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 4v5h5"/></svg>
+          Review the playbook
+        </button>
+        <button class="btn btn-primary" onclick="goToCountry()">
+          Start over
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- SCREEN: Flow (WhatsApp playbook) -->
   <div id="screen-flow" class="hidden">
     <!-- Progress -->
@@ -621,12 +1222,78 @@
 <script>
 // =============== STATE ===============
 const state = {
-  screen: 'country', // 'country' | 'platform' | 'coming-soon' | 'flow'
+  screen: 'country', // 'country' | 'platform' | 'vertical' | 'recommendation' | 'coming-soon' | 'flow' | 'resources'
   country: null,
   countryName: null,
   platform: null,
   platformName: null,
+  vertical: null,
+  verticalName: null,
   flowIndex: 0
+};
+
+// =============== VERTICALS ===============
+// Each vertical maps to a recommended bundle: which sections are essential vs optional,
+// and which add-ons (CAPI, AI, Ads) we suggest enabling.
+const verticals = {
+  ecommerce: {
+    name: 'E-commerce / Multi-channel retail',
+    icon: '🛍️',
+    desc: 'Selling physical goods across Facebook, Instagram, WhatsApp, marketplaces',
+    sections: { 1: 'essential', 2: 'essential', 3: 'essential', 4: 'recommended', 5: 'optional', 6: 'essential', 7: 'recommended' },
+    addons: ['CAPI (purchase tracking)', 'Botcake automation', 'CTWA Ads', 'Product catalog'],
+    estTime: '~45 min'
+  },
+  fnb: {
+    name: 'F&B / Restaurant',
+    icon: '🍔',
+    desc: 'Restaurants, cafes, food delivery, cloud kitchens',
+    sections: { 1: 'essential', 2: 'essential', 3: 'essential', 4: 'essential', 5: 'optional', 6: 'recommended', 7: 'optional' },
+    addons: ['Botcake auto-replies', 'Order management', 'Menu catalog'],
+    estTime: '~30 min'
+  },
+  beauty: {
+    name: 'Beauty & Cosmetics',
+    icon: '💄',
+    desc: 'Skincare, makeup, haircare brands selling DTC',
+    sections: { 1: 'essential', 2: 'essential', 3: 'essential', 4: 'recommended', 5: 'recommended', 6: 'essential', 7: 'essential' },
+    addons: ['CAPI (high-intent buyers)', 'Botcake AI product recs', 'CTWA Ads', 'Loyalty program'],
+    estTime: '~50 min'
+  },
+  fashion: {
+    name: 'Fashion & Apparel',
+    icon: '👗',
+    desc: 'Clothing, accessories, livestream selling',
+    sections: { 1: 'essential', 2: 'essential', 3: 'essential', 4: 'recommended', 5: 'optional', 6: 'essential', 7: 'recommended' },
+    addons: ['CAPI', 'Product variants (size/color)', 'Livestream selling', 'CTWA Ads'],
+    estTime: '~45 min'
+  },
+  services: {
+    name: 'Services & Booking',
+    icon: '📅',
+    desc: 'Consulting, agencies, professional services, bookings',
+    sections: { 1: 'essential', 2: 'essential', 3: 'optional', 4: 'essential', 5: 'recommended', 6: 'recommended', 7: 'optional' },
+    addons: ['Botcake AI for lead qualification', 'Welcome flow automation'],
+    estTime: '~30 min'
+  },
+  other: {
+    name: 'Other / General',
+    icon: '⚙️',
+    desc: 'Education, real estate, B2B, or something else',
+    sections: { 1: 'essential', 2: 'recommended', 3: 'recommended', 4: 'recommended', 5: 'recommended', 6: 'recommended', 7: 'optional' },
+    addons: ['Pick your add-ons as you go'],
+    estTime: '~40 min'
+  }
+};
+
+const sectionMeta = {
+  1: { name: 'Pancake Ecosystem Signup', desc: 'Sign up across Pancake, POS, Botcake' },
+  2: { name: 'Livechat Setup', desc: 'Inbox, tags, staff, Chrome extension' },
+  3: { name: 'POS Details', desc: 'Shops, orders, currency, products' },
+  4: { name: 'Botcake', desc: 'Connect channels, flows, automation' },
+  5: { name: 'Botcake AI', desc: 'AI agent + Pancake Wallet top-up' },
+  6: { name: 'WhatsApp API & CAPI', desc: 'WABA + Conversion API setup' },
+  7: { name: 'CTWA Campaign', desc: 'Click-to-WhatsApp ads on Meta' }
 };
 
 // =============== WHATSAPP FLOW STEPS ===============
@@ -1430,7 +2097,7 @@ const whatsappSteps = [
 // =============== SCREEN MANAGEMENT ===============
 function showScreen(name) {
   state.screen = name;
-  ['country', 'platform', 'coming-soon', 'flow'].forEach(s => {
+  ['country', 'platform', 'vertical', 'recommendation', 'coming-soon', 'flow', 'resources'].forEach(s => {
     document.getElementById('screen-' + s).classList.toggle('hidden', s !== name);
   });
   updateHeader();
@@ -1439,22 +2106,29 @@ function showScreen(name) {
 
 function updateHeader() {
   const right = document.getElementById('headerRight');
+  const countryChip = state.country ? `<span class="chip">${flagFor(state.country)} ${state.countryName} <span class="x" onclick="goToCountry()" title="Change country">×</span></span>` : '';
+  const platformChip = state.platform ? `<span class="chip">${state.platformName}</span>` : '';
+  const verticalChip = state.vertical ? `<span class="chip">${verticals[state.vertical].icon} ${state.verticalName}</span>` : '';
+
   if (state.screen === 'flow') {
     right.innerHTML = `
       <div class="step-counter">
-        ${state.country ? `<span class="chip">${flagFor(state.country)} ${state.countryName} <span class="x" onclick="goToCountry()" title="Change country">×</span></span>` : ''}
+        ${countryChip}
         Step <strong id="currentStep">${state.flowIndex + 1}</strong> of <span>${whatsappSteps.length}</span>
       </div>
     `;
   } else if (state.screen === 'platform') {
     right.innerHTML = state.country
-      ? `<div class="selection-chips"><span class="chip">${flagFor(state.country)} ${state.countryName} <span class="x" onclick="goToCountry()" title="Change country">×</span></span></div>`
+      ? `<div class="selection-chips">${countryChip}</div>`
       : '';
+  } else if (state.screen === 'vertical') {
+    right.innerHTML = `<div class="selection-chips">${countryChip}${platformChip}</div>`;
+  } else if (state.screen === 'recommendation') {
+    right.innerHTML = `<div class="selection-chips">${countryChip}${platformChip}${verticalChip}</div>`;
   } else if (state.screen === 'coming-soon') {
-    right.innerHTML = `<div class="selection-chips">
-      ${state.country ? `<span class="chip">${flagFor(state.country)} ${state.countryName}</span>` : ''}
-      ${state.platform ? `<span class="chip">${state.platformName}</span>` : ''}
-    </div>`;
+    right.innerHTML = `<div class="selection-chips">${countryChip}${platformChip}</div>`;
+  } else if (state.screen === 'resources') {
+    right.innerHTML = `<div class="selection-chips">${countryChip}${verticalChip}</div>`;
   } else {
     right.innerHTML = '';
   }
@@ -1469,14 +2143,28 @@ function flagFor(code) {
 function goToCountry() {
   state.country = null;
   state.platform = null;
+  state.vertical = null;
   state.flowIndex = 0;
   showScreen('country');
 }
 
 function goToPlatform() {
   state.platform = null;
+  state.vertical = null;
   state.flowIndex = 0;
   showScreen('platform');
+}
+
+function goToVertical() {
+  state.vertical = null;
+  state.flowIndex = 0;
+  renderVerticalPicker();
+  showScreen('vertical');
+}
+
+function goToRecommendation() {
+  renderRecommendation();
+  showScreen('recommendation');
 }
 
 function startWhatsAppFlow() {
@@ -1485,6 +2173,119 @@ function startWhatsAppFlow() {
   state.flowIndex = 0;
   showScreen('flow');
   renderStep();
+}
+
+function goToResources() {
+  renderResources();
+  showScreen('resources');
+}
+
+// =============== VERTICAL PICKER RENDER ===============
+function renderVerticalPicker() {
+  const grid = document.getElementById('verticalGrid');
+  grid.innerHTML = Object.entries(verticals).map(([key, v]) => `
+    <button class="vertical-card" data-vertical="${key}">
+      <span class="vertical-icon">${v.icon}</span>
+      <span class="vertical-name">${v.name}</span>
+      <span class="vertical-desc">${v.desc}</span>
+    </button>
+  `).join('');
+  grid.querySelectorAll('.vertical-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const key = card.dataset.vertical;
+      state.vertical = key;
+      state.verticalName = verticals[key].name;
+      goToRecommendation();
+    });
+  });
+}
+
+// =============== RECOMMENDATION RENDER ===============
+function renderRecommendation() {
+  const v = verticals[state.vertical];
+  if (!v) return;
+
+  // Header chips
+  document.getElementById('recChips').innerHTML = `
+    ${state.country ? `<span class="chip">${flagFor(state.country)} ${state.countryName}</span>` : ''}
+    ${state.platform ? `<span class="chip">${state.platformName}</span>` : ''}
+    <span class="chip">${v.icon} ${v.name}</span>
+  `;
+
+  // Meta numbers
+  const essentialCount = Object.values(v.sections).filter(p => p === 'essential').length;
+  const essentialSteps = whatsappSteps.filter(s => v.sections[s.section] === 'essential').length;
+  document.getElementById('recCountSections').textContent = essentialCount;
+  document.getElementById('recCountSteps').textContent = essentialSteps;
+  document.getElementById('recCountTime').textContent = v.estTime;
+
+  // Subtitle
+  document.getElementById('recSub').textContent = `For a ${v.name.toLowerCase()} business, here's the Pancake bundle we suggest. Tap any section to jump straight in.`;
+
+  // Add-ons
+  document.getElementById('recAddons').innerHTML = v.addons.length ? `
+    <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Recommended add-ons</div>
+    <div class="rec-addons">
+      ${v.addons.map(a => `<span class="rec-addon">✓ ${a}</span>`).join('')}
+    </div>
+  ` : '';
+
+  // Section list (sorted: essential first, then recommended, then optional)
+  const priorityOrder = { essential: 0, recommended: 1, optional: 2 };
+  const sections = Object.entries(v.sections)
+    .map(([num, priority]) => ({ num: parseInt(num), priority }))
+    .sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority] || a.num - b.num);
+
+  document.getElementById('recSectionList').innerHTML = sections.map(({ num, priority }) => {
+    const meta = sectionMeta[num];
+    const badge = priority === 'essential' ? 'Essential'
+      : priority === 'recommended' ? 'Recommended'
+      : 'Optional';
+    return `
+      <div class="rec-section ${priority}" onclick="jumpToSection(${num})">
+        <div class="rec-section-num">${String(num).padStart(2, '0')}</div>
+        <div class="rec-section-info">
+          <div class="name">${meta.name}</div>
+          <div class="desc">${meta.desc}</div>
+        </div>
+        <span class="rec-section-badge">${badge}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function jumpToSection(sectionNum) {
+  // Find first step of this section and jump straight there
+  const idx = whatsappSteps.findIndex(s => s.section === sectionNum);
+  if (idx === -1) return;
+  state.platform = 'whatsapp';
+  state.platformName = 'WhatsApp';
+  state.flowIndex = idx;
+  showScreen('flow');
+  renderStep();
+}
+
+// =============== RESOURCES RENDER ===============
+function renderResources() {
+  // Country-aware contact info
+  const contacts = {
+    VN: [['Website', 'https://pancake.vn', '🌐'], ['Email', 'mailto:support@pancake.biz', '📧']],
+    PH: [['Email', 'mailto:support@pancake.biz', '📧'], ['Fanpage', 'https://www.facebook.com/pancake.ph', '📘'], ['Community', 'https://www.facebook.com/groups/pancake.ph', '👥']],
+    TH: [['Email', 'mailto:support@pancake.biz', '📧'], ['Fanpage', 'https://www.facebook.com/Pancake.thOfficial', '📘'], ['Line OA', 'https://line.me/R/oaMessage/@811mmtdk', '💚']],
+    ID: [['Email', 'mailto:support@pancake.biz', '📧'], ['Instagram', 'https://www.instagram.com/pancake.indonesia/', '📷'], ['WhatsApp', 'https://wa.me/6287711890788', '💬']],
+    MM: [['Facebook Page', 'https://www.facebook.com/pancakemyanmar', '📘']],
+    LATAM: [['Instagram', 'https://www.instagram.com/pancakelatamoficial/', '📷'], ['WhatsApp', 'https://wa.me/573189123034', '💬']]
+  };
+  const list = contacts[state.country] || contacts.VN;
+  document.getElementById('resContactLinks').innerHTML = list.map(([label, href, icon]) => `
+    <a href="${href}" target="_blank" class="res-link">
+      <span class="res-link-icon">${icon}</span>
+      <div class="res-link-text">
+        <div class="title">${label}</div>
+        <div class="url">${href.replace(/^https?:\/\/|^mailto:/, '')}</div>
+      </div>
+    </a>
+  `).join('');
 }
 
 function showComingSoon(platform, name) {
@@ -1515,8 +2316,8 @@ document.querySelectorAll('.platform-card').forEach(card => {
       state.platform = platform;
       state.platformName = name;
       state.flowIndex = 0;
-      showScreen('flow');
-      renderStep();
+      renderVerticalPicker();
+      showScreen('vertical');
     } else {
       showComingSoon(platform, name);
     }
@@ -1559,10 +2360,10 @@ function renderStep() {
     else if (s < step.section) pill.classList.add('completed');
   });
 
-  document.getElementById('prevBtn').disabled = false; // Back always works (goes to platform on first step)
+  document.getElementById('prevBtn').disabled = false; // Back always works (goes to recommendation on first step)
   const nextBtn = document.getElementById('nextBtn');
   if (state.flowIndex === whatsappSteps.length - 1) {
-    nextBtn.innerHTML = `Restart <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 4v5h5"/></svg>`;
+    nextBtn.innerHTML = `View resources <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
   } else {
     nextBtn.innerHTML = `Next Step <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
   }
@@ -1575,8 +2376,8 @@ function nextStep() {
     state.flowIndex++;
     renderStep();
   } else {
-    state.flowIndex = 0;
-    renderStep();
+    // After last step, go to resources screen
+    goToResources();
   }
 }
 
@@ -1585,8 +2386,12 @@ function prevStep() {
     state.flowIndex--;
     renderStep();
   } else {
-    // On first step, "Back" returns to platform picker
-    showScreen('platform');
+    // On first step, "Back" returns to recommendation (or platform if no vertical was picked)
+    if (state.vertical) {
+      goToRecommendation();
+    } else {
+      showScreen('platform');
+    }
   }
 }
 
@@ -1609,9 +2414,267 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft') prevStep();
 });
 
+// ====================== EDIT MODE ======================
+// Allows in-page editing of step titles, subtitles, and content.
+// Drafts saved to localStorage. Export → content-overrides.json file
+// that can be committed to the repo so the whole team sees the changes.
+
+const EDIT_STORAGE_KEY = 'pancake_playbook_local_edits';
+let editMode = false;
+let localEdits = {};      // edits saved in this browser (drafts)
+let teamEdits = {};       // edits loaded from content-overrides.json (published)
+
+// Try to fetch published team edits
+async function loadTeamEdits() {
+  try {
+    const res = await fetch('content-overrides.json', { cache: 'no-store' });
+    if (res.ok) teamEdits = await res.json();
+  } catch (e) { /* no team file yet, that's fine */ }
+}
+
+function loadLocalEdits() {
+  try { localEdits = JSON.parse(localStorage.getItem(EDIT_STORAGE_KEY) || '{}'); }
+  catch (e) { localEdits = {}; }
+}
+
+function saveLocalEdits() {
+  localStorage.setItem(EDIT_STORAGE_KEY, JSON.stringify(localEdits));
+  updateEditCount();
+}
+
+// Apply edits (local takes priority over team) on top of the base step
+function getStepWithEdits(idx) {
+  const base = whatsappSteps[idx];
+  const merged = { ...base };
+  for (const field of ['title', 'subtitle', 'content']) {
+    const localKey = `${idx}.${field}`;
+    if (localEdits[localKey] !== undefined) merged[field] = localEdits[localKey];
+    else if (teamEdits[localKey] !== undefined) merged[field] = teamEdits[localKey];
+  }
+  return merged;
+}
+
+// Override the global renderStep: re-render the current step using edits
+const originalRenderStep = renderStep;
+renderStep = function() {
+  const step = getStepWithEdits(state.flowIndex);
+  const card = document.getElementById('stepCard');
+  card.innerHTML = `
+    <div class="step-section-label">${step.sectionLabel}</div>
+    <h2 class="step-title" ${editMode ? 'contenteditable="true" data-field="title" data-placeholder="Step title"' : ''}>${step.title}</h2>
+    ${step.subtitle || editMode ? `<p class="step-subtitle" ${editMode ? 'contenteditable="true" data-field="subtitle" data-placeholder="Optional subtitle"' : ''}>${step.subtitle || ''}</p>` : ''}
+    <div class="step-content" data-field="content">${step.content}</div>
+    ${editMode ? `<button class="edit-content-btn" onclick="openContentEditor(${state.flowIndex})">✏️ Edit content HTML</button>` : ''}
+  `;
+
+  updateHeader();
+  const percent = Math.round(((state.flowIndex + 1) / whatsappSteps.length) * 100);
+  document.getElementById('progressFill').style.width = percent + '%';
+  document.getElementById('progressPercent').textContent = percent + '% complete';
+
+  const sectionNames = {
+    1: 'Section 1 · Pancake Ecosystem Signup',
+    2: 'Section 2 · Livechat Setup',
+    3: 'Section 3 · POS Details',
+    4: 'Section 4 · Botcake',
+    5: 'Section 5 · Botcake AI',
+    6: 'Section 6 · WhatsApp API & CAPI',
+    7: 'Section 7 · CTWA Campaign'
+  };
+  document.getElementById('progressSection').textContent = sectionNames[step.section];
+
+  document.querySelectorAll('.section-pill').forEach(pill => {
+    const s = parseInt(pill.dataset.section);
+    pill.classList.remove('active', 'completed');
+    if (s === step.section) pill.classList.add('active');
+    else if (s < step.section) pill.classList.add('completed');
+  });
+
+  document.getElementById('prevBtn').disabled = false;
+  const nextBtn = document.getElementById('nextBtn');
+  if (state.flowIndex === whatsappSteps.length - 1) {
+    nextBtn.innerHTML = `View resources <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
+  } else {
+    nextBtn.innerHTML = `Next Step <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
+  }
+
+  if (editMode) attachEditHandlers();
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+
+function attachEditHandlers() {
+  const card = document.getElementById('stepCard');
+  card.querySelectorAll('[contenteditable="true"]').forEach(el => {
+    el.addEventListener('blur', () => {
+      const field = el.dataset.field;
+      const key = `${state.flowIndex}.${field}`;
+      const newVal = el.innerText.trim();
+      const base = whatsappSteps[state.flowIndex];
+      // Only save if different from base + team baseline
+      const teamVal = teamEdits[key];
+      if (newVal === (teamVal !== undefined ? teamVal : (base[field] || ''))) {
+        delete localEdits[key];
+      } else {
+        localEdits[key] = newVal;
+      }
+      saveLocalEdits();
+      showSavedToast();
+    });
+  });
+}
+
+function showSavedToast() {
+  const t = document.getElementById('editSavedToast');
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => t.classList.remove('show'), 1500);
+}
+
+function updateEditCount() {
+  const count = Object.keys(localEdits).length;
+  const el = document.getElementById('editCount');
+  if (el) el.textContent = count;
+}
+
+function enterEditMode() {
+  editMode = true;
+  document.body.classList.add('editing');
+  if (state.screen === 'flow') renderStep();
+  updateEditCount();
+}
+
+function exitEditMode() {
+  editMode = false;
+  document.body.classList.remove('editing');
+  if (state.screen === 'flow') renderStep();
+}
+
+function openContentEditor(idx) {
+  const merged = getStepWithEdits(idx);
+  document.getElementById('editModalTitle').textContent = `Edit content HTML — "${merged.title}"`;
+  document.getElementById('editModalTextarea').value = merged.content;
+  document.getElementById('editModalTextarea').dataset.idx = idx;
+  document.getElementById('editModal').classList.add('show');
+}
+
+function closeContentEditor() {
+  document.getElementById('editModal').classList.remove('show');
+}
+
+function saveContentEditor() {
+  const ta = document.getElementById('editModalTextarea');
+  const idx = parseInt(ta.dataset.idx);
+  const key = `${idx}.content`;
+  const newVal = ta.value;
+  const base = whatsappSteps[idx];
+  const teamVal = teamEdits[key];
+  if (newVal === (teamVal !== undefined ? teamVal : base.content)) {
+    delete localEdits[key];
+  } else {
+    localEdits[key] = newVal;
+  }
+  saveLocalEdits();
+  closeContentEditor();
+  if (state.screen === 'flow') renderStep();
+  showSavedToast();
+}
+
+function exportEdits() {
+  // Merge team + local into a single overrides file
+  const merged = { ...teamEdits, ...localEdits };
+  if (Object.keys(merged).length === 0) {
+    alert('No edits to export yet.');
+    return;
+  }
+  const blob = new Blob([JSON.stringify(merged, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'content-overrides.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importEdits() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'application/json,.json';
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const imported = JSON.parse(text);
+      if (typeof imported !== 'object') throw new Error('Not an object');
+      // Merge into local edits
+      Object.assign(localEdits, imported);
+      saveLocalEdits();
+      if (state.screen === 'flow') renderStep();
+      alert(`Imported ${Object.keys(imported).length} edits. They've been saved as local drafts.`);
+    } catch (err) {
+      alert('Could not read JSON file: ' + err.message);
+    }
+  };
+  input.click();
+}
+
+function discardLocalDrafts() {
+  if (Object.keys(localEdits).length === 0) {
+    alert('No local drafts to discard.');
+    return;
+  }
+  if (!confirm(`Discard ${Object.keys(localEdits).length} unsaved local edits? This cannot be undone.`)) return;
+  localEdits = {};
+  saveLocalEdits();
+  if (state.screen === 'flow') renderStep();
+}
+
+// Init edit mode
+loadLocalEdits();
+loadTeamEdits().then(() => {
+  if (state.screen === 'flow') renderStep();
+});
+
+// URL ?edit=1 or keyboard Cmd/Ctrl+E to toggle
+if (new URLSearchParams(window.location.search).get('edit') === '1') {
+  enterEditMode();
+}
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'e') {
+    e.preventDefault();
+    if (editMode) exitEditMode();
+    else enterEditMode();
+  }
+});
+
 // Initial
 showScreen('country');
 </script>
+
+<!-- Edit Mode UI -->
+<button class="edit-fab" onclick="enterEditMode()" title="Enter edit mode (Cmd/Ctrl + E)">✏️</button>
+
+<div class="edit-toolbar">
+  <span class="ed-label">Editing · <strong id="editCount">0</strong> local drafts</span>
+  <button onclick="importEdits()" title="Load a content-overrides.json file">📥 Import</button>
+  <button class="primary" onclick="exportEdits()" title="Download all edits as content-overrides.json">📤 Export</button>
+  <button class="danger" onclick="discardLocalDrafts()" title="Clear unsaved drafts in this browser">Discard drafts</button>
+  <button onclick="exitEditMode()" title="Exit edit mode">✓ Done</button>
+</div>
+
+<div class="edit-saved-toast" id="editSavedToast">Saved ✓</div>
+
+<div class="edit-modal-backdrop" id="editModal">
+  <div class="edit-modal">
+    <h3 id="editModalTitle">Edit content HTML</h3>
+    <p>Edit the raw HTML. You can use <code>&lt;p&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;strong&gt;</code>, callout boxes (<code>&lt;div class="callout tip"&gt;</code>), screenshots (<code>&lt;div class="screenshot"&gt;</code>), and inline code (<code>&lt;code&gt;</code>).</p>
+    <textarea id="editModalTextarea"></textarea>
+    <div class="edit-modal-actions">
+      <button class="btn btn-ghost" onclick="closeContentEditor()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveContentEditor()">Save</button>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
