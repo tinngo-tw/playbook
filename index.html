@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pancake Onboarding Playbook</title>
+<title>Pancake Onboarding Hub — Interactive Playbooks</title>
+<meta name="description" content="Step-by-step interactive playbooks to onboard your business onto Pancake — WhatsApp, Messenger, Instagram, and the full Pancake ecosystem.">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -13,1271 +14,951 @@
     --primary-light: #dbeafe;
     --accent: #7c3aed;
     --success: #10b981;
+    --warning: #f59e0b;
     --bg: #f8fafc;
     --surface: #ffffff;
     --text: #0f172a;
     --text-muted: #64748b;
+    --text-soft: #475569;
     --border: #e2e8f0;
     --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 20px rgba(0,0,0,0.04);
     --shadow-lg: 0 10px 40px rgba(37,99,235,0.15);
+    --shadow-xl: 0 20px 60px rgba(37,99,235,0.2);
   }
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
-    background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%);
-    min-height: 100vh;
+    background: var(--bg);
     color: var(--text);
     line-height: 1.6;
-    padding: 20px;
+    overflow-x: hidden;
   }
 
-  .container { max-width: 920px; margin: 0 auto; }
+  /* ===== Nav ===== */
+  .nav {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
-  .hidden { display: none !important; }
-
-  /* Header */
-  .header {
-    background: var(--surface);
-    border-radius: 20px;
-    padding: 28px 32px;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow);
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
   }
 
-  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text);
+  }
 
   .brand-logo {
-    width: 44px; height: 44px; border-radius: 12px;
+    width: 36px; height: 36px; border-radius: 10px;
     background: linear-gradient(135deg, var(--primary), var(--accent));
     display: flex; align-items: center; justify-content: center;
-    color: white; font-weight: 700; font-size: 20px;
+    color: white; font-weight: 700; font-size: 17px;
   }
 
-  .brand-text h1 { font-size: 18px; font-weight: 700; color: var(--text); }
-  .brand-text p { font-size: 13px; color: var(--text-muted); }
+  .brand-name { font-weight: 700; font-size: 16px; }
 
-  .step-counter { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-muted); font-weight: 500; }
-  .step-counter strong { color: var(--primary); font-weight: 700; font-size: 16px; }
-
-  /* Selection chips */
-  .selection-chips {
+  .nav-links {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    flex-wrap: wrap;
+    gap: 28px;
   }
 
-  .chip {
-    background: var(--primary-light);
-    color: var(--primary);
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .chip .x {
-    cursor: pointer;
-    opacity: 0.6;
+  .nav-link {
+    color: var(--text-soft);
+    text-decoration: none;
     font-size: 14px;
-    line-height: 1;
-  }
-
-  .chip .x:hover { opacity: 1; }
-
-  /* Picker screens */
-  .picker-card {
-    background: var(--surface);
-    border-radius: 20px;
-    padding: 48px 40px;
-    box-shadow: var(--shadow);
-    text-align: center;
-    animation: fadeIn 0.4s ease-out;
-  }
-
-  .picker-eyebrow {
-    display: inline-block;
-    background: var(--primary-light);
-    color: var(--primary);
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 16px;
-  }
-
-  .picker-title {
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--text);
-    margin-bottom: 12px;
-    line-height: 1.2;
-  }
-
-  .picker-subtitle {
-    font-size: 16px;
-    color: var(--text-muted);
-    margin-bottom: 32px;
-    max-width: 560px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .country-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 12px;
-    margin-top: 20px;
-  }
-
-  .country-card {
-    background: var(--bg);
-    border: 2px solid var(--border);
-    border-radius: 16px;
-    padding: 24px 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    font-family: inherit;
-    color: var(--text);
-  }
-
-  .country-card:hover {
-    border-color: var(--primary);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-    background: var(--surface);
-  }
-
-  .country-flag {
-    font-size: 48px;
-    line-height: 1;
-  }
-
-  .country-name {
-    font-size: 15px;
-    font-weight: 600;
-  }
-
-  .country-code {
-    font-size: 12px;
-    color: var(--text-muted);
     font-weight: 500;
+    transition: color 0.15s;
   }
-
-  .platform-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-    margin-top: 20px;
-  }
-
-  .platform-card {
-    background: var(--bg);
-    border: 2px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    font-family: inherit;
-    color: var(--text);
-    text-align: center;
-    position: relative;
-  }
-
-  .platform-card:hover {
-    border-color: var(--primary);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-    background: var(--surface);
-  }
-
-  .platform-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 30px;
-  }
-
-  .platform-icon.messenger {
-    background: linear-gradient(135deg, #00B2FF 0%, #006AFF 50%, #FF5050 100%);
-  }
-
-  .platform-icon.instagram {
-    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  }
-
-  .platform-icon.whatsapp {
-    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-  }
-
-  .platform-name {
-    font-size: 18px;
-    font-weight: 700;
-  }
-
-  .platform-desc {
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-
-  .platform-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: #f59e0b;
-    color: white;
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 999px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-  }
-
-  .platform-badge.ready {
-    background: var(--success);
-  }
-
-  /* Coming soon screen */
-  .coming-soon-icon {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 0 auto 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 50px;
-  }
-
-  .coming-soon-icon.messenger {
-    background: linear-gradient(135deg, #00B2FF 0%, #006AFF 50%, #FF5050 100%);
-  }
-
-  .coming-soon-icon.instagram {
-    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  }
-
-  /* Progress */
-  .progress-bar {
-    background: var(--surface);
-    border-radius: 16px;
-    padding: 20px 28px;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow);
-  }
-
-  .progress-track { height: 8px; background: #e2e8f0; border-radius: 999px; overflow: hidden; position: relative; }
-  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 999px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); width: 0%; }
-  .progress-info { display: flex; justify-content: space-between; margin-top: 12px; font-size: 13px; color: var(--text-muted); }
-  .progress-section { color: var(--primary); font-weight: 600; }
-
-  /* Section pills */
-  .section-pills { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
-  .section-pill {
-    padding: 8px 16px; border-radius: 999px; background: var(--surface);
-    border: 1px solid var(--border); font-size: 13px; font-weight: 500;
-    color: var(--text-muted); cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .section-pill .num {
-    width: 22px; height: 22px; border-radius: 50%; background: #e2e8f0;
-    color: var(--text-muted); display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700;
-  }
-  .section-pill.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: var(--shadow-lg); }
-  .section-pill.active .num { background: rgba(255,255,255,0.25); color: white; }
-  .section-pill.completed { background: var(--primary-light); color: var(--primary); border-color: var(--primary-light); }
-  .section-pill.completed .num { background: var(--primary); color: white; }
-
-  /* Step Card */
-  .step-card {
-    background: var(--surface); border-radius: 20px; padding: 40px;
-    box-shadow: var(--shadow); margin-bottom: 24px;
-    animation: fadeIn 0.4s ease-out;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .step-section-label {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--primary-light); color: var(--primary);
-    padding: 6px 12px; border-radius: 999px; font-size: 12px;
-    font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
-    margin-bottom: 16px;
-  }
-
-  .step-title { font-size: 28px; font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.25; }
-  .step-subtitle { font-size: 16px; color: var(--text-muted); margin-bottom: 24px; }
-
-  .step-content { font-size: 15px; color: var(--text); line-height: 1.7; }
-  .step-content p { margin-bottom: 14px; }
-  .step-content strong { color: var(--text); font-weight: 600; }
-  .step-content code {
-    background: #f1f5f9; padding: 2px 6px; border-radius: 4px;
-    font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: var(--accent);
-  }
-  .step-content a { color: var(--primary); text-decoration: none; font-weight: 500; border-bottom: 1px dashed var(--primary); }
-  .step-content a:hover { border-bottom-style: solid; }
-
-  .step-content ul { margin: 14px 0; padding-left: 0; list-style: none; }
-  .step-content ul li { padding: 10px 0 10px 32px; position: relative; border-bottom: 1px dashed var(--border); }
-  .step-content ul li:last-child { border-bottom: none; }
-  .step-content ul li::before {
-    content: ""; position: absolute; left: 8px; top: 18px;
-    width: 8px; height: 8px; background: var(--primary); border-radius: 50%;
-  }
-
-  /* Callout box */
-  .callout {
-    border-radius: 12px; padding: 16px 20px; margin: 20px 0;
-    display: flex; gap: 14px; align-items: flex-start; border-left: 4px solid;
-  }
-  .callout-icon { font-size: 20px; line-height: 1; margin-top: 2px; }
-  .callout.info { background: #eff6ff; border-color: var(--primary); color: #1e40af; }
-  .callout.warning { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
-  .callout.success { background: #d1fae5; border-color: var(--success); color: #065f46; }
-  .callout.tip { background: #f5f3ff; border-color: var(--accent); color: #5b21b6; }
-
-  .action-tag {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--text); color: white; padding: 4px 10px;
-    border-radius: 6px; font-size: 13px; font-weight: 600;
-    font-family: 'SF Mono', Monaco, monospace; margin: 0 2px;
-  }
-
-  /* Screenshot */
-  .screenshot { margin: 20px 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #f8fafc; box-shadow: var(--shadow); }
-  .screenshot img { width: 100%; display: block; height: auto; }
-  .screenshot-grid { display: grid; gap: 12px; margin: 20px 0; grid-template-columns: 1fr; }
-  @media (min-width: 700px) { .screenshot-grid.two-col { grid-template-columns: 1fr 1fr; } }
-
-  /* Mock UI */
-  .ui-mock { background: #f1f5f9; border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin: 16px 0; font-size: 13px; color: var(--text-muted); }
-
-  /* Navigation */
-  .nav-buttons { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 16px; }
+  .nav-link:hover { color: var(--primary); }
 
   .btn {
-    border: none; cursor: pointer; font-size: 15px; font-weight: 600;
-    padding: 14px 28px; border-radius: 12px; transition: all 0.2s;
-    display: inline-flex; align-items: center; gap: 8px; font-family: inherit;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 22px;
+    border-radius: 10px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+    text-decoration: none;
   }
 
   .btn-primary {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white; box-shadow: 0 4px 14px rgba(37,99,235,0.35);
+    color: white;
+    box-shadow: 0 4px 14px rgba(37,99,235,0.35);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,99,235,0.45); }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.45); }
 
-  .btn-ghost { background: var(--surface); color: var(--text-muted); border: 1px solid var(--border); }
-  .btn-ghost:hover { background: #f8fafc; color: var(--text); }
-  .btn-ghost:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  /* Completion */
-  .completion { text-align: center; padding: 40px 20px; }
-  .completion-icon {
-    width: 100px; height: 100px;
-    background: linear-gradient(135deg, var(--success), #059669);
-    border-radius: 50%; margin: 0 auto 24px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 50px; color: white;
-    box-shadow: 0 10px 40px rgba(16,185,129,0.35);
-    animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  .btn-ghost {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
   }
-  @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+  .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
 
-  .resources-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 12px; margin-top: 24px;
+  .btn-lg {
+    padding: 16px 32px;
+    font-size: 16px;
+    border-radius: 12px;
   }
-  .resource-card {
-    background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
-    padding: 16px; text-decoration: none; color: var(--text);
-    transition: all 0.2s; display: block; text-align: left;
+
+  /* ===== Hero ===== */
+  .hero {
+    position: relative;
+    padding: 80px 24px 100px;
+    background: linear-gradient(180deg, #eff6ff 0%, #f5f3ff 50%, var(--bg) 100%);
+    overflow: hidden;
   }
-  .resource-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow); }
-  .resource-card .label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-  .resource-card .title { font-size: 14px; font-weight: 600; color: var(--primary); }
 
-  .kbd-hint { text-align: center; margin-top: 16px; font-size: 12px; color: var(--text-muted); }
-  .kbd { display: inline-block; padding: 2px 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; box-shadow: 0 1px 0 var(--border); }
+  .hero::before, .hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    pointer-events: none;
+  }
 
-  @media (max-width: 640px) {
-    body { padding: 12px; }
-    .step-card, .picker-card { padding: 24px 20px; }
-    .step-title, .picker-title { font-size: 22px; }
-    .header { padding: 20px; }
-    .btn { padding: 12px 20px; font-size: 14px; }
-    .country-flag { font-size: 36px; }
+  .hero::before {
+    width: 400px; height: 400px;
+    background: var(--primary);
+    top: -100px; left: -100px;
+  }
+
+  .hero::after {
+    width: 500px; height: 500px;
+    background: var(--accent);
+    bottom: -200px; right: -150px;
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+
+  .hero-badge .dot {
+    width: 8px; height: 8px;
+    background: var(--success);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 60px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, var(--text) 30%, var(--primary) 70%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 19px);
+    color: var(--text-soft);
+    max-width: 640px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta {
+    margin-top: 48px;
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-meta-item svg {
+    color: var(--success);
+  }
+
+  /* ===== Sections ===== */
+  .section {
+    padding: 80px 24px;
+  }
+
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+    line-height: 1.15;
+  }
+
+  .section-sub {
+    font-size: 17px;
+    color: var(--text-soft);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  /* ===== Playbook Cards ===== */
+  .playbooks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .playbook-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    transition: all 0.3s;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .playbook-card:not(.disabled):hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .playbook-card.disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .playbook-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .playbook-icon.whatsapp { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); }
+  .playbook-icon.messenger { background: linear-gradient(135deg, #00B2FF 0%, #006AFF 50%, #FF5050 100%); }
+  .playbook-icon.instagram { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+
+  .playbook-status {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .playbook-status.ready {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .playbook-status.soon {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .playbook-name {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .playbook-desc {
+    font-size: 14px;
+    color: var(--text-soft);
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+
+  .playbook-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .playbook-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .playbook-cta {
+    margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .playbook-card.disabled .playbook-cta {
+    color: var(--text-muted);
+  }
+
+  /* ===== Ecosystem strip ===== */
+  .ecosystem {
+    background: var(--surface);
+  }
+
+  .ecosystem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .product-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.2s;
+  }
+
+  .product-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+  }
+
+  .product-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 14px;
+    font-size: 18px;
+  }
+
+  .product-icon.pos { background: linear-gradient(135deg, #f59e0b, #ea580c); }
+  .product-icon.botcake { background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+
+  .product-name {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 6px;
+  }
+
+  .product-desc {
+    font-size: 14px;
+    color: var(--text-soft);
+  }
+
+  /* ===== Steps / What's covered ===== */
+  .covered {
+    background: linear-gradient(180deg, var(--bg) 0%, #eff6ff 100%);
+  }
+
+  .covered-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .covered-card {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--primary);
+  }
+
+  .covered-card:nth-child(2) { border-left-color: var(--accent); }
+  .covered-card:nth-child(3) { border-left-color: var(--success); }
+
+  .covered-num {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .covered-card:nth-child(2) .covered-num { color: var(--accent); }
+  .covered-card:nth-child(3) .covered-num { color: var(--success); }
+
+  .covered-title {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .covered-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .covered-list li {
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--text-soft);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .covered-list li::before {
+    content: "";
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+    border-radius: 50%;
+    margin-top: 8px;
+    opacity: 0.4;
+  }
+
+  /* ===== Country bar ===== */
+  .country-bar {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .country-bar-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .country-flags {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .country-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .country-pill .flag {
+    font-size: 18px;
+  }
+
+  /* ===== Final CTA ===== */
+  .final-cta {
+    padding: 80px 24px;
+    text-align: center;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta::before, .final-cta::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.25;
+    background: white;
+    pointer-events: none;
+  }
+
+  .final-cta::before {
+    width: 300px; height: 300px;
+    top: -100px; right: 10%;
+  }
+  .final-cta::after {
+    width: 400px; height: 400px;
+    bottom: -200px; left: 10%;
+  }
+
+  .final-cta-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .final-cta h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .final-cta p {
+    font-size: 17px;
+    margin-bottom: 32px;
+    opacity: 0.92;
+  }
+
+  .btn-white {
+    background: white;
+    color: var(--primary);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+  /* ===== Footer ===== */
+  .footer {
+    background: var(--text);
+    color: #cbd5e1;
+    padding: 48px 24px 28px;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+  }
+
+  .footer-brand {
+    max-width: 320px;
+  }
+
+  .footer-brand .brand {
+    color: white;
+    margin-bottom: 12px;
+  }
+
+  .footer-brand .brand-name {
+    color: white;
+  }
+
+  .footer-brand p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .footer-col h4 {
+    color: white;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+
+  .footer-col a {
+    display: block;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 4px 0;
+    transition: color 0.15s;
+  }
+
+  .footer-col a:hover { color: white; }
+
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 40px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid #334155;
+    font-size: 13px;
+    color: #94a3b8;
+    text-align: center;
+  }
+
+  @media (max-width: 700px) {
+    .nav-links { gap: 16px; }
+    .nav-links .nav-link { display: none; }
+    .hero { padding: 60px 20px 80px; }
+    .section { padding: 60px 20px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 28px; }
   }
 </style>
 </head>
 <body>
 
-<div class="container">
-
-  <!-- Header -->
-  <div class="header">
-    <div class="brand">
+<!-- ===== Navigation ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="brand">
       <div class="brand-logo">P</div>
-      <div class="brand-text">
-        <h1>Pancake Onboarding</h1>
-        <p>Interactive setup playbook</p>
-      </div>
-    </div>
-    <div id="headerRight">
-      <!-- updated by JS: chips during picker, step counter during flow -->
-    </div>
-  </div>
-
-  <!-- SCREEN: Country picker -->
-  <div id="screen-country" class="picker-card">
-    <span class="picker-eyebrow">Step 1 of 2</span>
-    <h2 class="picker-title">Where are you from?</h2>
-    <p class="picker-subtitle">Pick your region so we can tailor the onboarding flow.</p>
-    <div class="country-grid">
-      <button class="country-card" data-country="VN" data-name="Vietnam">
-        <span class="country-flag">🇻🇳</span>
-        <span class="country-name">Vietnam</span>
-        <span class="country-code">VN</span>
-      </button>
-      <button class="country-card" data-country="ID" data-name="Indonesia">
-        <span class="country-flag">🇮🇩</span>
-        <span class="country-name">Indonesia</span>
-        <span class="country-code">ID</span>
-      </button>
-      <button class="country-card" data-country="TH" data-name="Thailand">
-        <span class="country-flag">🇹🇭</span>
-        <span class="country-name">Thailand</span>
-        <span class="country-code">TH</span>
-      </button>
-      <button class="country-card" data-country="PH" data-name="Philippines">
-        <span class="country-flag">🇵🇭</span>
-        <span class="country-name">Philippines</span>
-        <span class="country-code">PH</span>
-      </button>
-      <button class="country-card" data-country="LATAM" data-name="LATAM">
-        <span class="country-flag">🇨🇴</span>
-        <span class="country-name">LATAM</span>
-        <span class="country-code">Latin America</span>
-      </button>
+      <div class="brand-name">Pancake Onboarding Hub</div>
+    </a>
+    <div class="nav-links">
+      <a href="#playbooks" class="nav-link">Playbooks</a>
+      <a href="#ecosystem" class="nav-link">Ecosystem</a>
+      <a href="#covered" class="nav-link">What's covered</a>
+      <a href="playbook.html" class="btn btn-primary">Start onboarding</a>
     </div>
   </div>
+</nav>
 
-  <!-- SCREEN: Platform picker -->
-  <div id="screen-platform" class="picker-card hidden">
-    <span class="picker-eyebrow">Step 2 of 2</span>
-    <h2 class="picker-title">Which platform do you use most with clients?</h2>
-    <p class="picker-subtitle">Choose the messaging channel that drives most of your customer conversations.</p>
-    <div class="platform-grid">
-      <button class="platform-card" data-platform="messenger" data-name="Messenger">
-        <div class="platform-icon messenger">💬</div>
-        <div class="platform-name">Messenger</div>
-        <div class="platform-desc">Facebook Messenger conversations</div>
-        <span class="platform-badge">Coming soon</span>
-      </button>
-      <button class="platform-card" data-platform="instagram" data-name="Instagram">
-        <div class="platform-icon instagram">📷</div>
-        <div class="platform-name">Instagram</div>
-        <div class="platform-desc">Instagram DMs and story replies</div>
-        <span class="platform-badge">Coming soon</span>
-      </button>
-      <button class="platform-card" data-platform="whatsapp" data-name="WhatsApp">
-        <div class="platform-icon whatsapp">📱</div>
-        <div class="platform-name">WhatsApp</div>
-        <div class="platform-desc">WhatsApp Business API &amp; CAPI</div>
-        <span class="platform-badge ready">Ready</span>
-      </button>
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      <span>Full WhatsApp + ecosystem playbook now live</span>
     </div>
-    <div style="margin-top: 28px;">
-      <button class="btn btn-ghost" onclick="goToCountry()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-        Back
-      </button>
+    <h1>Get started with Pancake,<br>one step at a time.</h1>
+    <p class="hero-sub">Interactive, click-through playbooks that walk you through every screen, button, and decision — from creating your Pancake account to running your first Click-to-WhatsApp campaign.</p>
+    <div class="hero-cta">
+      <a href="playbook.html" class="btn btn-primary btn-lg">
+        Start onboarding
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+      <a href="#playbooks" class="btn btn-ghost btn-lg">Browse playbooks</a>
     </div>
-  </div>
-
-  <!-- SCREEN: Coming soon -->
-  <div id="screen-coming-soon" class="picker-card hidden">
-    <div id="comingSoonIcon" class="coming-soon-icon"></div>
-    <h2 class="picker-title" id="comingSoonTitle">Coming soon</h2>
-    <p class="picker-subtitle" id="comingSoonSubtitle">We're putting the finishing touches on this onboarding flow.</p>
-    <div class="callout info" style="text-align: left; max-width: 560px; margin: 0 auto;">
-      <div class="callout-icon">📨</div>
-      <div>In the meantime, contact your Pancake account manager for setup help — or pick a different platform below.</div>
-    </div>
-    <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-      <button class="btn btn-ghost" onclick="goToPlatform()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-        Choose a different platform
-      </button>
-      <button class="btn btn-primary" onclick="startWhatsAppFlow()">
-        Try WhatsApp instead
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-      </button>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>7 sections · 46 steps</span>
+      </div>
+      <div class="hero-meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>6 countries supported</span>
+      </div>
+      <div class="hero-meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>~30 minutes to complete</span>
+      </div>
     </div>
   </div>
+</section>
 
-  <!-- SCREEN: Flow (WhatsApp playbook) -->
-  <div id="screen-flow" class="hidden">
-    <!-- Progress -->
-    <div class="progress-bar">
-      <div class="progress-track">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-      <div class="progress-info">
-        <span class="progress-section" id="progressSection">Section 1 · Pancake Ecosystem Onboarding</span>
-        <span id="progressPercent">0% complete</span>
-      </div>
+<!-- ===== Country support bar ===== -->
+<section class="country-bar">
+  <div class="country-bar-label">Available for businesses in</div>
+  <div class="country-flags">
+    <div class="country-pill"><span class="flag">🇻🇳</span> Vietnam</div>
+    <div class="country-pill"><span class="flag">🇮🇩</span> Indonesia</div>
+    <div class="country-pill"><span class="flag">🇹🇭</span> Thailand</div>
+    <div class="country-pill"><span class="flag">🇵🇭</span> Philippines</div>
+    <div class="country-pill"><span class="flag">🇲🇲</span> Myanmar</div>
+    <div class="country-pill"><span class="flag">🇨🇴</span> LATAM</div>
+  </div>
+</section>
+
+<!-- ===== Playbooks ===== -->
+<section class="section" id="playbooks">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Playbooks</div>
+      <h2 class="section-title">Pick the channel you sell on most</h2>
+      <p class="section-sub">Each playbook is a guided, screen-by-screen walkthrough — no guesswork, no missed steps.</p>
     </div>
 
-    <!-- Section Pills -->
-    <div class="section-pills">
-      <div class="section-pill active" data-section="1">
-        <span class="num">01</span>
-        <span>Ecosystem Onboarding</span>
-      </div>
-      <div class="section-pill" data-section="2">
-        <span class="num">02</span>
-        <span>WhatsApp API &amp; CAPI</span>
-      </div>
-      <div class="section-pill" data-section="3">
-        <span class="num">03</span>
-        <span>CTWA Campaign</span>
-      </div>
-    </div>
+    <div class="playbooks">
+      <a href="playbook.html" class="playbook-card">
+        <span class="playbook-status ready">Ready</span>
+        <div class="playbook-icon whatsapp">📱</div>
+        <div class="playbook-name">WhatsApp</div>
+        <div class="playbook-desc">Full Pancake onboarding from sign-in to WhatsApp Business API — including POS, Botcake chatbot, and Botcake AI setup.</div>
+        <div class="playbook-meta">
+          <span class="playbook-meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            46 steps · 7 sections
+          </span>
+          <span class="playbook-meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            ~30 min
+          </span>
+        </div>
+        <div class="playbook-cta">
+          Start the WhatsApp playbook
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </div>
+      </a>
 
-    <!-- Step Card -->
-    <div class="step-card" id="stepCard"></div>
+      <div class="playbook-card disabled">
+        <span class="playbook-status soon">Coming soon</span>
+        <div class="playbook-icon messenger">💬</div>
+        <div class="playbook-name">Messenger</div>
+        <div class="playbook-desc">Connect Facebook Messenger, automate replies with Botcake, and route conversations into Pancake's unified inbox.</div>
+        <div class="playbook-meta">
+          <span class="playbook-meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            In development
+          </span>
+        </div>
+        <div class="playbook-cta">Notify me when ready</div>
+      </div>
 
-    <!-- Navigation -->
-    <div class="nav-buttons">
-      <button class="btn btn-ghost" id="prevBtn" onclick="prevStep()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-        Back
-      </button>
-      <button class="btn btn-primary" id="nextBtn" onclick="nextStep()">
-        Next Step
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-      </button>
-    </div>
-
-    <div class="kbd-hint">
-      Tip: use <span class="kbd">←</span> <span class="kbd">→</span> arrow keys to navigate
+      <div class="playbook-card disabled">
+        <span class="playbook-status soon">Coming soon</span>
+        <div class="playbook-icon instagram">📷</div>
+        <div class="playbook-name">Instagram</div>
+        <div class="playbook-desc">Manage Instagram DMs, story replies, and comments — all from the same Pancake inbox as your other channels.</div>
+        <div class="playbook-meta">
+          <span class="playbook-meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            In development
+          </span>
+        </div>
+        <div class="playbook-cta">Notify me when ready</div>
+      </div>
     </div>
   </div>
+</section>
 
-</div>
+<!-- ===== Ecosystem ===== -->
+<section class="section ecosystem" id="ecosystem">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">The Pancake Ecosystem</div>
+      <h2 class="section-title">Three products, one playbook</h2>
+      <p class="section-sub">Every onboarding flow gets your account live across the products you'll actually use day-to-day.</p>
+    </div>
 
-<script>
-// =============== STATE ===============
-const state = {
-  screen: 'country', // 'country' | 'platform' | 'coming-soon' | 'flow'
-  country: null,
-  countryName: null,
-  platform: null,
-  platformName: null,
-  flowIndex: 0
-};
+    <div class="ecosystem-grid">
+      <div class="product-card">
+        <div class="product-icon">P</div>
+        <div class="product-name">Pancake</div>
+        <div class="product-desc">Omnichannel inbox that unifies Facebook, Instagram, WhatsApp, TikTok, and more into a single conversation view.</div>
+      </div>
+      <div class="product-card">
+        <div class="product-icon pos">$</div>
+        <div class="product-name">Pancake POS</div>
+        <div class="product-desc">Multi-channel sales management — inventory, orders, warehouses, and Conversion API for tracking purchases back to Meta.</div>
+      </div>
+      <div class="product-card">
+        <div class="product-icon botcake">🤖</div>
+        <div class="product-name">Botcake</div>
+        <div class="product-desc">AI-powered chatbot to automate replies, qualify leads, and close orders inside chats — across all your messaging channels.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-// =============== WHATSAPP FLOW STEPS ===============
-const whatsappSteps = [
-  {
-    section: 1,
-    sectionLabel: "Section 01 · Getting Started",
-    title: "Welcome to the CTWA & CAPI Playbook",
-    subtitle: "A guided setup for connecting WhatsApp Business API and Conversion API to your Pancake account.",
-    content: `
-      <p>This interactive playbook walks you through three sections:</p>
-      <ul>
-        <li><strong>Pancake Ecosystem Onboarding</strong> — Set up Pancake, Pancake POS, and Botcake accounts.</li>
-        <li><strong>Connecting WhatsApp API &amp; CAPI</strong> — Link your WhatsApp Business number and configure conversion events.</li>
-        <li><strong>Setting up the CTWA Campaign</strong> — Reference for launching Click-to-WhatsApp ads on Meta.</li>
-      </ul>
-      <div class="callout info">
-        <div class="callout-icon">📋</div>
-        <div><strong>Before you start:</strong> Make sure you have a Facebook account with full access to a verified Business Manager Account, and an accessible business website.</div>
-      </div>
-      <p>Click <strong>Next Step</strong> when you're ready to begin.</p>
-    `
-  },
-  {
-    section: 1,
-    sectionLabel: "Section 01 · Pancake",
-    title: "Sign in to Pancake",
-    subtitle: "Step 1 of 3 — Set up your Pancake account.",
-    content: `
-      <p>Head to <a href="https://pancake.biz" target="_blank">https://pancake.biz</a> and click the <strong>Sign In</strong> button in the top-right corner.</p>
-      <div class="screenshot"><img src="assets/img-002.png" alt="pancake.biz homepage" loading="lazy"></div>
-      <div class="ui-mock">Action: <span class="action-tag">Sign In</span> button on the top right of the homepage.</div>
-      <div class="callout tip">
-        <div class="callout-icon">💡</div>
-        <div>Pancake is the omnichannel messaging platform that unifies all customer conversations across Facebook, Instagram, WhatsApp, and more.</div>
-      </div>
-    `
-  },
-  {
-    section: 1,
-    sectionLabel: "Section 01 · Pancake",
-    title: "Log in with Facebook",
-    subtitle: "Use your Business Manager admin account.",
-    content: `
-      <p>On the login screen, click the <strong>Facebook</strong> button.</p>
-      <p>Use the Facebook account that has <strong>full access to your Business Manager Account</strong> to log in.</p>
-      <div class="screenshot"><img src="assets/img-003.png" alt="Pancake login with Facebook button" loading="lazy"></div>
-      <div class="callout warning">
-        <div class="callout-icon">⚠️</div>
-        <div><strong>Important:</strong> The Facebook account must be an admin of the Business Manager. If you log in with a personal account that lacks BM access, the WhatsApp connection in later steps will fail.</div>
-      </div>
-    `
-  },
-  {
-    section: 1,
-    sectionLabel: "Section 01 · Pancake",
-    title: "Complete the Meta sign-up flow",
-    subtitle: "Grant standard permissions and select your assets.",
-    content: `
-      <p>You will go through a sign-up flow from Meta. During this flow:</p>
-      <ul>
-        <li>Select the correct <strong>Facebook page</strong> (the one you'll later link to the WhatsApp API number).</li>
-        <li>Select the correct <strong>Business Manager Account</strong>.</li>
-      </ul>
-      <div class="callout warning">
-        <div class="callout-icon">🔒</div>
-        <div><strong>Do not change any permissions</strong> in the prompted flow. The permissions Meta requests are standard and required for Pancake to function correctly.</div>
-      </div>
-      <p>Once the flow is complete, you'll be redirected back to the Pancake Dashboard.</p>
-    `
-  },
-  {
-    section: 1,
-    sectionLabel: "Section 01 · Pancake",
-    title: "Activate your pages",
-    subtitle: "Connect Facebook and Instagram to Pancake.",
-    content: `
-      <p>From the Pancake Dashboard, click the <strong>Connect</strong> button to activate your Facebook and Instagram pages.</p>
-      <div class="screenshot"><img src="assets/img-004.png" alt="Pancake dashboard - no pages activated yet" loading="lazy"></div>
-      <div class="ui-mock">Action: <span class="action-tag">+ Connect</span> button on the top right of the dashboard.</div>
-      <div class="callout success">
-        <div class="callout-icon">✅</div>
-        <div>If you see "No pages have been activated yet" — that's normal. Clicking Connect will pull in the assets you authorized in the previous step.</div>
-      </div>
-    `
-  },
-  {
-    section: 1,
-    sectionLabel: "Section 01 · Pancake POS",
-    title: "Sign up for Pancake POS",
-    subtitle: "Step 2 of 3 — Order and sales management.",
-    content: `
-      <p>Head to <a href="https://pos.pancake.biz" target="_blank">https://pos.pancake.biz</a> and click the <strong>Try now</strong> or <strong>Sign Up</strong> button in the top-right corner.</p>
-      <div class="screenshot"><img src="assets/img-005.png" alt="Pancake POS homepage" loading="lazy"></div>
-      <div class="callout tip">
-        <div class="callout-icon">🛒</div>
-        <div>Pancake POS handles multi-channel sales management, inventory, and order tracking — and it's where CAPI (Conversion API) is configured later in this playbook.</div>
-      </div>
-    `
-  },
-  {
-    section: 1,
-    sectionLabel: "Section 01 · Pancake POS",
-    title: "Log in with the same Facebook account",
-    subtitle: "Use the same credentials as Pancake.",
-    content: `
-      <p>You'll be redirected to the login page. Click the <strong>Facebook</strong> button and go through the login flow using the <strong>same account</strong> you used for Pancake.</p>
-      <div class="screenshot-grid two-col">
-        <div class="screenshot"><img src="assets/img-006.png" alt="Login page" loading="lazy"></div>
-        <div class="screenshot"><img src="assets/img-007.png" alt="POS dashboard" loading="lazy"></div>
-      </div>
-      <div class="callout warning">
-        <div class="callout-icon">⚠️</div>
-        <div>Using a different Facebook account here will create a separate POS workspace that can't sync with your Pancake conversations.</div>
-      </div>
-      <p>Once done, you'll be redirected back to the POS dashboard.</p>
-    `
-  },
-  {
-    section: 1,
-    sectionLabel: "Section 01 · Botcake",
-    title: "Sign up for Botcake",
-    subtitle: "Step 3 of 3 — AI chatbot platform.",
-    content: `
-      <p>Head to <a href="https://botcake.io" target="_blank">https://botcake.io</a> and click the <strong>Try now</strong> or <strong>Login</strong> button in the top-right corner.</p>
-      <div class="screenshot"><img src="assets/img-008.png" alt="Botcake.io homepage" loading="lazy"></div>
-      <p>Same drill: click the <strong>Facebook</strong> button and log in with the <strong>same account</strong> used for Pancake.</p>
-      <div class="screenshot"><img src="assets/img-009.png" alt="Login with Facebook" loading="lazy"></div>
-      <div class="callout tip">
-        <div class="callout-icon">🤖</div>
-        <div>Botcake powers AI-driven automation — automating replies, qualifying leads, and closing orders inside chats across Messenger, Instagram, and WhatsApp.</div>
-      </div>
-    `
-  },
-  {
-    section: 1,
-    sectionLabel: "Section 01 · Complete",
-    title: "Ecosystem onboarding complete",
-    subtitle: "You're now set up on all 3 platforms.",
-    content: `
-      <div class="callout success">
-        <div class="callout-icon">🎉</div>
-        <div><strong>Congratulations!</strong> You've onboarded to all 3 Pancake ecosystem platforms: Pancake, Pancake POS, and Botcake.</div>
-      </div>
-      <p>Next, we'll set them up by connecting WhatsApp API and configuring Conversion API (CAPI) to send purchase signals back to Meta.</p>
-    `
-  },
+<!-- ===== What's covered ===== -->
+<section class="section covered" id="covered">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">What's inside the playbook</div>
+      <h2 class="section-title">46 steps. Seven sections. Zero guesswork.</h2>
+      <p class="section-sub">Every screen has a screenshot. Every action has context. Click "Next Step" when you've completed each step.</p>
+    </div>
 
-  // ============ SECTION 2: WHATSAPP API & CAPI ============
-  {
-    section: 2,
-    sectionLabel: "Section 02 · WhatsApp API",
-    title: "Open the connection wizard",
-    subtitle: "Begin the WhatsApp Business API setup.",
-    content: `
-      <p>From the Pancake Dashboard, click the <strong>Connect</strong> button (top right).</p>
-      <div class="screenshot"><img src="assets/img-010.png" alt="Pancake dashboard with Connect button highlighted" loading="lazy"></div>
-      <div class="ui-mock">Action: <span class="action-tag">+ Connect</span> on the dashboard header.</div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · WhatsApp API",
-    title: "Choose WhatsApp Business",
-    subtitle: "Select the WhatsApp connection option.",
-    content: `
-      <p>In the "Add a connection" panel, select <strong>WhatsApp</strong> from the left menu, then click <strong>Connect WhatsApp Business</strong>.</p>
-      <div class="screenshot"><img src="assets/img-011.png" alt="Add a connection - WhatsApp Business panel" loading="lazy"></div>
-      <div class="callout info">
-        <div class="callout-icon">ℹ️</div>
-        <div>The WhatsApp QR code connection method is no longer available. The official WhatsApp Business API is the only supported integration.</div>
+    <div class="covered-grid">
+      <div class="covered-card">
+        <div class="covered-num">Section 01 · Ecosystem Signup</div>
+        <div class="covered-title">Sign up across Pancake, POS &amp; Botcake</div>
+        <ul class="covered-list">
+          <li>Sign in to pancake.biz with Facebook</li>
+          <li>Complete the Meta sign-up flow</li>
+          <li>Activate Facebook &amp; Instagram pages</li>
+          <li>Sign up for Pancake POS &amp; Botcake</li>
+        </ul>
       </div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · WhatsApp API",
-    title: "Confirm the requirements",
-    subtitle: "Tick the checkbox and continue.",
-    content: `
-      <p>Before connecting, Meta will show a checklist of requirements. Make sure your account meets all of them:</p>
-      <ul>
-        <li><strong>Business Manager</strong> — must be verified.</li>
-        <li><strong>Business website</strong> — must be valid and active. (A link to your Facebook Page or Instagram works too.)</li>
-        <li><strong>Connection phone number</strong> — a new number, or one you can use in dual mode with the WhatsApp Business mobile app.</li>
-      </ul>
-      <p>Tick the box <em>"I've read and understood the requirements above"</em>, then click <strong>Continue</strong>.</p>
-      <div class="screenshot"><img src="assets/img-012.png" alt="Before You Connect requirements panel" loading="lazy"></div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · WhatsApp API",
-    title: "Open Meta's Embedded Signup",
-    subtitle: "Authenticate with Facebook.",
-    content: `
-      <p>A pop-up window will open and transfer you to Meta's <strong>Embedded Signup</strong> flow.</p>
-      <p>Choose <strong>"Continue as [your name]"</strong> to log in with the Facebook account that has full Business Manager access — the same one used for Pancake.</p>
-      <div class="screenshot"><img src="assets/img-013.png" alt="Facebook Login for Business - Continue as" loading="lazy"></div>
-      <div class="callout warning">
-        <div class="callout-icon">🚫</div>
-        <div>If you see "Log into another account", make sure you're switching to the correct admin account, not creating a new personal profile.</div>
+
+      <div class="covered-card">
+        <div class="covered-num">Section 02 · Livechat</div>
+        <div class="covered-title">Unified inbox setup</div>
+        <ul class="covered-list">
+          <li>Sync messages &amp; comments from Meta Business Suite</li>
+          <li>Set up tags &amp; saved replies (shortcuts like /pr)</li>
+          <li>Add staff to your team inbox</li>
+          <li>Install the Pancake Chrome Extension</li>
+          <li>Create your first order inside a chat</li>
+        </ul>
       </div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · WhatsApp API",
-    title: "Acknowledge the terms",
-    subtitle: "Review what you'll share with Pancake.",
-    content: `
-      <p>Meta will show a summary screen titled <strong>"Seamlessly connect your account to Pancake Singapore"</strong>.</p>
-      <p>Review the capabilities (Cloud API messaging, large message volume handling, reduced SMS/voice costs), then click <strong>Continue</strong>.</p>
-      <div class="screenshot"><img src="assets/img-014.png" alt="Seamlessly connect your account to Pancake" loading="lazy"></div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · WhatsApp API",
-    title: "Choose your Business Portfolio",
-    subtitle: "Create a new WhatsApp Business Account.",
-    content: `
-      <p>In the asset selection screen:</p>
-      <ul>
-        <li>Pick your <strong>Business portfolio</strong> from the dropdown.</li>
-        <li>Under <strong>WhatsApp Business account</strong>, select <strong>"Create a WhatsApp Business account"</strong>.</li>
-      </ul>
-      <p>Click <strong>Next</strong>.</p>
-      <div class="screenshot"><img src="assets/img-015.png" alt="Select business assets to share - Business portfolio" loading="lazy"></div>
-      <div class="callout tip">
-        <div class="callout-icon">💡</div>
-        <div>If you already have an existing WhatsApp Business Account, you can also select "Connect a WhatsApp Business App" instead.</div>
+
+      <div class="covered-card">
+        <div class="covered-num">Section 03 · POS Details</div>
+        <div class="covered-title">Pancake POS for fulfillment</div>
+        <ul class="covered-list">
+          <li>Activate shops in Pancake POS</li>
+          <li>Batch-update orders</li>
+          <li>Set currency &amp; shop information</li>
+          <li>Add your first product (basic + advanced info)</li>
+        </ul>
       </div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · WhatsApp API",
-    title: "Fill in your business information",
-    subtitle: "Identify the account in Business Manager.",
-    content: `
-      <p>Provide the following details:</p>
-      <ul>
-        <li><strong>WhatsApp Business Account Name</strong> — Internal label that appears in Business Manager. <em>Not visible to customers.</em></li>
-        <li><strong>Category</strong> — Choose the product or service category that best matches your business.</li>
-        <li><strong>Website</strong> — Your accessible business website. Use a domain that includes your brand name when possible.</li>
-      </ul>
-      <div class="callout warning">
-        <div class="callout-icon">🌐</div>
-        <div>The website must be reachable. Meta verifies the URL during review — broken or parked domains can cause delays.</div>
+
+      <div class="covered-card">
+        <div class="covered-num">Section 04 · Botcake</div>
+        <div class="covered-title">AI chatbot for your channels</div>
+        <ul class="covered-list">
+          <li>Sign up for Botcake</li>
+          <li>Connect Messenger / Instagram / Zalo</li>
+          <li>Build message flows</li>
+          <li>Set up automation (Welcome Message)</li>
+        </ul>
       </div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · WhatsApp API",
-    title: "Add and verify your phone number",
-    subtitle: "Register the WhatsApp number via OTP.",
-    content: `
-      <p>Add the WhatsApp phone number that will be linked to this account, then verify it via OTP.</p>
-      <ul>
-        <li>Choose <strong>Add a new number</strong>.</li>
-        <li>Select your country code and enter the phone number.</li>
-        <li>Choose verification method: <strong>Text message</strong> or <strong>Phone call</strong> (use Phone call for landlines).</li>
-        <li>Enter the OTP you receive to verify.</li>
-      </ul>
-      <div class="screenshot"><img src="assets/img-016.png" alt="Add your WhatsApp phone number screen" loading="lazy"></div>
-      <div class="callout info">
-        <div class="callout-icon">📱</div>
-        <div>The number must not already be in active use on a personal WhatsApp account. Delete it from regular WhatsApp first if needed.</div>
+
+      <div class="covered-card">
+        <div class="covered-num">Section 05 · Botcake AI</div>
+        <div class="covered-title">Turn the bot smart</div>
+        <ul class="covered-list">
+          <li>Create an AI Agent with prompt + instructions</li>
+          <li>Top up your Pancake Wallet (min $10)</li>
+          <li>Attach Wallet to Botcake</li>
+        </ul>
       </div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · WhatsApp API",
-    title: "Confirm the connection",
-    subtitle: "Review what Pancake can access.",
-    content: `
-      <p>Meta will show a final review screen: <strong>"Review what you'll share with PancakeWA"</strong>.</p>
-      <p>Pancake will be able to:</p>
-      <ul>
-        <li>Manage your WhatsApp accounts.</li>
-        <li>Manage and access conversations in WhatsApp.</li>
-        <li>Log events on your WhatsApp Business account's behalf and send those events to Meta (this enables CAPI).</li>
-      </ul>
-      <p>Click <strong>Confirm</strong>.</p>
-      <div class="screenshot"><img src="assets/img-017.png" alt="Review what you will share with PancakeWA" loading="lazy"></div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · WhatsApp API",
-    title: "Wait for processing — and finish",
-    subtitle: "Don't close the loading window.",
-    content: `
-      <p>Wait for the connecting process to complete, then click <strong>Finish</strong>.</p>
-      <div class="screenshot"><img src="assets/img-018.png" alt="Your account is connected to Pancake" loading="lazy"></div>
-      <div class="callout warning">
-        <div class="callout-icon">⏱️</div>
-        <div><strong>Do not close the loading pop-up</strong> — the system is still processing the changes. Be patient. If anything looks stuck, refresh the page and retry.</div>
+
+      <div class="covered-card">
+        <div class="covered-num">Section 06 · WhatsApp API &amp; CAPI</div>
+        <div class="covered-title">Connect WABA + send purchase events</div>
+        <ul class="covered-list">
+          <li>Meta Embedded Signup flow</li>
+          <li>Create new WhatsApp Business Account (or connect existing)</li>
+          <li>Fill business info — name, category, website</li>
+          <li>Add phone number &amp; verify via OTP</li>
+          <li>Configure Conversion API (CAPI) for purchase signals</li>
+        </ul>
       </div>
-      <p>You'll be redirected to the conversation management screen within 1–2 minutes. After loading completes, your WhatsApp phone number will appear on the Pancake Dashboard.</p>
-      <div class="callout success">
-        <div class="callout-icon">✅</div>
-        <div>WhatsApp Business API is now connected. Next: configure CAPI to send purchase events back to Meta.</div>
+
+      <div class="covered-card">
+        <div class="covered-num">Section 07 · CTWA Campaign</div>
+        <div class="covered-title">Launch your first Click-to-WhatsApp ad</div>
+        <ul class="covered-list">
+          <li>Choose your Meta campaign objective</li>
+          <li>Streamlined vs. Manual setup</li>
+          <li>Configure the Ad Set with WhatsApp messaging</li>
+          <li>Route ad messages into Pancake</li>
+        </ul>
       </div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · CAPI",
-    title: "Open your WhatsApp inbox",
-    subtitle: "Start the CAPI configuration.",
-    content: `
-      <p>From the Pancake Dashboard, click on the <strong>WhatsApp phone number</strong> tile. This opens the conversation view.</p>
-      <div class="screenshot"><img src="assets/img-019.png" alt="Pancake dashboard with WhatsApp tiles" loading="lazy"></div>
-      <div class="callout tip">
-        <div class="callout-icon">💬</div>
-        <div>If you don't see the WhatsApp tile yet, refresh the dashboard. It can take 1–2 minutes after the API connection finishes.</div>
-      </div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · CAPI",
-    title: "Switch to the Orders view",
-    subtitle: "Move into Pancake POS.",
-    content: `
-      <p>In the conversation view, click <strong>Orders</strong> in the top navigation. This takes you to the Pancake POS view, where CAPI is configured.</p>
-      <div class="screenshot"><img src="assets/img-020.png" alt="Conversation view with Orders tab highlighted" loading="lazy"></div>
-      <div class="ui-mock">Top nav: Conversations · <span class="action-tag">Orders</span> · Analytics · Settings</div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · CAPI",
-    title: "Go to Conversion event settings",
-    subtitle: "Open the configuration page.",
-    content: `
-      <p>In the POS view, click the <strong>Settings</strong> (gear) icon in the left sidebar, then select <strong>Conversion event</strong> under the General → Shop section.</p>
-      <div class="screenshot"><img src="assets/img-021.png" alt="Configuration page with Conversion event highlighted" loading="lazy"></div>
-      <div class="ui-mock">Path: Settings → General → Shop → <span class="action-tag">Conversion event</span></div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · CAPI",
-    title: "Enable Facebook event sync",
-    subtitle: "Turn on the toggle and add a custom event.",
-    content: `
-      <p>On the Conversion event page:</p>
-      <ul>
-        <li>Toggle on <strong>Sync events to Facebook</strong>.</li>
-        <li>Click <strong>+ Add custom events</strong> on the right.</li>
-      </ul>
-      <div class="screenshot"><img src="assets/img-022.png" alt="Sync events to Facebook toggle and Add custom events button" loading="lazy"></div>
-      <div class="callout info">
-        <div class="callout-icon">📊</div>
-        <div>By default, Pancake syncs <code>Initiated Checkout</code> when a new POS order is created, and <code>Purchase</code> when a Confirmed order is created. You can add custom rules on top of this.</div>
-      </div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · CAPI",
-    title: "Map order status to a Meta event",
-    subtitle: "Tell Pancake when to send the Purchase signal.",
-    content: `
-      <p>In the <strong>Add custom events</strong> dialog:</p>
-      <ul>
-        <li><strong>When order status is</strong> — choose the order status that triggers the event (e.g., <code>Confirmed</code>).</li>
-        <li><strong>Sync event</strong> — choose the Meta event to send (e.g., <code>Purchase (Meta purchases)</code>).</li>
-        <li><strong>Default value</strong> — optional fallback value, in your local currency.</li>
-      </ul>
-      <div class="screenshot"><img src="assets/img-023.png" alt="Add custom events dialog" loading="lazy"></div>
-      <div class="callout tip">
-        <div class="callout-icon">💡</div>
-        <div>The example in the playbook maps <strong>"Confirmed"</strong> order status → <strong>"Purchase"</strong> event. Adjust to match your fulfillment workflow.</div>
-      </div>
-    `
-  },
-  {
-    section: 2,
-    sectionLabel: "Section 02 · CAPI",
-    title: "Save your configuration",
-    subtitle: "Click OK to finish CAPI setup.",
-    content: `
-      <p>Click <strong>OK</strong> to save the custom event mapping. Your configuration is now active.</p>
-      <div class="screenshot"><img src="assets/img-024.png" alt="Configuration with Purchase Confirmed event" loading="lazy"></div>
-      <div class="screenshot"><img src="assets/img-025.png" alt="List of dataset after signal transmission" loading="lazy"></div>
-      <div class="callout success">
-        <div class="callout-icon">✅</div>
-        <div><strong>CAPI setup complete!</strong> Once you create the first order from a CTWA client, Pancake will automatically send the signal to Meta. The dataset (with platform, page, dataset ID, and timestamp) will appear under <em>List of dataset</em> after the first signal is successfully transmitted.</div>
-      </div>
-    `
-  },
+    </div>
+  </div>
+</section>
 
-  // ============ SECTION 3: CTWA CAMPAIGN ============
-  {
-    section: 3,
-    sectionLabel: "Section 03 · Campaign Setup",
-    title: "Choose your campaign objective",
-    subtitle: "Reference: Click-to-WhatsApp ad setup in Meta Ads Manager.",
-    content: `
-      <p>For Click-to-WhatsApp advertisement, you can use any of these campaign objectives:</p>
-      <ul>
-        <li><strong>Engagement</strong> — Get more messages, video views, post engagement, or page likes.</li>
-        <li><strong>Leads</strong> — Generate leads through WhatsApp conversations.</li>
-        <li><strong>Sales</strong> — Drive purchases via messaging conversations.</li>
-      </ul>
-      <div class="screenshot"><img src="assets/img-026.png" alt="Choose a campaign objective in Meta Ads Manager" loading="lazy"></div>
-      <div class="callout tip">
-        <div class="callout-icon">🎯</div>
-        <div>For the example in this playbook, we use <strong>Engagement</strong>. The setup steps are similar across the three objectives.</div>
-      </div>
-    `
-  },
-  {
-    section: 3,
-    sectionLabel: "Section 03 · Campaign Setup",
-    title: "Pick a setup type",
-    subtitle: "Streamlined or Manual — your choice.",
-    content: `
-      <p>Meta will offer two setup paths:</p>
-      <ul>
-        <li><strong>Streamlined</strong> — Recommended settings with Advantage+ audience and placements pre-applied.</li>
-        <li><strong>Manual setup</strong> — Build the campaign from scratch using the standard setup.</li>
-      </ul>
-      <p>In this playbook, we use <strong>Manual setup</strong> for full control. Select <em>"Manual engagement campaign"</em> and click <strong>Continue</strong>.</p>
-      <div class="screenshot"><img src="assets/img-027.png" alt="Choose a campaign setup - Manual setup highlighted" loading="lazy"></div>
-    `
-  },
-  {
-    section: 3,
-    sectionLabel: "Section 03 · Campaign Setup",
-    title: "Configure the Ad Set",
-    subtitle: "Link the page and pick WhatsApp as the messaging app.",
-    content: `
-      <p>In the <strong>Ad Set</strong>, configure these key fields:</p>
-      <ul>
-        <li><strong>Facebook Page</strong> — Choose the page that's associated with your WhatsApp number.</li>
-        <li><strong>Messaging apps</strong> — Tick <strong>WhatsApp</strong>, then select your verified WhatsApp number from the dropdown.</li>
-      </ul>
-      <div class="callout info">
-        <div class="callout-icon">📌</div>
-        <div>You can connect up to <strong>50 WhatsApp numbers per Facebook Page</strong>. Manage these in Business Manager → Page settings.</div>
-      </div>
-      <div class="screenshot"><img src="assets/img-028.png" alt="Engagement Ad Set with WhatsApp messaging app selected" loading="lazy"></div>
-      <p>Then set up your audience, budget, schedule, and creative as usual. Once your ads start running, messages from CTWA clicks will land directly in your Pancake WhatsApp inbox.</p>
-    `
-  },
-  {
-    section: 3,
-    sectionLabel: "All Done",
-    title: "🎉 You're all set!",
-    subtitle: "CTWA & CAPI are fully configured.",
-    isCompletion: true,
-    content: `
-      <div class="completion">
-        <div class="completion-icon">✓</div>
-        <h2 style="font-size: 26px; margin-bottom: 8px;">Setup complete</h2>
-        <p style="color: var(--text-muted); max-width: 480px; margin: 0 auto 12px;">Your Pancake ecosystem is connected, WhatsApp Business API is live, and CAPI is sending purchase signals back to Meta. Your CTWA campaigns are ready to launch.</p>
-      </div>
-      <h3 style="font-size: 16px; margin: 24px 0 12px;">Additional resources</h3>
-      <div class="resources-grid">
-        <a href="https://docs.pancake.biz/pos/st-f2/st-p1?lang=en" target="_blank" class="resource-card">
-          <div class="label">Pancake POS</div>
-          <div class="title">Warehouse &amp; Products setup →</div>
-        </a>
-        <a href="https://docs.pancake.biz/pos/st-f2/st-p3/st-s1/st-ss5?lang=en" target="_blank" class="resource-card">
-          <div class="label">Integration</div>
-          <div class="title">Connecting Shopify →</div>
-        </a>
-        <a href="https://docs.pancake.biz/pos/st-f2/st-p3/st-s4?lang=en" target="_blank" class="resource-card">
-          <div class="label">Integration</div>
-          <div class="title">Sync Shopify products to POS →</div>
-        </a>
-        <a href="https://docs.pancake.biz/botcake/st-f4/st-p5" target="_blank" class="resource-card">
-          <div class="label">Automation</div>
-          <div class="title">Botcake AI setup →</div>
-        </a>
-      </div>
-      <div class="callout info" style="margin-top: 24px;">
-        <div class="callout-icon">📨</div>
-        <div>Need help? Contact Pancake or Meta directly for further information.</div>
-      </div>
-    `
-  }
-];
+<!-- ===== Final CTA ===== -->
+<section class="final-cta">
+  <div class="final-cta-inner">
+    <h2>Ready to onboard your business?</h2>
+    <p>Pick your country, choose your channel, and follow along. The whole flow takes about 15 minutes.</p>
+    <a href="playbook.html" class="btn btn-white btn-lg">
+      Start the playbook
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </a>
+  </div>
+</section>
 
-// =============== SCREEN MANAGEMENT ===============
-function showScreen(name) {
-  state.screen = name;
-  ['country', 'platform', 'coming-soon', 'flow'].forEach(s => {
-    document.getElementById('screen-' + s).classList.toggle('hidden', s !== name);
-  });
-  updateHeader();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function updateHeader() {
-  const right = document.getElementById('headerRight');
-  if (state.screen === 'flow') {
-    right.innerHTML = `
-      <div class="step-counter">
-        ${state.country ? `<span class="chip">${flagFor(state.country)} ${state.countryName} <span class="x" onclick="goToCountry()" title="Change country">×</span></span>` : ''}
-        Step <strong id="currentStep">${state.flowIndex + 1}</strong> of <span>${whatsappSteps.length}</span>
-      </div>
-    `;
-  } else if (state.screen === 'platform') {
-    right.innerHTML = state.country
-      ? `<div class="selection-chips"><span class="chip">${flagFor(state.country)} ${state.countryName} <span class="x" onclick="goToCountry()" title="Change country">×</span></span></div>`
-      : '';
-  } else if (state.screen === 'coming-soon') {
-    right.innerHTML = `<div class="selection-chips">
-      ${state.country ? `<span class="chip">${flagFor(state.country)} ${state.countryName}</span>` : ''}
-      ${state.platform ? `<span class="chip">${state.platformName}</span>` : ''}
-    </div>`;
-  } else {
-    right.innerHTML = '';
-  }
-}
-
-function flagFor(code) {
-  const map = { VN: '🇻🇳', ID: '🇮🇩', TH: '🇹🇭', PH: '🇵🇭', LATAM: '🇨🇴' };
-  return map[code] || '';
-}
-
-// =============== NAVIGATION ===============
-function goToCountry() {
-  state.country = null;
-  state.platform = null;
-  state.flowIndex = 0;
-  showScreen('country');
-}
-
-function goToPlatform() {
-  state.platform = null;
-  state.flowIndex = 0;
-  showScreen('platform');
-}
-
-function startWhatsAppFlow() {
-  state.platform = 'whatsapp';
-  state.platformName = 'WhatsApp';
-  state.flowIndex = 0;
-  showScreen('flow');
-  renderStep();
-}
-
-function showComingSoon(platform, name) {
-  state.platform = platform;
-  state.platformName = name;
-  showScreen('coming-soon');
-  const icon = document.getElementById('comingSoonIcon');
-  icon.className = 'coming-soon-icon ' + platform;
-  icon.textContent = platform === 'messenger' ? '💬' : '📷';
-  document.getElementById('comingSoonTitle').textContent = `${name} flow — coming soon`;
-  document.getElementById('comingSoonSubtitle').textContent = `We're putting the finishing touches on the ${name} onboarding playbook. Check back shortly.`;
-}
-
-// =============== COUNTRY/PLATFORM CLICK HANDLERS ===============
-document.querySelectorAll('.country-card').forEach(card => {
-  card.addEventListener('click', () => {
-    state.country = card.dataset.country;
-    state.countryName = card.dataset.name;
-    showScreen('platform');
-  });
-});
-
-document.querySelectorAll('.platform-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const platform = card.dataset.platform;
-    const name = card.dataset.name;
-    if (platform === 'whatsapp') {
-      state.platform = platform;
-      state.platformName = name;
-      state.flowIndex = 0;
-      showScreen('flow');
-      renderStep();
-    } else {
-      showComingSoon(platform, name);
-    }
-  });
-});
-
-// =============== FLOW RENDER ===============
-function renderStep() {
-  const step = whatsappSteps[state.flowIndex];
-  const card = document.getElementById('stepCard');
-
-  card.innerHTML = `
-    <div class="step-section-label">${step.sectionLabel}</div>
-    <h2 class="step-title">${step.title}</h2>
-    ${step.subtitle ? `<p class="step-subtitle">${step.subtitle}</p>` : ''}
-    <div class="step-content">${step.content}</div>
-  `;
-
-  updateHeader();
-
-  const percent = Math.round(((state.flowIndex + 1) / whatsappSteps.length) * 100);
-  document.getElementById('progressFill').style.width = percent + '%';
-  document.getElementById('progressPercent').textContent = percent + '% complete';
-
-  const sectionNames = {
-    1: 'Section 1 · Pancake Ecosystem Onboarding',
-    2: 'Section 2 · Connecting WhatsApp API & CAPI',
-    3: 'Section 3 · Setting up the CTWA Campaign'
-  };
-  document.getElementById('progressSection').textContent = sectionNames[step.section];
-
-  document.querySelectorAll('.section-pill').forEach(pill => {
-    const s = parseInt(pill.dataset.section);
-    pill.classList.remove('active', 'completed');
-    if (s === step.section) pill.classList.add('active');
-    else if (s < step.section) pill.classList.add('completed');
-  });
-
-  document.getElementById('prevBtn').disabled = false; // Back always works (goes to platform on first step)
-  const nextBtn = document.getElementById('nextBtn');
-  if (state.flowIndex === whatsappSteps.length - 1) {
-    nextBtn.innerHTML = `Restart <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 4v5h5"/></svg>`;
-  } else {
-    nextBtn.innerHTML = `Next Step <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
-  }
-
-  document.getElementById('stepCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-function nextStep() {
-  if (state.flowIndex < whatsappSteps.length - 1) {
-    state.flowIndex++;
-    renderStep();
-  } else {
-    state.flowIndex = 0;
-    renderStep();
-  }
-}
-
-function prevStep() {
-  if (state.flowIndex > 0) {
-    state.flowIndex--;
-    renderStep();
-  } else {
-    // On first step, "Back" returns to platform picker
-    showScreen('platform');
-  }
-}
-
-// Section pill click navigation
-document.querySelectorAll('.section-pill').forEach(pill => {
-  pill.addEventListener('click', () => {
-    const s = parseInt(pill.dataset.section);
-    const firstStepOfSection = whatsappSteps.findIndex(step => step.section === s);
-    if (firstStepOfSection !== -1) {
-      state.flowIndex = firstStepOfSection;
-      renderStep();
-    }
-  });
-});
-
-// Keyboard navigation (only in flow screen)
-document.addEventListener('keydown', (e) => {
-  if (state.screen !== 'flow') return;
-  if (e.key === 'ArrowRight') nextStep();
-  if (e.key === 'ArrowLeft') prevStep();
-});
-
-// Initial
-showScreen('country');
-</script>
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="brand">
+        <div class="brand-logo">P</div>
+        <div class="brand-name">Pancake Onboarding Hub</div>
+      </a>
+      <p>Interactive playbooks to help your business get up and running on Pancake. Built for Country Managers, partners, and new merchants alike.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Playbooks</h4>
+      <a href="playbook.html">WhatsApp</a>
+      <a href="#">Messenger (soon)</a>
+      <a href="#">Instagram (soon)</a>
+    </div>
+    <div class="footer-col">
+      <h4>Pancake products</h4>
+      <a href="https://pancake.biz" target="_blank">Pancake</a>
+      <a href="https://pos.pancake.biz" target="_blank">Pancake POS</a>
+      <a href="https://botcake.io" target="_blank">Botcake</a>
+      <a href="https://docs.pancake.biz/?lang=en" target="_blank">Documentation</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    Unofficial onboarding hub · Not for redistribution without Pancake's permission
+  </div>
+</footer>
 
 </body>
 </html>
