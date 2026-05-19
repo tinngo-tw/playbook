@@ -209,6 +209,30 @@
     background: var(--surface);
   }
 
+  .platform-card.selected {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .platform-card.selected::after {
+    content: "✓";
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 26px;
+    height: 26px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.35);
+  }
+
   .platform-icon {
     width: 64px;
     height: 64px;
@@ -615,6 +639,78 @@
   .rec-section.recommended .rec-section-badge { background: #ede9fe; color: var(--accent); }
   .rec-section.optional .rec-section-badge { background: #f1f5f9; color: var(--text-muted); }
 
+  /* Drag-and-drop reorder visuals */
+  .rec-section.draggable { cursor: grab; }
+  .rec-section.draggable:active { cursor: grabbing; }
+  .rec-section.dragging { opacity: 0.4; }
+  .rec-section.drop-above { border-top: 3px solid var(--primary); padding-top: 13px; }
+  .rec-section.drop-below { border-bottom: 3px solid var(--primary); padding-bottom: 13px; }
+
+  .rec-section-handle {
+    color: var(--text-muted);
+    font-size: 18px;
+    user-select: none;
+    padding: 0 4px;
+    flex-shrink: 0;
+    cursor: grab;
+    opacity: 0.6;
+    transition: opacity 0.15s;
+  }
+  .rec-section:hover .rec-section-handle { opacity: 1; }
+
+  .rec-section-arrows {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-left: 4px;
+    flex-shrink: 0;
+  }
+  .rec-section-arrow {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    width: 24px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 9px;
+    color: var(--text-muted);
+    padding: 0;
+    font-family: inherit;
+  }
+  .rec-section-arrow:hover:not(:disabled) {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+  .rec-section-arrow:disabled { opacity: 0.2; cursor: not-allowed; }
+
+  .rec-reorder-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .rec-reorder-hint .reset-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .rec-reorder-hint .reset-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
   .rec-addons {
     display: flex;
     flex-wrap: wrap;
@@ -911,9 +1007,9 @@
 
   <!-- SCREEN: Country picker -->
   <div id="screen-country" class="picker-card">
-    <span class="picker-eyebrow">Step 1 of 2</span>
-    <h2 class="picker-title">Where are you from?</h2>
-    <p class="picker-subtitle">Pick your region so we can tailor the onboarding flow.</p>
+    <span class="picker-eyebrow" data-i18n="country_eyebrow">Step 1 of 4</span>
+    <h2 class="picker-title" data-i18n="country_title">Where are you from?</h2>
+    <p class="picker-subtitle" data-i18n="country_subtitle">Pick your region — we'll tailor the playbook to your market and language.</p>
     <div class="country-grid">
       <button class="country-card" data-country="VN" data-name="Vietnam">
         <span class="country-flag">🇻🇳</span>
@@ -948,35 +1044,101 @@
     </div>
   </div>
 
-  <!-- SCREEN: Platform picker -->
+  <!-- SCREEN: Platform picker (multi-select) -->
   <div id="screen-platform" class="picker-card hidden">
-    <span class="picker-eyebrow">Step 2 of 2</span>
-    <h2 class="picker-title">Which platform do you use most with clients?</h2>
-    <p class="picker-subtitle">Choose the messaging channel that drives most of your customer conversations.</p>
+    <span class="picker-eyebrow" data-i18n="platform_eyebrow">Step 2 of 4</span>
+    <h2 class="picker-title" data-i18n="platform_title">Which platforms do you sell on?</h2>
+    <p class="picker-subtitle" data-i18n="platform_subtitle">Multi-select. We'll add the right modules for each channel you pick.</p>
     <div class="platform-grid">
-      <button class="platform-card" data-platform="messenger" data-name="Messenger">
+      <button class="platform-card" data-platform="facebook" data-name="Facebook / Messenger">
         <div class="platform-icon messenger">💬</div>
-        <div class="platform-name">Messenger</div>
-        <div class="platform-desc">Facebook Messenger conversations</div>
-        <span class="platform-badge">Coming soon</span>
+        <div class="platform-name">Facebook</div>
+        <div class="platform-desc" data-i18n="platform_facebook_desc">Page messages &amp; comments</div>
       </button>
       <button class="platform-card" data-platform="instagram" data-name="Instagram">
         <div class="platform-icon instagram">📷</div>
         <div class="platform-name">Instagram</div>
-        <div class="platform-desc">Instagram DMs and story replies</div>
-        <span class="platform-badge">Coming soon</span>
+        <div class="platform-desc" data-i18n="platform_instagram_desc">DMs &amp; story replies</div>
       </button>
       <button class="platform-card" data-platform="whatsapp" data-name="WhatsApp">
         <div class="platform-icon whatsapp">📱</div>
         <div class="platform-name">WhatsApp</div>
-        <div class="platform-desc">WhatsApp Business API &amp; CAPI</div>
-        <span class="platform-badge ready">Ready</span>
+        <div class="platform-desc" data-i18n="platform_whatsapp_desc">WhatsApp Business API</div>
+      </button>
+      <button class="platform-card" data-platform="tiktok" data-name="TikTok">
+        <div class="platform-icon" style="background: linear-gradient(135deg, #000 0%, #25F4EE 50%, #FE2C55 100%);">🎵</div>
+        <div class="platform-name">TikTok</div>
+        <div class="platform-desc" data-i18n="platform_tiktok_desc">Live shopping &amp; DMs</div>
+      </button>
+      <button class="platform-card" data-platform="zalo" data-name="Zalo">
+        <div class="platform-icon" style="background: linear-gradient(135deg, #0068FF, #00A2FF);">Z</div>
+        <div class="platform-name">Zalo</div>
+        <div class="platform-desc" data-i18n="platform_zalo_desc">Zalo Official Account</div>
+      </button>
+      <button class="platform-card" data-platform="line" data-name="Line">
+        <div class="platform-icon" style="background: linear-gradient(135deg, #00B900, #00C300);">💚</div>
+        <div class="platform-name">Line</div>
+        <div class="platform-desc" data-i18n="platform_line_desc">Line Official Account</div>
+      </button>
+    </div>
+    <div style="margin-top: 28px; display: flex; gap: 12px; justify-content: space-between; flex-wrap: wrap;">
+      <button class="btn btn-ghost" onclick="goToCountry()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        <span data-i18n="back">Back</span>
+      </button>
+      <button class="btn btn-primary" id="platformContinueBtn" disabled onclick="goToBusiness()">
+        <span data-i18n="continue">Continue</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Business type picker -->
+  <div id="screen-business" class="picker-card hidden">
+    <span class="picker-eyebrow" data-i18n="business_eyebrow">Step 3 of 4</span>
+    <h2 class="picker-title" data-i18n="business_title">Are you selling products or services?</h2>
+    <p class="picker-subtitle" data-i18n="business_subtitle">This decides whether we add Pancake POS or Pancake CRM to your setup.</p>
+    <div class="platform-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+      <button class="platform-card" data-business="product">
+        <div class="platform-icon" style="background: linear-gradient(135deg, #f59e0b, #ea580c);">🛍️</div>
+        <div class="platform-name" data-i18n="business_product">Products &amp; Orders</div>
+        <div class="platform-desc" data-i18n="business_product_desc">Physical goods, inventory, orders, fulfillment — we'll add <strong>Pancake POS</strong></div>
+      </button>
+      <button class="platform-card" data-business="service">
+        <div class="platform-icon" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">📅</div>
+        <div class="platform-name" data-i18n="business_service">Services &amp; Booking</div>
+        <div class="platform-desc" data-i18n="business_service_desc">Consulting, bookings, professional services — we'll add <strong>Pancake CRM</strong></div>
       </button>
     </div>
     <div style="margin-top: 28px;">
-      <button class="btn btn-ghost" onclick="goToCountry()">
+      <button class="btn btn-ghost" onclick="showScreen('platform')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-        Back
+        <span data-i18n="back">Back</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Ads question -->
+  <div id="screen-ads" class="picker-card hidden">
+    <span class="picker-eyebrow" data-i18n="ads_eyebrow">Step 4 of 4</span>
+    <h2 class="picker-title" data-i18n="ads_title">Are you running Meta ads?</h2>
+    <p class="picker-subtitle" data-i18n="ads_subtitle">If yes, we'll add CAPI, CTWA (Click-to-WhatsApp), and CTD (Click-to-Direct) modules.</p>
+    <div class="platform-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+      <button class="platform-card" data-ads="yes">
+        <div class="platform-icon" style="background: linear-gradient(135deg, #10b981, #059669);">✓</div>
+        <div class="platform-name" data-i18n="ads_yes">Yes</div>
+        <div class="platform-desc" data-i18n="ads_yes_desc">I run Meta ads (or plan to)</div>
+      </button>
+      <button class="platform-card" data-ads="no">
+        <div class="platform-icon" style="background: linear-gradient(135deg, #64748b, #475569);">—</div>
+        <div class="platform-name" data-i18n="ads_no">Not yet</div>
+        <div class="platform-desc" data-i18n="ads_no_desc">No ads for now (you can add later)</div>
+      </button>
+    </div>
+    <div style="margin-top: 28px;">
+      <button class="btn btn-ghost" onclick="showScreen('business')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        <span data-i18n="back">Back</span>
       </button>
     </div>
   </div>
@@ -1041,6 +1203,8 @@
       </div>
 
       <div id="recAddons" style="margin-bottom: 24px;"></div>
+
+      <div class="rec-reorder-hint" id="recReorderHint"></div>
 
       <div class="rec-section-list" id="recSectionList"></div>
 
@@ -1169,7 +1333,15 @@
     <div class="section-pills">
       <div class="section-pill active" data-section="1">
         <span class="num">01</span>
-        <span>Ecosystem Signup</span>
+        <span>Pancake Signup</span>
+      </div>
+      <div class="section-pill" data-section="13" style="display: none;">
+        <span class="num">13</span>
+        <span>POS Signup</span>
+      </div>
+      <div class="section-pill" data-section="14" style="display: none;">
+        <span class="num">14</span>
+        <span>Botcake Signup</span>
       </div>
       <div class="section-pill" data-section="2">
         <span class="num">02</span>
@@ -1177,11 +1349,11 @@
       </div>
       <div class="section-pill" data-section="3">
         <span class="num">03</span>
-        <span>POS Details</span>
+        <span>POS Setup</span>
       </div>
       <div class="section-pill" data-section="4">
         <span class="num">04</span>
-        <span>Botcake</span>
+        <span>Botcake Setup</span>
       </div>
       <div class="section-pill" data-section="5">
         <span class="num">05</span>
@@ -1194,6 +1366,26 @@
       <div class="section-pill" data-section="7">
         <span class="num">07</span>
         <span>CTWA Campaign</span>
+      </div>
+      <div class="section-pill" data-section="8" style="display: none;">
+        <span class="num">08</span>
+        <span>Pancake CRM</span>
+      </div>
+      <div class="section-pill" data-section="9" style="display: none;">
+        <span class="num">09</span>
+        <span>CTD Campaign</span>
+      </div>
+      <div class="section-pill" data-section="10" style="display: none;">
+        <span class="num">10</span>
+        <span>Facebook</span>
+      </div>
+      <div class="section-pill" data-section="11" style="display: none;">
+        <span class="num">11</span>
+        <span>Instagram</span>
+      </div>
+      <div class="section-pill" data-section="12" style="display: none;">
+        <span class="num">12</span>
+        <span>WA Co-Existence</span>
       </div>
     </div>
 
@@ -1222,15 +1414,51 @@
 <script>
 // =============== STATE ===============
 const state = {
-  screen: 'country', // 'country' | 'platform' | 'vertical' | 'recommendation' | 'coming-soon' | 'flow' | 'resources'
+  screen: 'country', // 'country' | 'platform' | 'business' | 'ads' | 'recommendation' | 'coming-soon' | 'flow' | 'resources'
+  language: 'en',          // auto-set from country: VN → 'vi', others → 'en'
   country: null,
   countryName: null,
-  platform: null,
-  platformName: null,
-  vertical: null,
+  platforms: [],           // multi-select: ['facebook','instagram','whatsapp','tiktok','zalo','line']
+  business: null,          // 'product' (POS) | 'service' (CRM)
+  ads: null,               // true | false
+  vertical: null,          // legacy, kept for backwards compat
   verticalName: null,
-  flowIndex: 0
+  flowIndex: 0,
+  enabledSections: null,   // computed by computeEnabledSections()
+  moduleOrder: null        // user-defined ordering, loaded from localStorage
 };
+
+// =============== i18n ===============
+let translationsData = { en: {}, vi: {} };
+
+async function loadTranslations() {
+  try {
+    const res = await fetch('translations-vi.json', { cache: 'no-store' });
+    if (res.ok) translationsData.vi = await res.json();
+  } catch (e) { /* file not present, fall back to English */ }
+}
+
+function t(key, fallback) {
+  const lang = state.language || 'en';
+  if (lang === 'en') return fallback ?? key;
+  const ui = translationsData[lang]?.ui;
+  return ui?.[key] ?? fallback ?? key;
+}
+
+function tStep(idx, field, fallback) {
+  if (state.language === 'en') return fallback;
+  const step = translationsData.vi?.steps?.[String(idx)];
+  return step?.[field] ?? fallback;
+}
+
+function applyTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    const fallback = el.textContent;
+    const val = t(key, fallback);
+    if (val !== fallback) el.textContent = val;
+  });
+}
 
 // =============== VERTICALS ===============
 // Each vertical maps to a recommended bundle: which sections are essential vs optional,
@@ -1301,8 +1529,8 @@ const whatsappSteps = [
   {
     section: 1,
     sectionLabel: "Section 01 · Getting Started",
-    title: "Welcome to the CTWA & CAPI Playbook",
-    subtitle: "A guided setup for connecting WhatsApp Business API and Conversion API to your Pancake account.",
+    title: "Welcome to Pancake Onboarding",
+    subtitle: "A guided setup to get your business running on the Pancake ecosystem.",
     content: `
       <p>This interactive playbook walks you through three sections:</p>
       <ul>
@@ -1382,9 +1610,22 @@ const whatsappSteps = [
   },
   {
     section: 1,
-    sectionLabel: "Section 01 · Pancake POS",
+    sectionLabel: "Section 01 · Pancake",
+    title: "Pancake signup complete",
+    subtitle: "Your Pancake account is ready.",
+    content: `
+      <div class="callout success">
+        <div class="callout-icon">🎉</div>
+        <div><strong>Pancake is set up.</strong> Your Facebook &amp; Instagram pages are connected and conversations are syncing.</div>
+      </div>
+      <p>Next, depending on the modules in your bundle, we'll set up Pancake POS, Botcake, and the platform-specific connections you picked.</p>
+    `
+  },
+  {
+    section: 13,
+    sectionLabel: "Section 13 · POS Signup",
     title: "Sign up for Pancake POS",
-    subtitle: "Step 2 of 3 — Order and sales management.",
+    subtitle: "Order and sales management.",
     content: `
       <p>Head to <a href="https://pos.pancake.biz" target="_blank">https://pos.pancake.biz</a> and click the <strong>Try now</strong> or <strong>Sign Up</strong> button in the top-right corner.</p>
       <div class="screenshot"><img src="assets/img-005.png" alt="Pancake POS homepage" loading="lazy"></div>
@@ -1395,9 +1636,9 @@ const whatsappSteps = [
     `
   },
   {
-    section: 1,
-    sectionLabel: "Section 01 · Pancake POS",
-    title: "Log in with the same Facebook account",
+    section: 13,
+    sectionLabel: "Section 13 · POS Signup",
+    title: "Log in to POS with Facebook",
     subtitle: "Use the same credentials as Pancake.",
     content: `
       <p>You'll be redirected to the login page. Click the <strong>Facebook</strong> button and go through the login flow using the <strong>same account</strong> you used for Pancake.</p>
@@ -1413,10 +1654,10 @@ const whatsappSteps = [
     `
   },
   {
-    section: 1,
-    sectionLabel: "Section 01 · Botcake",
+    section: 14,
+    sectionLabel: "Section 14 · Botcake Signup",
     title: "Sign up for Botcake",
-    subtitle: "Step 3 of 3 — AI chatbot platform.",
+    subtitle: "AI chatbot platform.",
     content: `
       <p>Head to <a href="https://botcake.io" target="_blank">https://botcake.io</a> and click the <strong>Try now</strong> or <strong>Login</strong> button in the top-right corner.</p>
       <div class="screenshot"><img src="assets/img-008.png" alt="Botcake.io homepage" loading="lazy"></div>
@@ -1425,23 +1666,6 @@ const whatsappSteps = [
       <div class="callout tip">
         <div class="callout-icon">🤖</div>
         <div>Botcake powers AI-driven automation — automating replies, qualifying leads, and closing orders inside chats across Messenger, Instagram, and WhatsApp.</div>
-      </div>
-    `
-  },
-  {
-    section: 1,
-    sectionLabel: "Section 01 · Complete",
-    title: "Ecosystem onboarding complete",
-    subtitle: "You're now set up on all 3 platforms.",
-    content: `
-      <div class="callout success">
-        <div class="callout-icon">🎉</div>
-        <div><strong>Congratulations!</strong> You've onboarded to all 3 Pancake ecosystem platforms: Pancake, Pancake POS, and Botcake.</div>
-      </div>
-      <p>Next, we'll dive into how to <strong>use</strong> each platform — starting with Livechat, then Pancake POS details, Botcake automation, and Botcake AI. After that, we'll connect WhatsApp Business API + CAPI and finish with the CTWA campaign.</p>
-      <div class="callout tip">
-        <div class="callout-icon">💡</div>
-        <div>If you only care about WhatsApp setup, you can use the section pills above to jump straight to <strong>Section 6 · WhatsApp API &amp; CAPI</strong>.</div>
       </div>
     `
   },
@@ -1454,12 +1678,13 @@ const whatsappSteps = [
     subtitle: "Sync conversations from Meta Business Suite into Pancake.",
     content: `
       <p>Click on your connection (for example, "Pancake Philippines") to start syncing conversations from Meta Business Suite.</p>
-      <div class="screenshot"><img src="assets/page-12.png" alt="Connection list in Pancake" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-14.png" alt="Conversation inbox view" loading="lazy"></div>
       <p>From there you can:</p>
       <ul>
         <li><strong>Assign or update conversations</strong> with multiple options.</li>
         <li><strong>Filter comments</strong> from your Page posts and reply directly.</li>
       </ul>
+      <div class="screenshot"><img src="assets/page-15.png" alt="Comment filter panel" loading="lazy"></div>
       <div class="callout tip">
         <div class="callout-icon">💬</div>
         <div>All inbox messages and page comments flow into one unified view — your team replies from one place regardless of channel.</div>
@@ -1480,8 +1705,9 @@ const whatsappSteps = [
         <li>Add a <strong>topic</strong> and a <strong>shortcut</strong> (e.g. <code>/pr</code> for "product info").</li>
         <li>Compose your message — include images, files, or variables.</li>
       </ul>
-      <div class="screenshot"><img src="assets/page-14.png" alt="Replying Helper setup" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-17.png" alt="Replying Helper saved replies list" loading="lazy"></div>
       <p>To use a saved reply inside a chat, type a slash (<code>/</code>) followed by your shortcut, then press <strong>Enter</strong> to send.</p>
+      <div class="screenshot"><img src="assets/page-18.png" alt="Quick reply shortcuts in chat" loading="lazy"></div>
       <div class="ui-mock">Example: <span class="action-tag">/pr</span> → expands into your saved product reply.</div>
     `
   },
@@ -1497,7 +1723,7 @@ const whatsappSteps = [
         <li>Have them log in at <a href="https://pancake.biz" target="_blank">pancake.biz</a> and connect available pages.</li>
         <li>Once connected, they'll be auto-added to your pages and subscriptions (assuming your plan has user slots available).</li>
       </ul>
-      <div class="screenshot"><img src="assets/page-16.png" alt="Add staff workflow" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-20.png" alt="Subscription Info — Users list" loading="lazy"></div>
       <p>To check subscription availability and manage users, go to <a href="https://pancake.biz/account" target="_blank">pancake.biz/account</a> → <strong>Subscription List</strong>.</p>
     `
   },
@@ -1508,6 +1734,7 @@ const whatsappSteps = [
     subtitle: "Required for Facebook follow-ups outside the 24-hour window.",
     content: `
       <p>For follow-up chats outside the standard 24-hour messaging window — and to protect your page quality — install the Pancake Extension for Chrome.</p>
+      <div class="screenshot"><img src="assets/page-22.png" alt="Pancake Chrome Extension download" loading="lazy"></div>
       <div class="callout info">
         <div class="callout-icon">🧩</div>
         <div><strong>Download:</strong> Search "Pancake Extension" in the Chrome Web Store and install.</div>
@@ -1527,7 +1754,8 @@ const whatsappSteps = [
     subtitle: "Capture customer info and product details mid-conversation.",
     content: `
       <p>Inside any conversation, you can create an order to capture customer info and product details without leaving the chat.</p>
-      <div class="screenshot"><img src="assets/page-18.png" alt="Create order from chat" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-24.png" alt="NEW button and order form" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-25.png" alt="Order status dropdown" loading="lazy"></div>
       <ul>
         <li>Click <strong>NEW</strong> in the top-right of the conversation view.</li>
         <li>Fill in customer information, products, and payment details in the form.</li>
@@ -1545,7 +1773,7 @@ const whatsappSteps = [
     subtitle: "Turn connected pages into POS shops.",
     content: `
       <p>If no shops or pages appear on the POS dashboard, click <strong>Active Shop</strong>.</p>
-      <div class="screenshot"><img src="assets/page-24.png" alt="Active Shop button" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-28.png" alt="POS Active Shop button and modal" loading="lazy"></div>
       <ul>
         <li>Select the pages you want to activate.</li>
         <li>Click <strong>Active Shop</strong> to confirm.</li>
@@ -1561,11 +1789,13 @@ const whatsappSteps = [
     subtitle: "Edit one order or many at once.",
     content: `
       <p>From the left menu, hover and select <strong>Order</strong> to access a unified order view across all your channels.</p>
-      <div class="screenshot"><img src="assets/page-26.png" alt="POS order list" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-31.png" alt="POS dashboard with unified order view" loading="lazy"></div>
       <ul>
         <li><strong>Single order:</strong> click into an order to edit its information.</li>
         <li><strong>Batch updates:</strong> select multiple orders, then click <strong>Quick Update</strong> in the toolbar and choose which fields to change.</li>
       </ul>
+      <div class="screenshot"><img src="assets/page-32.png" alt="Edit single order detail" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-34.png" alt="Quick Update for batch order edits" loading="lazy"></div>
     `
   },
   {
@@ -1580,7 +1810,7 @@ const whatsappSteps = [
         <li>Under <strong>General → Shop</strong>, click <strong>Shop Information</strong>.</li>
         <li>Under the <strong>Country – Currency</strong> section, set your country and default currency.</li>
       </ul>
-      <div class="screenshot"><img src="assets/page-28.png" alt="Shop Information configuration" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-37.png" alt="Configuration → Shop information → Currency settings" loading="lazy"></div>
     `
   },
   {
@@ -1590,10 +1820,11 @@ const whatsappSteps = [
     subtitle: "Three steps: create, basic info, advanced info.",
     content: `
       <p>Navigate to <strong>Product</strong> in the left menu to add a new product.</p>
-      <div class="screenshot"><img src="assets/page-31.png" alt="Add new product" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-38.png" alt="Product list and Product Setup modal" loading="lazy"></div>
       <p><strong>Step 1:</strong> Click <strong>+ Add product</strong>.</p>
       <p><strong>Step 2 — Basic info:</strong> Product name and SKU are mandatory. Optionally add price, category, brand, and images.</p>
       <p><strong>Step 3 — Advanced info:</strong></p>
+      <div class="screenshot"><img src="assets/page-40.png" alt="Product variants and attributes" loading="lazy"></div>
       <ul>
         <li><strong>Manipulation warehouse</strong> — pick which warehouse handles this product if you have multiple.</li>
         <li><strong>Attributes &amp; values</strong> — define product variants (color, size, etc.). Use <em>Quick add attributes</em> to auto-distribute values across variants.</li>
@@ -1614,7 +1845,8 @@ const whatsappSteps = [
     subtitle: "Connect a Messenger, Instagram, or Zalo page.",
     content: `
       <p>From the Botcake homepage, click <strong>+ Add new page</strong>.</p>
-      <div class="screenshot"><img src="assets/page-38.png" alt="Add new page in Botcake" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-42.png" alt="Botcake.io login + Add new page" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-43.png" alt="Choose platform: Messenger / Instagram / Zalo" loading="lazy"></div>
       <p><strong>Choose the platform</strong> the page belongs to:</p>
       <ul>
         <li><strong>Messenger</strong> — for Facebook pages.</li>
@@ -1635,7 +1867,7 @@ const whatsappSteps = [
         <li><strong>Getting Started</strong> — Best for beginners with no chatbot experience. Botcake guides you step by step to build a simple chatbot.</li>
         <li><strong>Professional</strong> — For users who already know how to use Botcake or have chatbot experience — jump straight in.</li>
       </ul>
-      <div class="screenshot"><img src="assets/page-40.png" alt="Choose Getting Started or Professional" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-44.png" alt="As a newbie / As a professional cards" loading="lazy"></div>
       <div class="callout tip">
         <div class="callout-icon">🎓</div>
         <div>First time? Pick <strong>Getting Started</strong> — you can always switch later.</div>
@@ -1655,8 +1887,9 @@ const whatsappSteps = [
         <li>Add a name for your flow.</li>
         <li>Start composing your content.</li>
       </ul>
-      <div class="screenshot"><img src="assets/page-42.png" alt="Create new message flow" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-46.png" alt="Flow library + Create new message flow" loading="lazy"></div>
       <p>You can switch between <strong>Basic Builder</strong> (simple step-by-step) and <strong>Flow Builder</strong> (visual node editor) at any time.</p>
+      <div class="screenshot"><img src="assets/page-47.png" alt="Flow builder with content blocks" loading="lazy"></div>
     `
   },
   {
@@ -1672,8 +1905,9 @@ const whatsappSteps = [
         <li>Select the flow you created in the previous step.</li>
         <li>Toggle <strong>Activate</strong> on.</li>
       </ul>
-      <div class="screenshot"><img src="assets/page-44.png" alt="Automation setup" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-49.png" alt="Automation sidebar with Welcome Message" loading="lazy"></div>
       <p><strong>Final step:</strong> Go to <strong>Setting → General → Basic Setting</strong> and turn on the <strong>Get Started button</strong>. Done.</p>
+      <div class="screenshot"><img src="assets/page-50.png" alt="Activate Welcome Message + Get Started button" loading="lazy"></div>
       <div class="callout info">
         <div class="callout-icon">📚</div>
         <div><strong>Full automation guide:</strong> <a href="https://pke.gg/xk458ra6" target="_blank">https://pke.gg/xk458ra6</a></div>
@@ -1695,6 +1929,7 @@ const whatsappSteps = [
         <li>Close orders inside chats.</li>
         <li>Distribute rule-based discount codes.</li>
       </ul>
+      <div class="screenshot"><img src="assets/page-52.png" alt="Botcake AI pricing overview" loading="lazy"></div>
       <div class="callout tip">
         <div class="callout-icon">🤖</div>
         <div>Botcake AI saves time, lifts customer experience, and boosts conversion rates. Pricing is shown inside the Botcake AI dashboard once you set up an AI agent.</div>
@@ -1713,8 +1948,9 @@ const whatsappSteps = [
         <strong>Botcake AI Prompt Library</strong> — pre-written templates for common use cases (sales agent, customer support, product recommender, etc.). Available inside the Botcake dashboard.
       </div>
       <p><strong>Step 2:</strong> From the Botcake homepage, navigate to <strong>AI Agent List</strong>.</p>
-      <div class="screenshot"><img src="assets/page-48.png" alt="AI Agent List" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-53.png" alt="Botcake AI Agent list" loading="lazy"></div>
       <p><strong>Step 3:</strong> Input a <strong>Name</strong> and <strong>Description</strong>, then paste your prompt into the <strong>AI Instructions</strong> field.</p>
+      <div class="screenshot"><img src="assets/page-54.png" alt="Add new agent with Instructions and Preview" loading="lazy"></div>
     `
   },
   {
@@ -1725,7 +1961,7 @@ const whatsappSteps = [
     content: `
       <p>To preview or enable AI inside your conversations, top up your Pancake Wallet. The minimum is <strong>$10</strong>.</p>
       <p><strong>Step 1:</strong> Go to <a href="https://account.pancake.vn/" target="_blank">https://account.pancake.vn/</a> and log in with the Facebook account connected to your pages.</p>
-      <div class="screenshot"><img src="assets/page-51.png" alt="Pancake account top up" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-56.png" alt="account.pancake.vn — top-up wallet" loading="lazy"></div>
       <p><strong>Step 2:</strong> From the homepage, select <strong>Top-up</strong> and create a new account.</p>
       <p><strong>Step 3:</strong> Name the account, then proceed with payment.</p>
     `
@@ -1742,7 +1978,7 @@ const whatsappSteps = [
         <li>Under <strong>Account Balance</strong>, click <strong>Reconnect</strong>.</li>
         <li>Your Pancake Wallet balance will appear. If it's above the threshold, AI is ready to use.</li>
       </ul>
-      <div class="screenshot"><img src="assets/page-53.png" alt="Reconnect wallet in Botcake" loading="lazy"></div>
+      <div class="screenshot"><img src="assets/page-57.png" alt="Botcake AI → General → Reconnect wallet" loading="lazy"></div>
       <p>You can now preview AI from the AI Agent view, or attach AI to any Automation to chat with customers right away.</p>
       <div class="callout success">
         <div class="callout-icon">✅</div>
@@ -1771,6 +2007,7 @@ const whatsappSteps = [
     content: `
       <p>In the "Add a connection" panel, select <strong>WhatsApp</strong> from the left menu, then click <strong>Connect WhatsApp Business</strong>.</p>
       <div class="screenshot"><img src="assets/img-011.png" alt="Add a connection - WhatsApp Business panel" loading="lazy"></div>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/2/17/Screenshot%202025-02-17%20at%2009.55.36.png" alt="WhatsApp Business panel (official)" loading="lazy"></div>
       <div class="callout info">
         <div class="callout-icon">ℹ️</div>
         <div>The WhatsApp QR code connection method is no longer available. The official WhatsApp Business API is the only supported integration.</div>
@@ -1802,6 +2039,7 @@ const whatsappSteps = [
       <p>A pop-up window will open and transfer you to Meta's <strong>Embedded Signup</strong> flow.</p>
       <p>Choose <strong>"Continue as [your name]"</strong> to log in with the Facebook account that has full Business Manager access — the same one used for Pancake.</p>
       <div class="screenshot"><img src="assets/img-013.png" alt="Facebook Login for Business - Continue as" loading="lazy"></div>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/2/17/Screenshot%202025-02-17%20at%2010.12.10.png" alt="Continue as — Facebook login (official)" loading="lazy"></div>
       <div class="callout warning">
         <div class="callout-icon">🚫</div>
         <div>If you see "Log into another account", make sure you're switching to the correct admin account, not creating a new personal profile.</div>
@@ -2091,15 +2329,331 @@ const whatsappSteps = [
         <div>Need help? Contact Pancake or Meta directly for further information.</div>
       </div>
     `
+  },
+
+  // ============ SECTION 10: DETAILED FACEBOOK CONNECTION ============
+  // Source: "Kết nối Pancake với Facebook" doc
+  {
+    section: 10,
+    sectionLabel: "Section 10 · Facebook",
+    title: "Facebook connection — requirements",
+    subtitle: "What you need before connecting your Facebook Page.",
+    content: `
+      <p>To connect your Facebook Page to Pancake, you'll need:</p>
+      <ul>
+        <li><strong>Page permissions</strong> on the Facebook Page you want to connect.</li>
+        <li>If your Page is inside a <strong>Business Manager (BM)</strong>, you also need the correct role in the BM.</li>
+      </ul>
+      <div class="callout info">
+        <div class="callout-icon">📚</div>
+        <div><strong>If you don't have a Business Manager yet:</strong>
+          <ul style="margin-top: 8px;">
+            <li><a href="https://www.facebook.com/business/help/113163272211510" target="_blank">What is Business Manager?</a></li>
+            <li><a href="https://www.facebook.com/business/help/1710077379203657" target="_blank">Create a new Business Manager</a></li>
+            <li><a href="https://www.facebook.com/business/help/720478807965744" target="_blank">Add your Page to Business Manager</a></li>
+            <li><a href="https://www.facebook.com/business/help/2169003770027706" target="_blank">Manage Business Manager permissions</a></li>
+            <li><a href="https://www.facebook.com/business/help/2169003770027706" target="_blank">Add people to Business Manager</a></li>
+          </ul>
+        </div>
+      </div>
+    `
+  },
+  {
+    section: 10,
+    sectionLabel: "Section 10 · Facebook",
+    title: "Sign in to Pancake",
+    subtitle: "Step 1 — From the homepage.",
+    content: `
+      <p>From the Pancake homepage, click <strong>Sign In</strong>.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/5/12/Screenshot%202025-05-12%20at%2011.32.52.png" alt="Pancake homepage Sign In" loading="lazy"></div>
+    `
+  },
+  {
+    section: 10,
+    sectionLabel: "Section 10 · Facebook",
+    title: "Choose your business management workflows",
+    subtitle: "Step 2 — Select all current and future businesses.",
+    content: `
+      <p><strong>Recommended:</strong> tick <em>"Opt in to all current businesses and future businesses"</em> so future Business Manager accounts auto-connect.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2024/8/24/imageda949642-07f9-404e-9c21-1cc3fdaeca68" alt="Choose business management workflows" loading="lazy"></div>
+    `
+  },
+  {
+    section: 10,
+    sectionLabel: "Section 10 · Facebook",
+    title: "Pick Facebook Pages to connect",
+    subtitle: "Step 3 — Multi-select your Pages.",
+    content: `
+      <p><strong>Recommended:</strong> opt into <em>all current Pages and future Pages</em>. This avoids having to redo this step every time you create a new Page.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2024/8/24/image800d453e-95d0-4fc6-8bcb-aa8d22662cb1" alt="Select Facebook Pages to connect" loading="lazy"></div>
+    `
+  },
+  {
+    section: 10,
+    sectionLabel: "Section 10 · Facebook",
+    title: "Pick Instagram accounts to connect",
+    subtitle: "Step 4 — Also grant Instagram access while you're here.",
+    content: `
+      <p>If you have Instagram Business accounts linked to your Pages, opt into <em>all current and future Instagram accounts</em> here too. This saves you from reconnecting Instagram separately later.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2024/8/24/imageb6b822a2-0763-4af3-9493-a3a8b56b5709" alt="Select Instagram accounts" loading="lazy"></div>
+    `
+  },
+  {
+    section: 10,
+    sectionLabel: "Section 10 · Facebook",
+    title: "Confirm Pancake's access",
+    subtitle: "Step 5 — Review permissions and finish.",
+    content: `
+      <p>Review the access summary, then confirm. You'll be redirected back to the Pancake dashboard where your selected Pages appear.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2024/8/24/imageaa4ae851-b01f-48fd-b3fa-045bcf642fad" alt="Confirm Pancake access" loading="lazy"></div>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/5/12/Screenshot%202025-05-12%20at%2011.34.37.png" alt="Pancake dashboard with connected pages" loading="lazy"></div>
+    `
+  },
+  {
+    section: 10,
+    sectionLabel: "Section 10 · Facebook",
+    title: "Activate your Pages",
+    subtitle: "Step 6 — Last step before messages flow in.",
+    content: `
+      <p>If you don't see your Facebook Page on the Pancake dashboard, check the connection list and <strong>activate</strong> the Page to start using it.</p>
+      <div class="callout tip">
+        <div class="callout-icon">⏱️</div>
+        <div>Pancake syncs conversations from the <strong>last 14 days</strong> when you first activate a Page.</div>
+      </div>
+    `
+  },
+
+  // ============ SECTION 11: DETAILED INSTAGRAM CONNECTION ============
+  // Source: "Kết nối Pancake với Instagram" + "Instagram Unified Onboarding" docs
+  {
+    section: 11,
+    sectionLabel: "Section 11 · Instagram",
+    title: "Three ways to connect Instagram",
+    subtitle: "Pick the method that matches your setup.",
+    content: `
+      <p>Instagram Business (a.k.a. <em>Instagram Official</em>) is the professional account type required to connect with Pancake. If you're on a regular personal Instagram, you'll be prompted to convert during signup.</p>
+      <p>There are <strong>three ways</strong> to connect Instagram, depending on what you already have:</p>
+      <ul>
+        <li><strong>Method A — While connecting Facebook</strong>: If your IG Business is already linked to a Facebook Page, tick the IG account during the Facebook signup flow (Section 10 covers this).</li>
+        <li><strong>Method B — Unified Onboarding</strong> (recommended for IG-only setups): Log into Meta Business directly with your Instagram account.</li>
+        <li><strong>Method C — Direct Instagram login</strong>: Log in with Instagram credentials, no Facebook needed.</li>
+      </ul>
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div>The next 5 steps cover <strong>Method B (Unified Onboarding)</strong>, which is the simplest and most reliable for new setups.</div>
+      </div>
+    `
+  },
+  {
+    section: 11,
+    sectionLabel: "Section 11 · Instagram",
+    title: "Unified Onboarding — Step 1",
+    subtitle: "Click Connect from the Pancake dashboard.",
+    content: `
+      <p>From your Pancake dashboard, click the <strong>Connect</strong> button.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/12/25/2841da57-49a1-4831-b35e-47f26dfd33c1_image.png" alt="Pancake dashboard Connect button" loading="lazy"></div>
+    `
+  },
+  {
+    section: 11,
+    sectionLabel: "Section 11 · Instagram",
+    title: "Unified Onboarding — Step 2",
+    subtitle: "Pick Instagram → Unified Onboarding.",
+    content: `
+      <p>In the Add a Connection modal, select <strong>Instagram</strong>, then click <strong>Unified Onboarding</strong>.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/12/25/e7c81a87-c782-44dc-8f18-e0f173bcf0b3_image.png" alt="Instagram Unified Onboarding option" loading="lazy"></div>
+    `
+  },
+  {
+    section: 11,
+    sectionLabel: "Section 11 · Instagram",
+    title: "Unified Onboarding — Step 3",
+    subtitle: "Log in with Instagram (not Facebook).",
+    content: `
+      <p>On Meta's Business login screen, choose <strong>Log in with Instagram</strong>.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/12/25/20a3fc5e-9905-4cb6-97fc-5e54c54ba03f_image.png" alt="Log in with Instagram option" loading="lazy"></div>
+      <p>Sign in with the Instagram account you want to connect. Double-check it's the correct account before proceeding.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/12/25/ea9b2c7b-e7b1-483b-bbd0-b08c3ed83ae2_image.png" alt="Instagram login screen" loading="lazy"></div>
+    `
+  },
+  {
+    section: 11,
+    sectionLabel: "Section 11 · Instagram",
+    title: "Unified Onboarding — Step 4",
+    subtitle: "Pick Business Portfolio, Instagram accounts, and Ad accounts.",
+    content: `
+      <p>Choose your <strong>Business Portfolio</strong>, the <strong>Instagram accounts</strong> you want to connect, and (optionally) any <strong>Ad accounts</strong>. Click <strong>Continue</strong> to finish.</p>
+      <div class="callout warning">
+        <div class="callout-icon">⚠️</div>
+        <div>If you manage multiple Instagram accounts, <strong>select all of them here</strong> — you can't easily re-trigger this multi-select later.</div>
+      </div>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/12/25/8c10872e-a7ad-4728-afea-76a2e491ad22_image.png" alt="Select Instagram accounts and ad accounts" loading="lazy"></div>
+    `
+  },
+  {
+    section: 11,
+    sectionLabel: "Section 11 · Instagram",
+    title: "Unified Onboarding — Requirements",
+    subtitle: "Two settings to check on Instagram before this works.",
+    content: `
+      <p><strong>1. Your Instagram account must be a Professional Account.</strong> Switch to Professional in the Instagram mobile app: Settings → Account → Switch to Professional Account.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/12/25/06815a4a-751b-481a-bc73-f5330024e986_image.png" alt="Convert to Professional Account" loading="lazy"></div>
+      <p><strong>2. Set Pancake as the default app in your account routing settings</strong> (Meta Business Settings → Inbox routing).</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/12/25/372f6eb2-ebe6-4241-a650-9dbcfd991267_image.png" alt="Routing settings — set Pancake as default" loading="lazy"></div>
+      <div class="callout info">
+        <div class="callout-icon">🔗</div>
+        <div>If your Instagram is linked to a Facebook Page, also check the routing setting at <em>Page Settings → Page Setup</em> on the linked Facebook Page.</div>
+      </div>
+    `
+  },
+
+  // ============ SECTION 12: WHATSAPP API CO-EXISTENCE ============
+  // Source: "Kết nối Pancake với WhatsApp > WhatsApp API Co-Existence" doc
+  {
+    section: 12,
+    sectionLabel: "Section 12 · WhatsApp Co-Existence",
+    title: "What is WhatsApp Co-Existence?",
+    subtitle: "An alternative to the standard WhatsApp API setup.",
+    content: `
+      <p><strong>Co-Existence</strong> lets you use the <strong>WhatsApp Business mobile app</strong> on your phone <em>and</em> Pancake at the same time. Your full chat history syncs both directions.</p>
+      <p><strong>You get:</strong></p>
+      <ul>
+        <li>✅ <strong>Synced chat history</strong> — Every message from your mobile app uploads to the WhatsApp API automatically.</li>
+        <li>✅ <strong>Full WhatsApp API features</strong> — Templates, bulk messaging, automation, buttons, product catalogs. Pay per use.</li>
+        <li>✅ <strong>Keep your mobile app features</strong> — You can still message customers for free directly from your phone.</li>
+      </ul>
+      <div class="callout warning">
+        <div class="callout-icon">🌐</div>
+        <div><strong>Not supported in:</strong> EEA, EU, UK · Australia, India, Japan, Nigeria, Philippines, Russia, South Korea, South Africa, Turkey. If your business is in any of these markets, use the standard WhatsApp API setup (Section 6) instead.</div>
+      </div>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/2/17/imageaa0f6322-bfa9-4583-b5e7-f768a3c21857" alt="Co-Existence regions not supported" loading="lazy"></div>
+    `
+  },
+  {
+    section: 12,
+    sectionLabel: "Section 12 · WhatsApp Co-Existence",
+    title: "Connect → WhatsApp",
+    subtitle: "Step 1 — From the Pancake dashboard.",
+    content: `
+      <p>On the Pancake dashboard, click <strong>Connect</strong>, then choose <strong>WhatsApp</strong>.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/11/18/c900b772-79ad-4568-9d5c-bb31e3cfdab5_Screenshot%202025-11-18%20at%2015.08.00.png" alt="Connect WhatsApp" loading="lazy"></div>
+      <p>Click <strong>Connect with WhatsApp Business</strong>.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/11/18/7b6db3fe-3e78-4065-97b6-098a04eb24e6_Screenshot%202025-11-18%20at%2014.27.27.png" alt="Connect with WhatsApp Business" loading="lazy"></div>
+    `
+  },
+  {
+    section: 12,
+    sectionLabel: "Section 12 · WhatsApp Co-Existence",
+    title: "Acknowledge requirements & continue",
+    subtitle: "Step 2 — Tick the box and proceed.",
+    content: `
+      <p>Tick <em>"I've read and understood"</em>, then click <strong>Continue</strong>.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/11/18/186310cb-9e0c-4de4-bf8d-9c7c7882012d_Screenshot%202025-11-18%20at%2014.27.51.png" alt="Acknowledge requirements" loading="lazy"></div>
+      <p>Choose <strong>"Continue as [your name]"</strong> to log in with your Facebook account.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/11/18/4579022d-a0c0-42ee-a9df-250b6942744d_Screenshot%202025-11-18%20at%2015.05.53.png" alt="Continue as user" loading="lazy"></div>
+    `
+  },
+  {
+    section: 12,
+    sectionLabel: "Section 12 · WhatsApp Co-Existence",
+    title: "Pick Business Manager → Connect with WhatsApp Business App",
+    subtitle: "Step 3 — Choose the Co-Existence option (not Cloud API).",
+    content: `
+      <p>Click <strong>Continue</strong> on the Meta welcome screen.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/11/18/250561b5-f232-4355-8ae4-232464542305_Screenshot%202025-11-18%20at%2014.29.28.png" alt="Continue on Meta welcome screen" loading="lazy"></div>
+      <p>Choose your <strong>Business Manager</strong>, then select <strong>"Connect with WhatsApp Business App"</strong> (this is what makes it Co-Existence — not Cloud API).</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/11/18/aa7c4adc-c7db-42bf-8ff1-223bcb6350c4_Screenshot%202025-11-18%20at%2014.30.23.png" alt="Connect with WhatsApp Business App" loading="lazy"></div>
+    `
+  },
+  {
+    section: 12,
+    sectionLabel: "Section 12 · WhatsApp Co-Existence",
+    title: "Enter your existing WhatsApp Business phone number",
+    subtitle: "Step 4 — Use the same number that's on your WhatsApp Business mobile app.",
+    content: `
+      <p>Enter the phone number you're currently using on the <strong>WhatsApp Business app on your phone</strong>, then click <strong>Next</strong>.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/11/18/b190a3f2-f3c3-49b9-9faa-8f9b818a74df_Screenshot%202025-11-18%20at%2014.33.08.png" alt="Enter WhatsApp Business phone number" loading="lazy"></div>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/11/18/68fba2c9-0077-4645-bd52-2218b91d319e_Screenshot%202025-11-18%20at%2014.37.19.png" alt="Phone number confirmation" loading="lazy"></div>
+    `
+  },
+  {
+    section: 12,
+    sectionLabel: "Section 12 · WhatsApp Co-Existence",
+    title: "Check WhatsApp Business app for QR scan request",
+    subtitle: "Step 5 — Move to your phone briefly.",
+    content: `
+      <p>Open the <strong>WhatsApp Business app on your phone</strong>. You'll receive a message from the <strong>"Facebook Business"</strong> account asking to connect.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/11/18/397bd0af-2b93-4306-b4cc-9bfceafdd108_image.png" alt="Facebook Business message in WhatsApp" loading="lazy"></div>
+      <p>Tap <strong>Connect</strong>, follow the on-phone instructions, and <strong>scan the QR code</strong>.</p>
+    `
+  },
+  {
+    section: 12,
+    sectionLabel: "Section 12 · WhatsApp Co-Existence",
+    title: "Confirm and finish",
+    subtitle: "Step 6 — Final clicks back in the browser.",
+    content: `
+      <p>Once your account name appears, click <strong>Continue</strong>.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/11/18/3f93a378-48d7-4674-88b5-f665d5f374a0_Screenshot%202025-11-18%20at%2014.39.03.png" alt="Account name appears" loading="lazy"></div>
+      <p>Click <strong>Confirm</strong>.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/11/18/26ce8491-19b5-4c7a-a8d1-fd7d114b47ab_Screenshot%202025-11-18%20at%2014.53.56.png" alt="Confirm connection" loading="lazy"></div>
+      <p>Wait for the connection to complete, then click <strong>Finish</strong>.</p>
+      <div class="screenshot"><img src="https://statics.pancake.vn/pancake-docs/2025/11/18/f03930b1-c8a7-4e1f-81b0-db7caa9d7532_Screenshot%202025-11-18%20at%2014.54.59.png" alt="Finish connection" loading="lazy"></div>
+      <div class="callout success">
+        <div class="callout-icon">✅</div>
+        <div>Wait 1–2 minutes for messages to sync. If you hit an error, refresh the page and reconnect. <strong>1:1 chat history from the last 6 months</strong> syncs to Pancake.</div>
+      </div>
+    `
+  },
+
+  // ============ SECTION 8: PANCAKE CRM (placeholder) ============
+  {
+    section: 8,
+    sectionLabel: "Section 08 · Pancake CRM",
+    title: "Pancake CRM — coming soon",
+    subtitle: "Detailed CRM onboarding for service businesses.",
+    content: `
+      <div class="callout tip">
+        <div class="callout-icon">🚧</div>
+        <div><strong>This module is under construction.</strong> Pancake CRM helps service businesses (consulting, bookings, professional services) manage customer relationships, track leads, and orchestrate follow-ups.</div>
+      </div>
+      <p>While we finalize this section, you can get started with the existing Pancake inbox features in <strong>Section 02 · Livechat</strong> and use the contact tags + saved replies to manage leads.</p>
+      <div class="callout info">
+        <div class="callout-icon">📨</div>
+        <div>For early access to Pancake CRM, contact your local Pancake support team (see Resources at the end).</div>
+      </div>
+    `
+  },
+
+  // ============ SECTION 9: CTD CAMPAIGN (placeholder) ============
+  {
+    section: 9,
+    sectionLabel: "Section 09 · CTD Campaign",
+    title: "Click-to-Direct Campaign — coming soon",
+    subtitle: "Run Messenger/Instagram Click-to-Direct ads on Meta.",
+    content: `
+      <div class="callout tip">
+        <div class="callout-icon">🚧</div>
+        <div><strong>This module is under construction.</strong> CTD (Click-to-Direct) campaigns drive Messenger or Instagram DM conversations from Meta ads — similar to CTWA but for Facebook Page Messenger and Instagram inbox.</div>
+      </div>
+      <p>The flow is similar to CTWA (Section 07): pick an Engagement / Leads / Sales objective in Meta Ads Manager, then in the Ad Set select <strong>Messenger</strong> or <strong>Instagram</strong> as the messaging app (instead of WhatsApp).</p>
+      <p>Once your CTD ads run, the resulting conversations flow directly into your Pancake unified inbox.</p>
+      <div class="callout info">
+        <div class="callout-icon">📚</div>
+        <div>Detailed step-by-step CTD setup is coming soon. For now, see the <a href="#" onclick="jumpToSection(7); return false;">CTWA Campaign section</a> — the principles are the same.</div>
+      </div>
+    `
   }
 ];
 
 // =============== SCREEN MANAGEMENT ===============
 function showScreen(name) {
   state.screen = name;
-  ['country', 'platform', 'vertical', 'recommendation', 'coming-soon', 'flow', 'resources'].forEach(s => {
-    document.getElementById('screen-' + s).classList.toggle('hidden', s !== name);
+  ['country', 'platform', 'business', 'ads', 'vertical', 'recommendation', 'coming-soon', 'flow', 'resources'].forEach(s => {
+    const el = document.getElementById('screen-' + s);
+    if (el) el.classList.toggle('hidden', s !== name);
   });
+  applyTranslations();
   updateHeader();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -2107,28 +2661,33 @@ function showScreen(name) {
 function updateHeader() {
   const right = document.getElementById('headerRight');
   const countryChip = state.country ? `<span class="chip">${flagFor(state.country)} ${state.countryName} <span class="x" onclick="goToCountry()" title="Change country">×</span></span>` : '';
-  const platformChip = state.platform ? `<span class="chip">${state.platformName}</span>` : '';
-  const verticalChip = state.vertical ? `<span class="chip">${verticals[state.vertical].icon} ${state.verticalName}</span>` : '';
+  const platformsChip = state.platforms.length ? `<span class="chip">${state.platforms.length} platform${state.platforms.length === 1 ? '' : 's'}</span>` : '';
+  const businessChip = state.business ? `<span class="chip">${state.business === 'product' ? '🛍️' : '📅'}</span>` : '';
+  const langChip = state.language === 'vi' ? `<span class="chip" style="background: #fef3c7; color: #92400e;">VI</span>` : '';
 
   if (state.screen === 'flow') {
+    const enabledList = enabledStepIndexes();
+    const pos = enabledList.indexOf(state.flowIndex);
+    const total = enabledList.length;
+    const currentNum = pos >= 0 ? pos + 1 : 1;
     right.innerHTML = `
       <div class="step-counter">
-        ${countryChip}
-        Step <strong id="currentStep">${state.flowIndex + 1}</strong> of <span>${whatsappSteps.length}</span>
+        ${countryChip}${langChip}
+        ${state.language === 'vi' ? `Bước <strong>${currentNum}</strong> / <span>${total}</span>` : `Step <strong>${currentNum}</strong> of <span>${total}</span>`}
       </div>
     `;
   } else if (state.screen === 'platform') {
     right.innerHTML = state.country
-      ? `<div class="selection-chips">${countryChip}</div>`
+      ? `<div class="selection-chips">${countryChip}${langChip}</div>`
       : '';
-  } else if (state.screen === 'vertical') {
-    right.innerHTML = `<div class="selection-chips">${countryChip}${platformChip}</div>`;
+  } else if (state.screen === 'business') {
+    right.innerHTML = `<div class="selection-chips">${countryChip}${platformsChip}${langChip}</div>`;
+  } else if (state.screen === 'ads') {
+    right.innerHTML = `<div class="selection-chips">${countryChip}${platformsChip}${businessChip}${langChip}</div>`;
   } else if (state.screen === 'recommendation') {
-    right.innerHTML = `<div class="selection-chips">${countryChip}${platformChip}${verticalChip}</div>`;
-  } else if (state.screen === 'coming-soon') {
-    right.innerHTML = `<div class="selection-chips">${countryChip}${platformChip}</div>`;
+    right.innerHTML = `<div class="selection-chips">${countryChip}${platformsChip}${businessChip}${langChip}</div>`;
   } else if (state.screen === 'resources') {
-    right.innerHTML = `<div class="selection-chips">${countryChip}${verticalChip}</div>`;
+    right.innerHTML = `<div class="selection-chips">${countryChip}${langChip}</div>`;
   } else {
     right.innerHTML = '';
   }
@@ -2142,42 +2701,253 @@ function flagFor(code) {
 // =============== NAVIGATION ===============
 function goToCountry() {
   state.country = null;
-  state.platform = null;
-  state.vertical = null;
+  state.platforms = [];
+  state.business = null;
+  state.ads = null;
   state.flowIndex = 0;
   showScreen('country');
 }
 
 function goToPlatform() {
-  state.platform = null;
-  state.vertical = null;
+  state.platforms = [];
+  state.business = null;
+  state.ads = null;
   state.flowIndex = 0;
+  updatePlatformContinueBtn();
   showScreen('platform');
 }
 
-function goToVertical() {
-  state.vertical = null;
-  state.flowIndex = 0;
-  renderVerticalPicker();
-  showScreen('vertical');
+function goToBusiness() {
+  state.business = null;
+  state.ads = null;
+  showScreen('business');
+}
+
+function goToAds() {
+  state.ads = null;
+  showScreen('ads');
 }
 
 function goToRecommendation() {
+  state.enabledSections = computeEnabledSections();
   renderRecommendation();
   showScreen('recommendation');
 }
 
-function startWhatsAppFlow() {
-  state.platform = 'whatsapp';
-  state.platformName = 'WhatsApp';
-  state.flowIndex = 0;
+function startFlow() {
+  state.flowIndex = firstEnabledStepIndex();
   showScreen('flow');
   renderStep();
 }
 
+// Backwards compat for old buttons
+function startWhatsAppFlow() { startFlow(); }
+function goToVertical() { showScreen('platform'); }
+
 function goToResources() {
   renderResources();
   showScreen('resources');
+}
+
+// =============== MODULE LOGIC ===============
+// Maps section number → module ID for clarity
+// Sections 1-7 are the existing playbook content; 8 and 9 are placeholders.
+function computeEnabledSections() {
+  const enabled = {};
+
+  // ===== SIGNUPS =====
+  enabled[1] = 'essential';   // Pancake Signup (always)
+
+  // POS Signup + Setup, based on business type
+  if (state.business === 'product') {
+    enabled[13] = 'essential'; // POS Signup
+    enabled[3] = 'essential';  // POS Setup
+  }
+  if (state.business === 'service') {
+    enabled[8] = 'essential';  // CRM (placeholder)
+  }
+
+  // Botcake Signup + Setup, based on chat platforms
+  const chatPlatforms = ['facebook', 'instagram', 'zalo'];
+  if (state.platforms.some(p => chatPlatforms.includes(p))) {
+    enabled[14] = 'recommended'; // Botcake Signup
+    enabled[4] = 'recommended';  // Botcake Setup
+    enabled[5] = 'optional';     // Botcake AI
+  }
+
+  // ===== PLATFORM CONNECTIONS =====
+  if (state.platforms.includes('facebook')) {
+    enabled[10] = 'essential';   // Facebook detailed connection
+  }
+  if (state.platforms.includes('instagram')) {
+    enabled[11] = 'essential';   // Instagram detailed connection
+  }
+  if (state.platforms.includes('whatsapp')) {
+    enabled[6] = 'essential';    // WhatsApp API
+    enabled[12] = 'recommended'; // WhatsApp Co-Existence (alternative)
+  }
+
+  // ===== SETUPS =====
+  enabled[2] = 'essential';   // Livechat Setup
+
+  // ===== ADS-DRIVEN MODULES =====
+  if (state.ads) {
+    if (state.platforms.includes('whatsapp')) {
+      enabled[7] = 'essential';  // CTWA Campaign
+    }
+    if (state.platforms.some(p => ['facebook', 'instagram'].includes(p))) {
+      enabled[9] = 'recommended'; // CTD (placeholder)
+    }
+  }
+
+  return enabled;
+}
+
+// =============== MODULE ORDERING ===============
+// Default display order: all SIGNUPS first (1, 13, 14), then platform connections,
+// then SETUPS, then ads-driven modules. CRM (8) and CTD (9) come last as placeholders.
+const DEFAULT_MODULE_ORDER = [
+  1,    // Pancake Signup
+  13,   // POS Signup
+  14,   // Botcake Signup
+  10,   // Facebook Connection (detailed)
+  11,   // Instagram Connection (detailed)
+  6,    // WhatsApp API (signup)
+  12,   // WhatsApp Co-Existence (alternative signup)
+  2,    // Livechat Setup
+  3,    // POS Setup
+  4,    // Botcake Setup
+  5,    // Botcake AI
+  7,    // CTWA Campaign
+  8,    // CRM placeholder
+  9     // CTD placeholder
+];
+const MODULE_ORDER_KEY = 'pancake_playbook_module_order';
+
+function getModuleOrder() {
+  if (state.moduleOrder && state.moduleOrder.length) return state.moduleOrder;
+  try {
+    const stored = localStorage.getItem(MODULE_ORDER_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length) {
+        state.moduleOrder = parsed;
+        return parsed;
+      }
+    }
+  } catch (e) {}
+  return DEFAULT_MODULE_ORDER.slice();
+}
+
+function saveModuleOrder(order) {
+  state.moduleOrder = order;
+  localStorage.setItem(MODULE_ORDER_KEY, JSON.stringify(order));
+}
+
+function resetModuleOrder() {
+  state.moduleOrder = null;
+  localStorage.removeItem(MODULE_ORDER_KEY);
+  renderRecommendation();
+  showSavedToast();
+}
+
+function isModuleOrderCustomized() {
+  const order = getModuleOrder();
+  return JSON.stringify(order) !== JSON.stringify(DEFAULT_MODULE_ORDER);
+}
+
+// Move a module up (-1) or down (+1) in the order
+function moveModule(section, direction) {
+  const order = getModuleOrder().slice();
+  const enabled = state.enabledSections || computeEnabledSections();
+  const enabledOrder = order.filter(n => enabled[n]);
+  const idx = enabledOrder.indexOf(section);
+  if (idx < 0) return;
+  const newIdx = idx + direction;
+  if (newIdx < 0 || newIdx >= enabledOrder.length) return;
+  [enabledOrder[idx], enabledOrder[newIdx]] = [enabledOrder[newIdx], enabledOrder[idx]];
+  // Stitch back into the full order: only enabled positions change
+  let i = 0;
+  const newOrder = order.map(n => enabled[n] ? enabledOrder[i++] : n);
+  // Add any enabled sections that weren't in the saved order yet (safety net)
+  for (const n of Object.keys(enabled).map(Number)) {
+    if (!newOrder.includes(n)) newOrder.push(n);
+  }
+  saveModuleOrder(newOrder);
+  renderRecommendation();
+  showSavedToast();
+}
+
+// Reorder by drag-and-drop: move `fromSection` to be in `toSection`'s position
+function reorderModulesByDrop(fromSection, toSection, dropPosition) {
+  if (fromSection === toSection) return;
+  const order = getModuleOrder().slice();
+  const enabled = state.enabledSections || computeEnabledSections();
+  const enabledOrder = order.filter(n => enabled[n]);
+  const fromIdx = enabledOrder.indexOf(fromSection);
+  const toIdx = enabledOrder.indexOf(toSection);
+  if (fromIdx < 0 || toIdx < 0) return;
+  // Remove from old position
+  enabledOrder.splice(fromIdx, 1);
+  // Calculate new insert index (account for the removal)
+  let insertIdx = enabledOrder.indexOf(toSection);
+  if (dropPosition === 'below') insertIdx += 1;
+  enabledOrder.splice(insertIdx, 0, fromSection);
+  // Stitch back into the full order
+  let i = 0;
+  const newOrder = order.map(n => enabled[n] ? enabledOrder[i++] : n);
+  for (const n of Object.keys(enabled).map(Number)) {
+    if (!newOrder.includes(n)) newOrder.push(n);
+  }
+  saveModuleOrder(newOrder);
+  renderRecommendation();
+  showSavedToast();
+}
+
+// Step indexes in user-defined module order
+function enabledStepIndexes() {
+  if (!state.enabledSections) state.enabledSections = computeEnabledSections();
+  const order = getModuleOrder();
+  const enabled = state.enabledSections;
+  // Walk through ordered enabled sections, collecting steps for each
+  const out = [];
+  const seenSections = new Set();
+  order.forEach(sectionNum => {
+    if (enabled[sectionNum] && !seenSections.has(sectionNum)) {
+      seenSections.add(sectionNum);
+      whatsappSteps.forEach((step, idx) => {
+        if (step.section === sectionNum) out.push(idx);
+      });
+    }
+  });
+  // Catch any enabled sections not in the saved order (e.g. new modules added later)
+  Object.keys(enabled).map(Number).forEach(sectionNum => {
+    if (!seenSections.has(sectionNum)) {
+      whatsappSteps.forEach((step, idx) => {
+        if (step.section === sectionNum) out.push(idx);
+      });
+    }
+  });
+  return out;
+}
+
+function firstEnabledStepIndex() {
+  const list = enabledStepIndexes();
+  return list[0] ?? 0;
+}
+
+function nextEnabledStepIndex(currentIdx) {
+  const list = enabledStepIndexes();
+  const pos = list.indexOf(currentIdx);
+  if (pos < 0 || pos === list.length - 1) return null;
+  return list[pos + 1];
+}
+
+function prevEnabledStepIndex(currentIdx) {
+  const list = enabledStepIndexes();
+  const pos = list.indexOf(currentIdx);
+  if (pos <= 0) return null;
+  return list[pos - 1];
 }
 
 // =============== VERTICAL PICKER RENDER ===============
@@ -2201,65 +2971,191 @@ function renderVerticalPicker() {
 }
 
 // =============== RECOMMENDATION RENDER ===============
+const sectionMetaExt = {
+  1: { name: 'Pancake Signup', desc: 'Sign up & connect Facebook / Instagram pages' },
+  13: { name: 'POS Signup', desc: 'Create your Pancake POS account' },
+  14: { name: 'Botcake Signup', desc: 'Create your Botcake chatbot account' },
+  2: { name: 'Livechat Setup', desc: 'Inbox, tags, staff, Chrome extension' },
+  3: { name: 'POS Setup', desc: 'Shops, orders, currency, products' },
+  4: { name: 'Botcake Setup', desc: 'Add page, flows, automation' },
+  5: { name: 'Botcake AI', desc: 'AI agent + Pancake Wallet top-up' },
+  6: { name: 'WhatsApp API & CAPI', desc: 'WABA + Conversion API setup' },
+  7: { name: 'CTWA Campaign', desc: 'Click-to-WhatsApp ads on Meta' },
+  8: { name: 'Pancake CRM', desc: 'Customer relationship management — coming soon' },
+  9: { name: 'CTD Campaign', desc: 'Click-to-Direct ads (Messenger/Instagram) — coming soon' },
+  10: { name: 'Facebook Connection', desc: 'Detailed FB Page + IG link connection flow' },
+  11: { name: 'Instagram Connection', desc: '3 methods incl. Unified Onboarding' },
+  12: { name: 'WhatsApp Co-Existence', desc: 'Alternative: sync with WhatsApp Business mobile app' }
+};
+
+function platformLabel(p) {
+  return ({
+    facebook: 'Facebook / Messenger',
+    instagram: 'Instagram',
+    whatsapp: 'WhatsApp',
+    tiktok: 'TikTok',
+    zalo: 'Zalo',
+    line: 'Line'
+  })[p] || p;
+}
+
 function renderRecommendation() {
-  const v = verticals[state.vertical];
-  if (!v) return;
+  const enabled = state.enabledSections || computeEnabledSections();
+  state.enabledSections = enabled;
 
   // Header chips
+  const platformChips = state.platforms.map(p => `<span class="chip">${platformLabel(p)}</span>`).join('');
+  const businessLabel = state.business === 'product' ? '🛍️ Products' : '📅 Services';
+  const adsLabel = state.ads ? '📢 Running ads' : '— No ads';
+
   document.getElementById('recChips').innerHTML = `
     ${state.country ? `<span class="chip">${flagFor(state.country)} ${state.countryName}</span>` : ''}
-    ${state.platform ? `<span class="chip">${state.platformName}</span>` : ''}
-    <span class="chip">${v.icon} ${v.name}</span>
+    ${platformChips}
+    <span class="chip">${businessLabel}</span>
+    <span class="chip">${adsLabel}</span>
   `;
 
   // Meta numbers
-  const essentialCount = Object.values(v.sections).filter(p => p === 'essential').length;
-  const essentialSteps = whatsappSteps.filter(s => v.sections[s.section] === 'essential').length;
-  document.getElementById('recCountSections').textContent = essentialCount;
-  document.getElementById('recCountSteps').textContent = essentialSteps;
-  document.getElementById('recCountTime').textContent = v.estTime;
+  const essentialSectionsCount = Object.values(enabled).filter(p => p === 'essential').length;
+  const totalStepsCount = enabledStepIndexes().length;
 
-  // Subtitle
-  document.getElementById('recSub').textContent = `For a ${v.name.toLowerCase()} business, here's the Pancake bundle we suggest. Tap any section to jump straight in.`;
+  // Rough time estimate (1.5 min per step)
+  const estMins = Math.round(totalStepsCount * 1.5);
 
-  // Add-ons
-  document.getElementById('recAddons').innerHTML = v.addons.length ? `
-    <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Recommended add-ons</div>
+  document.getElementById('recCountSections').textContent = essentialSectionsCount;
+  document.getElementById('recCountSteps').textContent = totalStepsCount;
+  document.getElementById('recCountTime').textContent = `~${estMins} min`;
+
+  document.getElementById('recSub').textContent = state.language === 'vi'
+    ? 'Dựa trên lựa chọn của bạn, đây là bộ giải pháp Pancake chúng tôi đề xuất. Nhấn vào bất kỳ phần nào để vào thẳng nội dung.'
+    : 'Based on your selections, here\'s the Pancake bundle we suggest. Tap any section to jump straight in.';
+
+  // Add-ons (auto-derived from selections)
+  const addons = [];
+  if (state.business === 'product') addons.push('Pancake POS');
+  if (state.business === 'service') addons.push('Pancake CRM');
+  if (state.platforms.some(p => ['facebook','instagram','zalo'].includes(p))) addons.push('Botcake automation', 'Botcake AI');
+  if (state.platforms.includes('whatsapp')) addons.push('WhatsApp Business API');
+  if (state.ads && state.platforms.includes('whatsapp')) addons.push('CAPI', 'CTWA Ads');
+  if (state.ads && state.platforms.some(p => ['facebook','instagram'].includes(p))) addons.push('CTD Ads');
+
+  document.getElementById('recAddons').innerHTML = addons.length ? `
+    <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">${state.language === 'vi' ? 'Add-on được đề xuất' : 'Recommended add-ons'}</div>
     <div class="rec-addons">
-      ${v.addons.map(a => `<span class="rec-addon">✓ ${a}</span>`).join('')}
+      ${addons.map(a => `<span class="rec-addon">✓ ${a}</span>`).join('')}
     </div>
   ` : '';
 
-  // Section list (sorted: essential first, then recommended, then optional)
-  const priorityOrder = { essential: 0, recommended: 1, optional: 2 };
-  const sections = Object.entries(v.sections)
-    .map(([num, priority]) => ({ num: parseInt(num), priority }))
-    .sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority] || a.num - b.num);
+  // Section list — show in user-defined module order (drag-and-droppable)
+  const order = getModuleOrder();
+  const sections = [];
+  const seenSections = new Set();
+  order.forEach(num => {
+    if (enabled[num] && !seenSections.has(num)) {
+      seenSections.add(num);
+      sections.push({ num, priority: enabled[num] });
+    }
+  });
+  Object.entries(enabled).forEach(([n, p]) => {
+    const num = parseInt(n);
+    if (!seenSections.has(num)) sections.push({ num, priority: p });
+  });
 
-  document.getElementById('recSectionList').innerHTML = sections.map(({ num, priority }) => {
-    const meta = sectionMeta[num];
-    const badge = priority === 'essential' ? 'Essential'
+  const badgeText = (priority) => {
+    if (state.language === 'vi') {
+      return priority === 'essential' ? 'Cần thiết'
+        : priority === 'recommended' ? 'Đề xuất'
+        : 'Tùy chọn';
+    }
+    return priority === 'essential' ? 'Essential'
       : priority === 'recommended' ? 'Recommended'
       : 'Optional';
+  };
+
+  // Reorder hint + reset button
+  const hintText = state.language === 'vi'
+    ? '<strong>↕️ Sắp xếp lại:</strong> kéo thả các module hoặc dùng nút ▲▼ để thay đổi thứ tự.'
+    : '<strong>↕️ Reorder:</strong> drag modules or use the ▲▼ arrows to change the order.';
+  const resetLabel = state.language === 'vi' ? 'Khôi phục thứ tự mặc định' : 'Reset to default';
+  document.getElementById('recReorderHint').innerHTML = `
+    <span>${hintText}</span>
+    ${isModuleOrderCustomized() ? `<button class="reset-btn" onclick="resetModuleOrder()">${resetLabel}</button>` : ''}
+  `;
+
+  document.getElementById('recSectionList').innerHTML = sections.map(({ num, priority }, idx) => {
+    const meta = sectionMetaExt[num];
+    const isFirst = idx === 0;
+    const isLast = idx === sections.length - 1;
     return `
-      <div class="rec-section ${priority}" onclick="jumpToSection(${num})">
+      <div class="rec-section ${priority} draggable" data-section="${num}" draggable="true">
+        <span class="rec-section-handle" title="Drag to reorder">⋮⋮</span>
         <div class="rec-section-num">${String(num).padStart(2, '0')}</div>
-        <div class="rec-section-info">
+        <div class="rec-section-info" onclick="jumpToSection(${num})" style="cursor: pointer;">
           <div class="name">${meta.name}</div>
           <div class="desc">${meta.desc}</div>
         </div>
-        <span class="rec-section-badge">${badge}</span>
+        <span class="rec-section-badge">${badgeText(priority)}</span>
+        <div class="rec-section-arrows">
+          <button class="rec-section-arrow" onclick="event.stopPropagation(); moveModule(${num}, -1)" ${isFirst ? 'disabled' : ''} title="Move up">▲</button>
+          <button class="rec-section-arrow" onclick="event.stopPropagation(); moveModule(${num}, 1)" ${isLast ? 'disabled' : ''} title="Move down">▼</button>
+        </div>
       </div>
     `;
   }).join('');
+
+  attachDragReorder();
+}
+
+// Attach HTML5 drag-and-drop handlers to the rec section list
+function attachDragReorder() {
+  const list = document.getElementById('recSectionList');
+  if (!list) return;
+  let dragSection = null;
+
+  list.querySelectorAll('.rec-section').forEach(el => {
+    el.addEventListener('dragstart', (e) => {
+      dragSection = parseInt(el.dataset.section);
+      el.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      // Required for Firefox
+      try { e.dataTransfer.setData('text/plain', String(dragSection)); } catch (err) {}
+    });
+    el.addEventListener('dragend', () => {
+      el.classList.remove('dragging');
+      list.querySelectorAll('.rec-section').forEach(e2 => {
+        e2.classList.remove('drop-above', 'drop-below');
+      });
+      dragSection = null;
+    });
+    el.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      const targetSection = parseInt(el.dataset.section);
+      if (!dragSection || dragSection === targetSection) return;
+      // Determine drop position: top half = above, bottom half = below
+      const rect = el.getBoundingClientRect();
+      const midY = rect.top + rect.height / 2;
+      const dropPos = e.clientY < midY ? 'above' : 'below';
+      list.querySelectorAll('.rec-section').forEach(e2 => {
+        e2.classList.remove('drop-above', 'drop-below');
+      });
+      el.classList.add(dropPos === 'above' ? 'drop-above' : 'drop-below');
+    });
+    el.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const targetSection = parseInt(el.dataset.section);
+      if (!dragSection || dragSection === targetSection) return;
+      const rect = el.getBoundingClientRect();
+      const midY = rect.top + rect.height / 2;
+      const dropPos = e.clientY < midY ? 'above' : 'below';
+      reorderModulesByDrop(dragSection, targetSection, dropPos);
+    });
+  });
 }
 
 function jumpToSection(sectionNum) {
-  // Find first step of this section and jump straight there
   const idx = whatsappSteps.findIndex(s => s.section === sectionNum);
   if (idx === -1) return;
-  state.platform = 'whatsapp';
-  state.platformName = 'WhatsApp';
   state.flowIndex = idx;
   showScreen('flow');
   renderStep();
@@ -2304,23 +3200,49 @@ document.querySelectorAll('.country-card').forEach(card => {
   card.addEventListener('click', () => {
     state.country = card.dataset.country;
     state.countryName = card.dataset.name;
+    // Auto-set language: Vietnam → Vietnamese, others → English
+    state.language = (state.country === 'VN') ? 'vi' : 'en';
+    state.platforms = [];
+    updatePlatformContinueBtn();
+    document.querySelectorAll('#screen-platform .platform-card').forEach(c => c.classList.remove('selected'));
     showScreen('platform');
   });
 });
 
-document.querySelectorAll('.platform-card').forEach(card => {
+// Multi-select for platforms
+document.querySelectorAll('#screen-platform .platform-card').forEach(card => {
   card.addEventListener('click', () => {
     const platform = card.dataset.platform;
-    const name = card.dataset.name;
-    if (platform === 'whatsapp') {
-      state.platform = platform;
-      state.platformName = name;
-      state.flowIndex = 0;
-      renderVerticalPicker();
-      showScreen('vertical');
+    const idx = state.platforms.indexOf(platform);
+    if (idx >= 0) {
+      state.platforms.splice(idx, 1);
+      card.classList.remove('selected');
     } else {
-      showComingSoon(platform, name);
+      state.platforms.push(platform);
+      card.classList.add('selected');
     }
+    updatePlatformContinueBtn();
+  });
+});
+
+function updatePlatformContinueBtn() {
+  const btn = document.getElementById('platformContinueBtn');
+  if (btn) btn.disabled = state.platforms.length === 0;
+}
+
+// Business type click
+document.querySelectorAll('#screen-business .platform-card').forEach(card => {
+  card.addEventListener('click', () => {
+    state.business = card.dataset.business;
+    goToAds();
+  });
+});
+
+// Ads click
+document.querySelectorAll('#screen-ads .platform-card').forEach(card => {
+  card.addEventListener('click', () => {
+    state.ads = card.dataset.ads === 'yes';
+    goToRecommendation();
   });
 });
 
@@ -2329,16 +3251,24 @@ function renderStep() {
   const step = whatsappSteps[state.flowIndex];
   const card = document.getElementById('stepCard');
 
+  // Apply VI translation if available
+  const title = tStep(state.flowIndex, 'title', step.title);
+  const subtitle = tStep(state.flowIndex, 'subtitle', step.subtitle);
+  const content = tStep(state.flowIndex, 'content', step.content);
+
   card.innerHTML = `
     <div class="step-section-label">${step.sectionLabel}</div>
-    <h2 class="step-title">${step.title}</h2>
-    ${step.subtitle ? `<p class="step-subtitle">${step.subtitle}</p>` : ''}
-    <div class="step-content">${step.content}</div>
+    <h2 class="step-title">${title}</h2>
+    ${subtitle ? `<p class="step-subtitle">${subtitle}</p>` : ''}
+    <div class="step-content">${content}</div>
   `;
 
   updateHeader();
 
-  const percent = Math.round(((state.flowIndex + 1) / whatsappSteps.length) * 100);
+  // Progress: based on position in enabled list
+  const enabledList = enabledStepIndexes();
+  const pos = enabledList.indexOf(state.flowIndex);
+  const percent = enabledList.length ? Math.round(((pos + 1) / enabledList.length) * 100) : 0;
   document.getElementById('progressFill').style.width = percent + '%';
   document.getElementById('progressPercent').textContent = percent + '% complete';
 
@@ -2372,26 +3302,24 @@ function renderStep() {
 }
 
 function nextStep() {
-  if (state.flowIndex < whatsappSteps.length - 1) {
-    state.flowIndex++;
+  const next = nextEnabledStepIndex(state.flowIndex);
+  if (next !== null) {
+    state.flowIndex = next;
     renderStep();
   } else {
-    // After last step, go to resources screen
+    // Last enabled step → go to resources
     goToResources();
   }
 }
 
 function prevStep() {
-  if (state.flowIndex > 0) {
-    state.flowIndex--;
+  const prev = prevEnabledStepIndex(state.flowIndex);
+  if (prev !== null) {
+    state.flowIndex = prev;
     renderStep();
   } else {
-    // On first step, "Back" returns to recommendation (or platform if no vertical was picked)
-    if (state.vertical) {
-      goToRecommendation();
-    } else {
-      showScreen('platform');
-    }
+    // On first enabled step, Back returns to recommendation
+    goToRecommendation();
   }
 }
 
@@ -2424,11 +3352,24 @@ let editMode = false;
 let localEdits = {};      // edits saved in this browser (drafts)
 let teamEdits = {};       // edits loaded from content-overrides.json (published)
 
-// Try to fetch published team edits
+// Try to fetch published team edits (text content + module order)
 async function loadTeamEdits() {
   try {
     const res = await fetch('content-overrides.json', { cache: 'no-store' });
-    if (res.ok) teamEdits = await res.json();
+    if (res.ok) {
+      const parsed = await res.json();
+      // New structured format
+      if (parsed.__edits || parsed.__moduleOrder) {
+        teamEdits = parsed.__edits || {};
+        // Only apply team module order if user hasn't customized locally
+        if (Array.isArray(parsed.__moduleOrder) && !localStorage.getItem(MODULE_ORDER_KEY)) {
+          state.moduleOrder = parsed.__moduleOrder;
+        }
+      } else {
+        // Legacy flat format
+        teamEdits = parsed;
+      }
+    }
   } catch (e) { /* no team file yet, that's fine */ }
 }
 
@@ -2454,53 +3395,109 @@ function getStepWithEdits(idx) {
   return merged;
 }
 
-// Override the global renderStep: re-render the current step using edits
+// Override the global renderStep: re-render the current step using edits + translations
 const originalRenderStep = renderStep;
 renderStep = function() {
   const step = getStepWithEdits(state.flowIndex);
   const card = document.getElementById('stepCard');
+
+  // Apply VI translation if available + local/team edits on top
+  const title = tStep(state.flowIndex, 'title', step.title);
+  const subtitle = tStep(state.flowIndex, 'subtitle', step.subtitle);
+  const content = tStep(state.flowIndex, 'content', step.content);
+
   card.innerHTML = `
     <div class="step-section-label">${step.sectionLabel}</div>
-    <h2 class="step-title" ${editMode ? 'contenteditable="true" data-field="title" data-placeholder="Step title"' : ''}>${step.title}</h2>
-    ${step.subtitle || editMode ? `<p class="step-subtitle" ${editMode ? 'contenteditable="true" data-field="subtitle" data-placeholder="Optional subtitle"' : ''}>${step.subtitle || ''}</p>` : ''}
-    <div class="step-content" data-field="content">${step.content}</div>
-    ${editMode ? `<button class="edit-content-btn" onclick="openContentEditor(${state.flowIndex})">✏️ Edit content HTML</button>` : ''}
+    <h2 class="step-title" ${editMode ? 'contenteditable="true" data-field="title" data-placeholder="Step title"' : ''}>${title}</h2>
+    ${subtitle || editMode ? `<p class="step-subtitle" ${editMode ? 'contenteditable="true" data-field="subtitle" data-placeholder="Optional subtitle"' : ''}>${subtitle || ''}</p>` : ''}
+    <div class="step-content" data-field="content">${content}</div>
+    ${editMode ? `<button class="edit-content-btn" onclick="openContentEditor(${state.flowIndex})">✏️ Edit content HTML</button> <button class="edit-content-btn" style="margin-left:8px;" onclick="insertImagePrompt(${state.flowIndex})">🖼️ Insert image</button>` : ''}
   `;
 
   updateHeader();
-  const percent = Math.round(((state.flowIndex + 1) / whatsappSteps.length) * 100);
+
+  // Progress based on position in enabled list
+  const enabledList = enabledStepIndexes();
+  const pos = enabledList.indexOf(state.flowIndex);
+  const percent = enabledList.length ? Math.round(((pos + 1) / enabledList.length) * 100) : 0;
   document.getElementById('progressFill').style.width = percent + '%';
-  document.getElementById('progressPercent').textContent = percent + '% complete';
+  document.getElementById('progressPercent').textContent = (state.language === 'vi' ? `${percent}% hoàn thành` : `${percent}% complete`);
 
-  const sectionNames = {
-    1: 'Section 1 · Pancake Ecosystem Signup',
-    2: 'Section 2 · Livechat Setup',
-    3: 'Section 3 · POS Details',
-    4: 'Section 4 · Botcake',
-    5: 'Section 5 · Botcake AI',
-    6: 'Section 6 · WhatsApp API & CAPI',
-    7: 'Section 7 · CTWA Campaign'
+  const sectionNamesEn = {
+    1: 'Pancake Signup',
+    13: 'POS Signup',
+    14: 'Botcake Signup',
+    10: 'Facebook Connection',
+    11: 'Instagram Connection',
+    6: 'WhatsApp API & CAPI',
+    12: 'WhatsApp Co-Existence',
+    2: 'Livechat Setup',
+    3: 'POS Setup',
+    4: 'Botcake Setup',
+    5: 'Botcake AI',
+    7: 'CTWA Campaign',
+    8: 'Pancake CRM',
+    9: 'CTD Campaign'
   };
-  document.getElementById('progressSection').textContent = sectionNames[step.section];
+  const sectionNamesVi = {
+    1: 'Đăng ký Pancake',
+    13: 'Đăng ký POS',
+    14: 'Đăng ký Botcake',
+    10: 'Kết nối Facebook',
+    11: 'Kết nối Instagram',
+    6: 'WhatsApp API & CAPI',
+    12: 'WhatsApp Co-Existence',
+    2: 'Thiết lập Livechat',
+    3: 'Cấu hình POS',
+    4: 'Cấu hình Botcake',
+    5: 'Botcake AI',
+    7: 'Chiến dịch CTWA',
+    8: 'Pancake CRM',
+    9: 'Chiến dịch CTD'
+  };
+  const sectionNames = state.language === 'vi' ? sectionNamesVi : sectionNamesEn;
+  document.getElementById('progressSection').textContent = sectionNames[step.section] || '';
 
+  // Section pills — show only enabled sections
+  const enabled = state.enabledSections || computeEnabledSections();
   document.querySelectorAll('.section-pill').forEach(pill => {
     const s = parseInt(pill.dataset.section);
     pill.classList.remove('active', 'completed');
-    if (s === step.section) pill.classList.add('active');
-    else if (s < step.section) pill.classList.add('completed');
+    if (!enabled[s]) {
+      pill.style.display = 'none';
+    } else {
+      pill.style.display = '';
+      if (s === step.section) pill.classList.add('active');
+      else if (s < step.section) pill.classList.add('completed');
+    }
   });
 
   document.getElementById('prevBtn').disabled = false;
   const nextBtn = document.getElementById('nextBtn');
-  if (state.flowIndex === whatsappSteps.length - 1) {
-    nextBtn.innerHTML = `View resources <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
+  const isLastEnabled = nextEnabledStepIndex(state.flowIndex) === null;
+  if (isLastEnabled) {
+    nextBtn.innerHTML = `${state.language === 'vi' ? 'Xem tài nguyên' : 'View resources'} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
   } else {
-    nextBtn.innerHTML = `Next Step <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
+    nextBtn.innerHTML = `${state.language === 'vi' ? 'Tiếp theo' : 'Next Step'} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
   }
+  document.getElementById('prevBtn').innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>${state.language === 'vi' ? 'Quay lại' : 'Back'}`;
 
   if (editMode) attachEditHandlers();
   card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
+
+// Image URL insertion helper (edit mode)
+function insertImagePrompt(idx) {
+  const url = prompt('Paste an image URL (or leave blank to cancel):');
+  if (!url || !url.trim()) return;
+  const merged = getStepWithEdits(idx);
+  const newContent = merged.content + `\n      <div class="screenshot"><img src="${url.trim()}" alt="" loading="lazy"></div>`;
+  const key = `${idx}.content`;
+  localEdits[key] = newContent;
+  saveLocalEdits();
+  if (state.screen === 'flow') renderStep();
+  showSavedToast();
+}
 
 function attachEditHandlers() {
   const card = document.getElementById('stepCard');
@@ -2580,13 +3577,24 @@ function saveContentEditor() {
 }
 
 function exportEdits() {
-  // Merge team + local into a single overrides file
+  // Bundle: text/content edits, module order, and other customizations
   const merged = { ...teamEdits, ...localEdits };
-  if (Object.keys(merged).length === 0) {
-    alert('No edits to export yet.');
+  const moduleOrder = getModuleOrder();
+  const isCustomOrder = JSON.stringify(moduleOrder) !== JSON.stringify(DEFAULT_MODULE_ORDER);
+
+  if (Object.keys(merged).length === 0 && !isCustomOrder) {
+    alert('No edits or custom module order to export yet.');
     return;
   }
-  const blob = new Blob([JSON.stringify(merged, null, 2)], { type: 'application/json' });
+
+  // Use a structured format: edits go under "__edits", order under "__moduleOrder"
+  // (legacy flat format also supported on import)
+  const payload = {
+    __edits: merged,
+    __moduleOrder: isCustomOrder ? moduleOrder : undefined
+  };
+
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -2606,11 +3614,26 @@ function importEdits() {
       const text = await file.text();
       const imported = JSON.parse(text);
       if (typeof imported !== 'object') throw new Error('Not an object');
-      // Merge into local edits
-      Object.assign(localEdits, imported);
+
+      let importedEdits = imported;
+      let importedOrder = null;
+
+      // New structured format
+      if (imported.__edits || imported.__moduleOrder) {
+        importedEdits = imported.__edits || {};
+        importedOrder = Array.isArray(imported.__moduleOrder) ? imported.__moduleOrder : null;
+      }
+
+      Object.assign(localEdits, importedEdits);
       saveLocalEdits();
+      let msg = `Imported ${Object.keys(importedEdits).length} content edits.`;
+      if (importedOrder) {
+        saveModuleOrder(importedOrder);
+        msg += ` Module order restored from file.`;
+      }
       if (state.screen === 'flow') renderStep();
-      alert(`Imported ${Object.keys(imported).length} edits. They've been saved as local drafts.`);
+      if (state.screen === 'recommendation') renderRecommendation();
+      alert(msg);
     } catch (err) {
       alert('Could not read JSON file: ' + err.message);
     }
@@ -2619,14 +3642,24 @@ function importEdits() {
 }
 
 function discardLocalDrafts() {
-  if (Object.keys(localEdits).length === 0) {
-    alert('No local drafts to discard.');
+  const hasContentEdits = Object.keys(localEdits).length > 0;
+  const hasCustomOrder = isModuleOrderCustomized();
+  if (!hasContentEdits && !hasCustomOrder) {
+    alert('No local drafts or custom order to discard.');
     return;
   }
-  if (!confirm(`Discard ${Object.keys(localEdits).length} unsaved local edits? This cannot be undone.`)) return;
+  const parts = [];
+  if (hasContentEdits) parts.push(`${Object.keys(localEdits).length} content edits`);
+  if (hasCustomOrder) parts.push('custom module order');
+  if (!confirm(`Discard ${parts.join(' and ')}? This cannot be undone.`)) return;
   localEdits = {};
   saveLocalEdits();
+  if (hasCustomOrder) {
+    state.moduleOrder = null;
+    localStorage.removeItem(MODULE_ORDER_KEY);
+  }
   if (state.screen === 'flow') renderStep();
+  if (state.screen === 'recommendation') renderRecommendation();
 }
 
 // Init edit mode
@@ -2647,8 +3680,11 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Initial
-showScreen('country');
+// Initial — load Vietnamese translations first, then show country picker
+loadTranslations().then(() => {
+  showScreen('country');
+  applyTranslations();
+});
 </script>
 
 <!-- Edit Mode UI -->

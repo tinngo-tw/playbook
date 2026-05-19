@@ -1,0 +1,265 @@
+{
+  "ui": {
+    "brand_title": "Pancake Onboarding",
+    "brand_subtitle": "Quy trình thiết lập tương tác",
+    "country_eyebrow": "Bước 1 / 4",
+    "country_title": "Bạn đến từ đâu?",
+    "country_subtitle": "Chọn thị trường của bạn để chúng tôi cá nhân hóa hướng dẫn và thông tin hỗ trợ phù hợp.",
+    "platform_eyebrow": "Bước 2 / 4",
+    "platform_title": "Bạn bán hàng trên những nền tảng nào?",
+    "platform_subtitle": "Chọn kênh nhắn tin chính bạn muốn thiết lập trước.",
+    "business_eyebrow": "Bước 3 / 4",
+    "business_title": "Bạn kinh doanh sản phẩm hay dịch vụ?",
+    "business_product": "Bán sản phẩm",
+    "business_service": "Dịch vụ / Booking",
+    "ads_eyebrow": "Bước 4 / 4",
+    "ads_title": "Bạn có chạy quảng cáo Meta không?",
+    "ads_yes": "Có",
+    "ads_no": "Chưa",
+    "rec_title": "Bộ giải pháp được đề xuất",
+    "rec_start": "Bắt đầu onboarding",
+    "next_step": "Tiếp theo",
+    "back": "Quay lại",
+    "view_resources": "Xem tài nguyên",
+    "step_x_of_y": "Bước {x} / {y}",
+    "percent_complete": "{p}% hoàn thành",
+    "saved_toast": "Đã lưu ✓",
+    "edit_done": "Xong",
+    "edit_export": "Xuất",
+    "edit_import": "Nhập",
+    "edit_discard": "Xóa nháp",
+    "edit_local_drafts": "bản nháp"
+  },
+  "steps": {
+    "0": {
+      "title": "Chào mừng bạn đến với Playbook CTWA & CAPI",
+      "subtitle": "Hướng dẫn từng bước kết nối WhatsApp Business API và Conversion API với tài khoản Pancake của bạn.",
+      "content": "\n      <p>Playbook tương tác này sẽ đưa bạn qua ba phần:</p>\n      <ul>\n        <li><strong>Onboarding hệ sinh thái Pancake</strong> — Thiết lập tài khoản Pancake, Pancake POS và Botcake.</li>\n        <li><strong>Kết nối WhatsApp API &amp; CAPI</strong> — Liên kết số WhatsApp Business và cấu hình sự kiện chuyển đổi.</li>\n        <li><strong>Thiết lập chiến dịch CTWA</strong> — Tài liệu tham khảo để chạy quảng cáo Click-to-WhatsApp trên Meta.</li>\n      </ul>\n      <div class=\"callout info\">\n        <div class=\"callout-icon\">📋</div>\n        <div><strong>Trước khi bắt đầu:</strong> Hãy đảm bảo bạn có tài khoản Facebook với toàn quyền truy cập vào một Business Manager Account đã được xác minh, và một website doanh nghiệp có thể truy cập được.</div>\n      </div>\n      <p>Nhấn <strong>Tiếp theo</strong> khi bạn đã sẵn sàng bắt đầu.</p>\n    "
+    },
+    "1": {
+      "title": "Đăng nhập vào Pancake",
+      "subtitle": "Bước 1/3 — Thiết lập tài khoản Pancake của bạn.",
+      "content": "\n      <p>Truy cập <a href=\"https://pancake.biz\" target=\"_blank\">https://pancake.biz</a> và nhấn nút <strong>Sign In</strong> ở góc trên bên phải.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-002.png\" alt=\"pancake.biz homepage\" loading=\"lazy\"></div>\n      <div class=\"ui-mock\">Thao tác: nút <span class=\"action-tag\">Sign In</span> ở góc trên bên phải trang chủ.</div>\n      <div class=\"callout tip\">\n        <div class=\"callout-icon\">💡</div>\n        <div>Pancake là nền tảng nhắn tin đa kênh giúp hợp nhất mọi cuộc hội thoại với khách hàng trên Facebook, Instagram, WhatsApp và nhiều kênh khác.</div>\n      </div>\n    "
+    },
+    "2": {
+      "title": "Đăng nhập bằng Facebook",
+      "subtitle": "Dùng tài khoản admin của Business Manager.",
+      "content": "\n      <p>Tại màn hình đăng nhập, nhấn nút <strong>Facebook</strong>.</p>\n      <p>Dùng tài khoản Facebook có <strong>toàn quyền truy cập Business Manager Account của bạn</strong> để đăng nhập.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-003.png\" alt=\"Pancake login with Facebook button\" loading=\"lazy\"></div>\n      <div class=\"callout warning\">\n        <div class=\"callout-icon\">⚠️</div>\n        <div><strong>Lưu ý quan trọng:</strong> Tài khoản Facebook phải là admin của Business Manager. Nếu bạn đăng nhập bằng tài khoản cá nhân không có quyền BM, việc kết nối WhatsApp ở các bước sau sẽ thất bại.</div>\n      </div>\n    "
+    },
+    "3": {
+      "title": "Hoàn tất quy trình đăng ký với Meta",
+      "subtitle": "Cấp các quyền tiêu chuẩn và chọn tài sản của bạn.",
+      "content": "\n      <p>Bạn sẽ đi qua một quy trình đăng ký từ Meta. Trong quy trình này:</p>\n      <ul>\n        <li>Chọn đúng <strong>Facebook page</strong> (page bạn sẽ liên kết với số WhatsApp API sau này).</li>\n        <li>Chọn đúng <strong>Business Manager Account</strong>.</li>\n      </ul>\n      <div class=\"callout warning\">\n        <div class=\"callout-icon\">🔒</div>\n        <div><strong>Không thay đổi bất kỳ quyền nào</strong> trong quy trình được yêu cầu. Các quyền Meta yêu cầu là tiêu chuẩn và bắt buộc để Pancake hoạt động chính xác.</div>\n      </div>\n      <p>Khi quy trình hoàn tất, bạn sẽ được chuyển về Dashboard của Pancake.</p>\n    "
+    },
+    "4": {
+      "title": "Kích hoạt các page của bạn",
+      "subtitle": "Kết nối Facebook và Instagram vào Pancake.",
+      "content": "\n      <p>Từ Dashboard của Pancake, nhấn nút <strong>Connect</strong> để kích hoạt các page Facebook và Instagram.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-004.png\" alt=\"Pancake dashboard - no pages activated yet\" loading=\"lazy\"></div>\n      <div class=\"ui-mock\">Thao tác: nút <span class=\"action-tag\">+ Connect</span> ở góc trên bên phải dashboard.</div>\n      <div class=\"callout success\">\n        <div class=\"callout-icon\">✅</div>\n        <div>Nếu bạn thấy thông báo \"No pages have been activated yet\" — đó là điều bình thường. Nhấn Connect sẽ kéo về các tài sản bạn đã cấp quyền ở bước trước.</div>\n      </div>\n    "
+    },
+    "5": {
+      "title": "Đăng ký Pancake POS",
+      "subtitle": "Bước 2/3 — Quản lý đơn hàng và bán hàng.",
+      "content": "\n      <p>Truy cập <a href=\"https://pos.pancake.biz\" target=\"_blank\">https://pos.pancake.biz</a> và nhấn nút <strong>Try now</strong> hoặc <strong>Sign Up</strong> ở góc trên bên phải.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-005.png\" alt=\"Pancake POS homepage\" loading=\"lazy\"></div>\n      <div class=\"callout tip\">\n        <div class=\"callout-icon\">🛒</div>\n        <div>Pancake POS giúp quản lý bán hàng đa kênh, tồn kho và theo dõi đơn hàng — và đây cũng là nơi bạn sẽ cấu hình CAPI (Conversion API) ở các bước sau trong playbook này.</div>\n      </div>\n    "
+    },
+    "6": {
+      "title": "Đăng nhập bằng cùng một tài khoản Facebook",
+      "subtitle": "Dùng đúng tài khoản đã đăng nhập Pancake.",
+      "content": "\n      <p>Bạn sẽ được chuyển đến trang đăng nhập. Nhấn nút <strong>Facebook</strong> và thực hiện quy trình đăng nhập bằng <strong>cùng tài khoản</strong> bạn đã dùng cho Pancake.</p>\n      <div class=\"screenshot-grid two-col\">\n        <div class=\"screenshot\"><img src=\"assets/img-006.png\" alt=\"Login page\" loading=\"lazy\"></div>\n        <div class=\"screenshot\"><img src=\"assets/img-007.png\" alt=\"POS dashboard\" loading=\"lazy\"></div>\n      </div>\n      <div class=\"callout warning\">\n        <div class=\"callout-icon\">⚠️</div>\n        <div>Đăng nhập bằng tài khoản Facebook khác sẽ tạo ra một workspace POS riêng biệt, không thể đồng bộ với các cuộc hội thoại trên Pancake của bạn.</div>\n      </div>\n      <p>Khi hoàn tất, bạn sẽ được chuyển về dashboard của POS.</p>\n    "
+    },
+    "7": {
+      "title": "Đăng ký Botcake",
+      "subtitle": "Bước 3/3 — Nền tảng AI chatbot.",
+      "content": "\n      <p>Truy cập <a href=\"https://botcake.io\" target=\"_blank\">https://botcake.io</a> và nhấn nút <strong>Try now</strong> hoặc <strong>Login</strong> ở góc trên bên phải.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-008.png\" alt=\"Botcake.io homepage\" loading=\"lazy\"></div>\n      <p>Tương tự như trước: nhấn nút <strong>Facebook</strong> và đăng nhập bằng <strong>cùng tài khoản</strong> đã dùng cho Pancake.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-009.png\" alt=\"Login with Facebook\" loading=\"lazy\"></div>\n      <div class=\"callout tip\">\n        <div class=\"callout-icon\">🤖</div>\n        <div>Botcake cung cấp khả năng tự động hóa bằng AI — trả lời tự động, sàng lọc khách hàng tiềm năng và chốt đơn ngay trong khung chat trên Messenger, Instagram và WhatsApp.</div>\n      </div>\n    "
+    },
+    "8": {
+      "title": "Hoàn tất onboarding hệ sinh thái",
+      "subtitle": "Bạn đã có mặt trên cả 3 nền tảng.",
+      "content": "\n      <div class=\"callout success\">\n        <div class=\"callout-icon\">🎉</div>\n        <div><strong>Chúc mừng bạn!</strong> Bạn đã onboarding xong cả 3 nền tảng trong hệ sinh thái Pancake: Pancake, Pancake POS và Botcake.</div>\n      </div>\n      <p>Tiếp theo, chúng ta sẽ đi sâu vào cách <strong>sử dụng</strong> từng nền tảng — bắt đầu với Livechat, rồi đến chi tiết Pancake POS, tự động hóa Botcake và Botcake AI. Sau đó chúng ta sẽ kết nối WhatsApp Business API + CAPI và kết thúc với chiến dịch CTWA.</p>\n      <div class=\"callout tip\">\n        <div class=\"callout-icon\">💡</div>\n        <div>Nếu bạn chỉ quan tâm đến phần thiết lập WhatsApp, hãy dùng các pill phần ở phía trên để nhảy thẳng đến <strong>Phần 6 · WhatsApp API &amp; CAPI</strong>.</div>\n      </div>\n    "
+    },
+    "9": {
+      "title": "Trả lời tin nhắn inbox và bình luận",
+      "subtitle": "Đồng bộ hội thoại từ Meta Business Suite về Pancake.",
+      "content": "\n      <p>Nhấn vào kết nối của bạn (ví dụ \"Pancake Philippines\") để bắt đầu đồng bộ hội thoại từ Meta Business Suite.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-14.png\" alt=\"Conversation inbox view\" loading=\"lazy\"></div>\n      <p>Tại đây bạn có thể:</p>\n      <ul>\n        <li><strong>Gán hoặc cập nhật hội thoại</strong> với nhiều tùy chọn.</li>\n        <li><strong>Lọc bình luận</strong> từ các bài đăng trên Page và trả lời trực tiếp.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/page-15.png\" alt=\"Comment filter panel\" loading=\"lazy\"></div>\n      <div class=\"callout tip\">\n        <div class=\"callout-icon\">💬</div>\n        <div>Tất cả tin nhắn inbox và bình luận page đều đổ về một giao diện thống nhất — đội ngũ của bạn trả lời từ một chỗ, bất kể kênh nào.</div>\n      </div>\n    "
+    },
+    "10": {
+      "title": "Thiết lập tag và mẫu trả lời nhanh",
+      "subtitle": "Tăng tốc các câu trả lời lặp lại bằng phím tắt.",
+      "content": "\n      <p>Pancake hỗ trợ trả lời nhanh và số lượng tag hội thoại không giới hạn, giúp tăng tốc xử lý câu hỏi của khách hàng đáng kể.</p>\n      <p>Để thiết lập trả lời nhanh:</p>\n      <ul>\n        <li>Vào <strong>Settings → Replying Helper</strong>.</li>\n        <li>Nhấn <strong>Create</strong> để thêm mẫu trả lời mới.</li>\n        <li>Thêm <strong>chủ đề</strong> và <strong>phím tắt</strong> (ví dụ: <code>/pr</code> cho \"thông tin sản phẩm\").</li>\n        <li>Soạn nội dung tin nhắn — bao gồm hình ảnh, file hoặc biến.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/page-17.png\" alt=\"Replying Helper saved replies list\" loading=\"lazy\"></div>\n      <p>Để dùng mẫu trả lời nhanh trong khung chat, gõ dấu gạch chéo (<code>/</code>) theo sau là phím tắt của bạn, rồi nhấn <strong>Enter</strong> để gửi.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-18.png\" alt=\"Quick reply shortcuts in chat\" loading=\"lazy\"></div>\n      <div class=\"ui-mock\">Ví dụ: <span class=\"action-tag\">/pr</span> → tự bung thành mẫu trả lời sản phẩm đã lưu.</div>\n    "
+    },
+    "11": {
+      "title": "Thêm thành viên team",
+      "subtitle": "Đưa nhân viên vào hộp thư chung.",
+      "content": "\n      <p>Để thêm nhân viên vào một kết nối Facebook Page:</p>\n      <ul>\n        <li>Đảm bảo tài khoản Facebook của nhân viên có <strong>full hoặc partial access</strong> tới Facebook Page của bạn.</li>\n        <li>Yêu cầu họ đăng nhập tại <a href=\"https://pancake.biz\" target=\"_blank\">pancake.biz</a> và kết nối các page có sẵn.</li>\n        <li>Sau khi kết nối, họ sẽ được tự động thêm vào các page và subscription của bạn (miễn là gói của bạn còn slot user trống).</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/page-20.png\" alt=\"Subscription Info — Users list\" loading=\"lazy\"></div>\n      <p>Để kiểm tra subscription và quản lý user, hãy vào <a href=\"https://pancake.biz/account\" target=\"_blank\">pancake.biz/account</a> → <strong>Subscription List</strong>.</p>\n    "
+    },
+    "12": {
+      "title": "Cài đặt Pancake Chrome Extension",
+      "subtitle": "Bắt buộc cho follow-up Facebook ngoài khung 24 giờ.",
+      "content": "\n      <p>Để chat follow-up ngoài khung nhắn tin tiêu chuẩn 24 giờ — và để bảo vệ chất lượng page của bạn — hãy cài Pancake Extension cho Chrome.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-22.png\" alt=\"Pancake Chrome Extension download\" loading=\"lazy\"></div>\n      <div class=\"callout info\">\n        <div class=\"callout-icon\">🧩</div>\n        <div><strong>Tải về:</strong> Tìm \"Pancake Extension\" trên Chrome Web Store và cài đặt.</div>\n      </div>\n      <p><strong>Lưu ý quan trọng:</strong></p>\n      <ul>\n        <li>Yêu cầu tài khoản user của Facebook Page.</li>\n        <li>Chỉ hoạt động trên Chrome trên laptop/desktop.</li>\n        <li>KHÔNG áp dụng cho luồng Chatbot hoặc tin nhắn trên mobile.</li>\n      </ul>\n    "
+    },
+    "13": {
+      "title": "Tạo đơn hàng đầu tiên từ khung chat",
+      "subtitle": "Ghi nhận thông tin khách và sản phẩm ngay trong hội thoại.",
+      "content": "\n      <p>Trong bất kỳ hội thoại nào, bạn có thể tạo đơn hàng để ghi nhận thông tin khách và chi tiết sản phẩm mà không cần rời khung chat.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-24.png\" alt=\"NEW button and order form\" loading=\"lazy\"></div>\n      <div class=\"screenshot\"><img src=\"assets/page-25.png\" alt=\"Order status dropdown\" loading=\"lazy\"></div>\n      <ul>\n        <li>Nhấn <strong>NEW</strong> ở góc trên bên phải của khung hội thoại.</li>\n        <li>Điền thông tin khách hàng, sản phẩm và chi tiết thanh toán vào form.</li>\n        <li>Gửi đi — đơn hàng sẽ được gắn vào bên phải của hội thoại.</li>\n      </ul>\n      <p>Trong khung Đơn hàng, bạn có thể nhấn <strong>Confirm</strong> hoặc đổi trạng thái đơn bất kỳ lúc nào.</p>\n    "
+    },
+    "14": {
+      "title": "Kích hoạt các shop trong POS",
+      "subtitle": "Biến các page đã kết nối thành shop POS.",
+      "content": "\n      <p>Nếu chưa có shop hoặc page nào hiển thị trên dashboard POS, hãy nhấn <strong>Active Shop</strong>.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-28.png\" alt=\"POS Active Shop button and modal\" loading=\"lazy\"></div>\n      <ul>\n        <li>Chọn các page bạn muốn kích hoạt.</li>\n        <li>Nhấn <strong>Active Shop</strong> để xác nhận.</li>\n        <li>Tất cả các page đã kết nối sẽ xuất hiện trên trang chủ POS.</li>\n      </ul>\n      <p>Dưới mỗi page, nhấn <strong>Enter</strong> để truy cập đơn hàng và dữ liệu của page đó. Dashboard hiển thị thống kê chung được tự động tạo từ hoạt động Pancake / POS của bạn.</p>\n    "
+    },
+    "15": {
+      "title": "Cập nhật đơn hàng hàng loạt",
+      "subtitle": "Chỉnh một đơn hoặc nhiều đơn cùng lúc.",
+      "content": "\n      <p>Từ menu bên trái, di chuột vào và chọn <strong>Order</strong> để xem giao diện đơn hàng thống nhất trên tất cả các kênh.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-31.png\" alt=\"POS dashboard with unified order view\" loading=\"lazy\"></div>\n      <ul>\n        <li><strong>Đơn lẻ:</strong> nhấn vào một đơn để chỉnh sửa thông tin.</li>\n        <li><strong>Cập nhật hàng loạt:</strong> chọn nhiều đơn, sau đó nhấn <strong>Quick Update</strong> trên thanh công cụ và chọn các trường cần thay đổi.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/page-32.png\" alt=\"Edit single order detail\" loading=\"lazy\"></div>\n      <div class=\"screenshot\"><img src=\"assets/page-34.png\" alt=\"Quick Update for batch order edits\" loading=\"lazy\"></div>\n    "
+    },
+    "16": {
+      "title": "Cài đặt tiền tệ và địa chỉ",
+      "subtitle": "Đảm bảo tiền tệ địa phương hiển thị đúng.",
+      "content": "\n      <p>Nếu đơn hàng đang hiển thị sai tiền tệ (ví dụ <code>đ</code> thay vì <code>$</code>), hãy cập nhật từ Shop Information.</p>\n      <ul>\n        <li>Từ thanh công cụ bên trái, di chuột và chọn <strong>Configuration</strong>.</li>\n        <li>Trong <strong>General → Shop</strong>, nhấn <strong>Shop Information</strong>.</li>\n        <li>Trong mục <strong>Country – Currency</strong>, chọn quốc gia và tiền tệ mặc định.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/page-37.png\" alt=\"Configuration → Shop information → Currency settings\" loading=\"lazy\"></div>\n    "
+    },
+    "17": {
+      "title": "Thêm sản phẩm đầu tiên",
+      "subtitle": "Ba bước: tạo, thông tin cơ bản, thông tin nâng cao.",
+      "content": "\n      <p>Vào <strong>Product</strong> ở menu bên trái để thêm sản phẩm mới.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-38.png\" alt=\"Product list and Product Setup modal\" loading=\"lazy\"></div>\n      <p><strong>Bước 1:</strong> Nhấn <strong>+ Add product</strong>.</p>\n      <p><strong>Bước 2 — Thông tin cơ bản:</strong> Tên sản phẩm và SKU là bắt buộc. Tùy chọn thêm giá, danh mục, thương hiệu và hình ảnh.</p>\n      <p><strong>Bước 3 — Thông tin nâng cao:</strong></p>\n      <div class=\"screenshot\"><img src=\"assets/page-40.png\" alt=\"Product variants and attributes\" loading=\"lazy\"></div>\n      <ul>\n        <li><strong>Manipulation warehouse</strong> — chọn kho xử lý sản phẩm này nếu bạn có nhiều kho.</li>\n        <li><strong>Attributes &amp; values</strong> — định nghĩa biến thể sản phẩm (màu, size, v.v.). Dùng <em>Quick add attributes</em> để tự phân phối giá trị qua các biến thể.</li>\n        <li><strong>Pricing</strong> — Last imported price (giá nhập), Retail price (giá bán) và số lượng tồn kho.</li>\n      </ul>\n      <div class=\"callout tip\">\n        <div class=\"callout-icon\">📦</div>\n        <div><strong>Thuật ngữ tồn kho:</strong> <em>Total quantity</em> = tổng đã nhập · <em>Available</em> = sẵn sàng bán · <em>Inventory</em> = đang có trong kho (không tính các đơn trả/đơn nhập đang xử lý).</div>\n      </div>\n    "
+    },
+    "18": {
+      "title": "Thêm page mới vào Botcake",
+      "subtitle": "Kết nối page Messenger, Instagram hoặc Zalo.",
+      "content": "\n      <p>Từ trang chủ Botcake, nhấn <strong>+ Add new page</strong>.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-42.png\" alt=\"Botcake.io login + Add new page\" loading=\"lazy\"></div>\n      <div class=\"screenshot\"><img src=\"assets/page-43.png\" alt=\"Choose platform: Messenger / Instagram / Zalo\" loading=\"lazy\"></div>\n      <p><strong>Chọn nền tảng</strong> mà page thuộc về:</p>\n      <ul>\n        <li><strong>Messenger</strong> — cho các Facebook page.</li>\n        <li><strong>Instagram</strong> — cho tài khoản Instagram Business.</li>\n        <li><strong>Zalo</strong> — cho Zalo Official Account.</li>\n      </ul>\n      <p>Sau đó chọn page cụ thể bạn muốn kết nối. Botcake sẽ chuyển bạn đến dashboard.</p>\n    "
+    },
+    "19": {
+      "title": "Chọn chế độ khởi đầu",
+      "subtitle": "Getting Started cho người mới, Professional cho người đã có kinh nghiệm.",
+      "content": "\n      <p>Sau khi kết nối page, Botcake sẽ hiển thị một khảo sát nhanh với hai lựa chọn:</p>\n      <ul>\n        <li><strong>Getting Started</strong> — Phù hợp nhất cho người mới chưa có kinh nghiệm chatbot. Botcake sẽ hướng dẫn bạn từng bước để xây dựng một chatbot đơn giản.</li>\n        <li><strong>Professional</strong> — Dành cho người đã biết cách dùng Botcake hoặc có kinh nghiệm chatbot — vào thẳng làm việc.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/page-44.png\" alt=\"As a newbie / As a professional cards\" loading=\"lazy\"></div>\n      <div class=\"callout tip\">\n        <div class=\"callout-icon\">🎓</div>\n        <div>Lần đầu? Hãy chọn <strong>Getting Started</strong> — bạn có thể chuyển sang chế độ khác bất cứ lúc nào.</div>\n      </div>\n    "
+    },
+    "20": {
+      "title": "Tạo message flow đầu tiên",
+      "subtitle": "Nơi lưu trữ tất cả tin nhắn của bot.",
+      "content": "\n      <p>Một <em>flow</em> là nơi lưu trữ tất cả các tin nhắn bạn đã tạo — quản lý, chỉnh sửa, sao chép hoặc xóa từ một chỗ duy nhất.</p>\n      <p>Để tạo flow:</p>\n      <ul>\n        <li>Nhấn <strong>+ Create new message flow</strong>.</li>\n        <li>Đặt tên cho flow.</li>\n        <li>Bắt đầu soạn nội dung.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/page-46.png\" alt=\"Flow library + Create new message flow\" loading=\"lazy\"></div>\n      <p>Bạn có thể chuyển đổi giữa <strong>Basic Builder</strong> (từng bước đơn giản) và <strong>Flow Builder</strong> (trình chỉnh sửa node trực quan) bất cứ lúc nào.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-47.png\" alt=\"Flow builder with content blocks\" loading=\"lazy\"></div>\n    "
+    },
+    "21": {
+      "title": "Thiết lập automation (Welcome Message)",
+      "subtitle": "Kích hoạt phản hồi của bot dựa trên hành động của khách.",
+      "content": "\n      <p>Automation bao gồm nhiều loại trigger — Welcome Message, Comment Reply, Keyword Detection và nhiều loại khác.</p>\n      <p>Từ thanh menu, di chuột qua <strong>Automation</strong> và chọn điều kiện trigger bạn muốn thiết lập. Đối với <strong>Welcome Message</strong>:</p>\n      <ul>\n        <li>Mở tính năng Welcome Message.</li>\n        <li>Chọn flow bạn đã tạo ở bước trước.</li>\n        <li>Bật toggle <strong>Activate</strong>.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/page-49.png\" alt=\"Automation sidebar with Welcome Message\" loading=\"lazy\"></div>\n      <p><strong>Bước cuối:</strong> Vào <strong>Setting → General → Basic Setting</strong> và bật <strong>Get Started button</strong>. Xong.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-50.png\" alt=\"Activate Welcome Message + Get Started button\" loading=\"lazy\"></div>\n      <div class=\"callout info\">\n        <div class=\"callout-icon\">📚</div>\n        <div><strong>Hướng dẫn automation đầy đủ:</strong> <a href=\"https://pke.gg/xk458ra6\" target=\"_blank\">https://pke.gg/xk458ra6</a></div>\n      </div>\n    "
+    },
+    "22": {
+      "title": "Về Botcake AI",
+      "subtitle": "Chatbot AI bán hàng đa kênh.",
+      "content": "\n      <p>Botcake AI là chatbot được hỗ trợ bởi AI, thiết kế cho bán hàng đa kênh — Facebook, Zalo, Instagram và website. Với khả năng hiểu ngôn ngữ tự nhiên, nó có thể:</p>\n      <ul>\n        <li>Gợi ý sản phẩm cho khách hàng.</li>\n        <li>Xử lý hỗ trợ khách hàng tự động.</li>\n        <li>Chốt đơn ngay trong khung chat.</li>\n        <li>Phân phối mã giảm giá theo quy tắc.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/page-52.png\" alt=\"Botcake AI pricing overview\" loading=\"lazy\"></div>\n      <div class=\"callout tip\">\n        <div class=\"callout-icon\">🤖</div>\n        <div>Botcake AI tiết kiệm thời gian, nâng cao trải nghiệm khách hàng và tăng tỷ lệ chuyển đổi. Bảng giá được hiển thị trong dashboard Botcake AI sau khi bạn thiết lập một AI agent.</div>\n      </div>\n    "
+    },
+    "23": {
+      "title": "Tạo một AI Agent",
+      "subtitle": "Prompt + chỉ dẫn = trợ lý AI của bạn.",
+      "content": "\n      <p>Để tạo AI Agent, hãy đưa cho AI các chỉ dẫn chi tiết để nó thực hiện đúng các hành động mong muốn.</p>\n      <p><strong>Bước 1:</strong> Chuẩn bị prompt. Pancake cung cấp thư viện mẫu sẵn:</p>\n      <div class=\"ui-mock\">\n        <strong>Botcake AI Prompt Library</strong> — các mẫu viết sẵn cho những kịch bản phổ biến (sales agent, customer support, product recommender, v.v.). Có sẵn trong dashboard Botcake.\n      </div>\n      <p><strong>Bước 2:</strong> Từ trang chủ Botcake, vào <strong>AI Agent List</strong>.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-53.png\" alt=\"Botcake AI Agent list\" loading=\"lazy\"></div>\n      <p><strong>Bước 3:</strong> Nhập <strong>Name</strong> và <strong>Description</strong>, sau đó dán prompt vào trường <strong>AI Instructions</strong>.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-54.png\" alt=\"Add new agent with Instructions and Preview\" loading=\"lazy\"></div>\n    "
+    },
+    "24": {
+      "title": "Nạp tiền vào Pancake Wallet",
+      "subtitle": "AI chạy bằng credit theo lượng dùng — nạp tối thiểu $10.",
+      "content": "\n      <p>Để xem trước hoặc bật AI trong các cuộc hội thoại, hãy nạp tiền vào Pancake Wallet. Tối thiểu là <strong>$10</strong>.</p>\n      <p><strong>Bước 1:</strong> Truy cập <a href=\"https://account.pancake.vn/\" target=\"_blank\">https://account.pancake.vn/</a> và đăng nhập bằng tài khoản Facebook đã kết nối với các page.</p>\n      <div class=\"screenshot\"><img src=\"assets/page-56.png\" alt=\"account.pancake.vn — top-up wallet\" loading=\"lazy\"></div>\n      <p><strong>Bước 2:</strong> Từ trang chủ, chọn <strong>Top-up</strong> và tạo tài khoản mới.</p>\n      <p><strong>Bước 3:</strong> Đặt tên cho tài khoản, sau đó tiến hành thanh toán.</p>\n    "
+    },
+    "25": {
+      "title": "Gắn ví của bạn vào Botcake",
+      "subtitle": "Kết nối lại và AI của bạn đã sẵn sàng chat.",
+      "content": "\n      <p>Quay lại Botcake tại <a href=\"https://botcake.io\" target=\"_blank\">botcake.io</a>:</p>\n      <ul>\n        <li>Từ thanh menu, di chuột qua biểu tượng <strong>AI</strong> và chọn <strong>General</strong>.</li>\n        <li>Trong <strong>Account Balance</strong>, nhấn <strong>Reconnect</strong>.</li>\n        <li>Số dư Pancake Wallet của bạn sẽ hiện ra. Nếu trên ngưỡng tối thiểu, AI đã sẵn sàng để dùng.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/page-57.png\" alt=\"Botcake AI → General → Reconnect wallet\" loading=\"lazy\"></div>\n      <p>Bây giờ bạn có thể xem trước AI từ giao diện AI Agent, hoặc gắn AI vào bất kỳ Automation nào để bắt đầu chat với khách hàng ngay lập tức.</p>\n      <div class=\"callout success\">\n        <div class=\"callout-icon\">✅</div>\n        <div>Botcake AI đã hoạt động. Hãy kiểm tra trong phần preview AI Agent trước khi bật cho các cuộc chat khách hàng thực tế.</div>\n      </div>\n    "
+    },
+    "26": {
+      "title": "Mở wizard kết nối",
+      "subtitle": "Bắt đầu thiết lập WhatsApp Business API.",
+      "content": "\n      <p>Từ Dashboard của Pancake, nhấn nút <strong>Connect</strong> (góc trên bên phải).</p>\n      <div class=\"screenshot\"><img src=\"assets/img-010.png\" alt=\"Pancake dashboard with Connect button highlighted\" loading=\"lazy\"></div>\n      <div class=\"ui-mock\">Thao tác: <span class=\"action-tag\">+ Connect</span> trên header của dashboard.</div>\n    "
+    },
+    "27": {
+      "title": "Chọn WhatsApp Business",
+      "subtitle": "Chọn tùy chọn kết nối WhatsApp.",
+      "content": "\n      <p>Trong panel \"Add a connection\", chọn <strong>WhatsApp</strong> từ menu bên trái, sau đó nhấn <strong>Connect WhatsApp Business</strong>.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-011.png\" alt=\"Add a connection - WhatsApp Business panel\" loading=\"lazy\"></div>\n      <div class=\"callout info\">\n        <div class=\"callout-icon\">ℹ️</div>\n        <div>Phương thức kết nối WhatsApp bằng QR code không còn được hỗ trợ. WhatsApp Business API chính thức là tích hợp duy nhất được hỗ trợ.</div>\n      </div>\n    "
+    },
+    "28": {
+      "title": "Xác nhận các yêu cầu",
+      "subtitle": "Tick vào checkbox và tiếp tục.",
+      "content": "\n      <p>Trước khi kết nối, Meta sẽ hiển thị checklist các yêu cầu. Hãy đảm bảo tài khoản của bạn đáp ứng tất cả:</p>\n      <ul>\n        <li><strong>Business Manager</strong> — phải được xác minh.</li>\n        <li><strong>Website doanh nghiệp</strong> — phải hợp lệ và hoạt động. (Link tới Facebook Page hoặc Instagram của bạn cũng được.)</li>\n        <li><strong>Số điện thoại kết nối</strong> — một số mới, hoặc một số bạn có thể dùng ở chế độ dual với ứng dụng WhatsApp Business trên mobile.</li>\n      </ul>\n      <p>Tick vào ô <em>\"I've read and understood the requirements above\"</em>, sau đó nhấn <strong>Continue</strong>.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-012.png\" alt=\"Before You Connect requirements panel\" loading=\"lazy\"></div>\n    "
+    },
+    "29": {
+      "title": "Mở Embedded Signup của Meta",
+      "subtitle": "Xác thực bằng Facebook.",
+      "content": "\n      <p>Một cửa sổ pop-up sẽ mở ra và chuyển bạn đến luồng <strong>Embedded Signup</strong> của Meta.</p>\n      <p>Chọn <strong>\"Continue as [tên của bạn]\"</strong> để đăng nhập bằng tài khoản Facebook có toàn quyền Business Manager — chính là tài khoản đã dùng cho Pancake.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-013.png\" alt=\"Facebook Login for Business - Continue as\" loading=\"lazy\"></div>\n      <div class=\"callout warning\">\n        <div class=\"callout-icon\">🚫</div>\n        <div>Nếu thấy \"Log into another account\", hãy đảm bảo bạn đang chuyển sang đúng tài khoản admin, không phải tạo profile cá nhân mới.</div>\n      </div>\n    "
+    },
+    "30": {
+      "title": "Đồng ý các điều khoản",
+      "subtitle": "Xem lại những gì bạn sẽ chia sẻ với Pancake.",
+      "content": "\n      <p>Meta sẽ hiển thị màn hình tóm tắt với tiêu đề <strong>\"Seamlessly connect your account to Pancake Singapore\"</strong>.</p>\n      <p>Xem lại các khả năng (gửi tin nhắn qua Cloud API, xử lý lượng tin nhắn lớn, giảm chi phí SMS/voice), sau đó nhấn <strong>Continue</strong>.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-014.png\" alt=\"Seamlessly connect your account to Pancake\" loading=\"lazy\"></div>\n    "
+    },
+    "31": {
+      "title": "Chọn Business Portfolio",
+      "subtitle": "Tạo một WhatsApp Business Account mới.",
+      "content": "\n      <p>Trong màn hình chọn tài sản:</p>\n      <ul>\n        <li>Chọn <strong>Business portfolio</strong> của bạn từ dropdown.</li>\n        <li>Trong mục <strong>WhatsApp Business account</strong>, chọn <strong>\"Create a WhatsApp Business account\"</strong>.</li>\n      </ul>\n      <p>Nhấn <strong>Next</strong>.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-015.png\" alt=\"Select business assets to share - Business portfolio\" loading=\"lazy\"></div>\n      <div class=\"callout tip\">\n        <div class=\"callout-icon\">💡</div>\n        <div>Nếu bạn đã có sẵn một WhatsApp Business Account, bạn cũng có thể chọn \"Connect a WhatsApp Business App\" thay thế.</div>\n      </div>\n    "
+    },
+    "32": {
+      "title": "Điền thông tin doanh nghiệp",
+      "subtitle": "Định danh tài khoản trong Business Manager.",
+      "content": "\n      <p>Cung cấp các thông tin sau:</p>\n      <ul>\n        <li><strong>WhatsApp Business Account Name</strong> — Nhãn nội bộ hiển thị trong Business Manager. <em>Không hiển thị với khách hàng.</em></li>\n        <li><strong>Category</strong> — Chọn danh mục sản phẩm hoặc dịch vụ phù hợp nhất với doanh nghiệp của bạn.</li>\n        <li><strong>Website</strong> — Website doanh nghiệp có thể truy cập được. Ưu tiên dùng domain có chứa tên thương hiệu của bạn nếu có thể.</li>\n      </ul>\n      <div class=\"callout warning\">\n        <div class=\"callout-icon\">🌐</div>\n        <div>Website phải truy cập được. Meta sẽ xác minh URL trong quá trình duyệt — domain hỏng hoặc parked có thể gây chậm trễ.</div>\n      </div>\n    "
+    },
+    "33": {
+      "title": "Thêm và xác minh số điện thoại",
+      "subtitle": "Đăng ký số WhatsApp qua OTP.",
+      "content": "\n      <p>Thêm số điện thoại WhatsApp sẽ liên kết với tài khoản này, sau đó xác minh qua OTP.</p>\n      <ul>\n        <li>Chọn <strong>Add a new number</strong>.</li>\n        <li>Chọn mã quốc gia và nhập số điện thoại.</li>\n        <li>Chọn phương thức xác minh: <strong>Text message</strong> hoặc <strong>Phone call</strong> (dùng Phone call cho số bàn).</li>\n        <li>Nhập mã OTP bạn nhận được để xác minh.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/img-016.png\" alt=\"Add your WhatsApp phone number screen\" loading=\"lazy\"></div>\n      <div class=\"callout info\">\n        <div class=\"callout-icon\">📱</div>\n        <div>Số này không được đang sử dụng trên tài khoản WhatsApp cá nhân. Nếu cần, hãy xóa nó khỏi WhatsApp thường trước.</div>\n      </div>\n    "
+    },
+    "34": {
+      "title": "Xác nhận kết nối",
+      "subtitle": "Xem lại những gì Pancake có thể truy cập.",
+      "content": "\n      <p>Meta sẽ hiển thị màn hình review cuối cùng: <strong>\"Review what you'll share with PancakeWA\"</strong>.</p>\n      <p>Pancake sẽ có thể:</p>\n      <ul>\n        <li>Quản lý các tài khoản WhatsApp của bạn.</li>\n        <li>Quản lý và truy cập hội thoại trên WhatsApp.</li>\n        <li>Ghi nhận sự kiện thay mặt cho WhatsApp Business account của bạn và gửi các sự kiện đó về Meta (kích hoạt CAPI).</li>\n      </ul>\n      <p>Nhấn <strong>Confirm</strong>.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-017.png\" alt=\"Review what you will share with PancakeWA\" loading=\"lazy\"></div>\n    "
+    },
+    "35": {
+      "title": "Chờ xử lý — và hoàn tất",
+      "subtitle": "Đừng đóng cửa sổ loading.",
+      "content": "\n      <p>Chờ quá trình kết nối hoàn tất, sau đó nhấn <strong>Finish</strong>.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-018.png\" alt=\"Your account is connected to Pancake\" loading=\"lazy\"></div>\n      <div class=\"callout warning\">\n        <div class=\"callout-icon\">⏱️</div>\n        <div><strong>Không đóng pop-up loading</strong> — hệ thống vẫn đang xử lý các thay đổi. Hãy kiên nhẫn. Nếu thấy có vẻ bị treo, hãy refresh trang và thử lại.</div>\n      </div>\n      <p>Bạn sẽ được chuyển đến màn hình quản lý hội thoại trong vòng 1–2 phút. Sau khi loading xong, số điện thoại WhatsApp của bạn sẽ hiển thị trên Dashboard của Pancake.</p>\n      <div class=\"callout success\">\n        <div class=\"callout-icon\">✅</div>\n        <div>WhatsApp Business API đã được kết nối. Tiếp theo: cấu hình CAPI để gửi sự kiện mua hàng về Meta.</div>\n      </div>\n    "
+    },
+    "36": {
+      "title": "Mở hộp thư WhatsApp",
+      "subtitle": "Bắt đầu cấu hình CAPI.",
+      "content": "\n      <p>Từ Dashboard của Pancake, nhấn vào tile <strong>số điện thoại WhatsApp</strong>. Thao tác này sẽ mở giao diện hội thoại.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-019.png\" alt=\"Pancake dashboard with WhatsApp tiles\" loading=\"lazy\"></div>\n      <div class=\"callout tip\">\n        <div class=\"callout-icon\">💬</div>\n        <div>Nếu bạn chưa thấy tile WhatsApp, hãy refresh dashboard. Sau khi kết nối API hoàn tất có thể mất 1–2 phút để hiển thị.</div>\n      </div>\n    "
+    },
+    "37": {
+      "title": "Chuyển sang giao diện Orders",
+      "subtitle": "Vào Pancake POS.",
+      "content": "\n      <p>Trong giao diện hội thoại, nhấn <strong>Orders</strong> trên thanh điều hướng phía trên. Thao tác này đưa bạn đến giao diện Pancake POS, nơi cấu hình CAPI.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-020.png\" alt=\"Conversation view with Orders tab highlighted\" loading=\"lazy\"></div>\n      <div class=\"ui-mock\">Thanh điều hướng phía trên: Conversations · <span class=\"action-tag\">Orders</span> · Analytics · Settings</div>\n    "
+    },
+    "38": {
+      "title": "Vào cài đặt Conversion event",
+      "subtitle": "Mở trang cấu hình.",
+      "content": "\n      <p>Trong giao diện POS, nhấn biểu tượng <strong>Settings</strong> (bánh răng) ở sidebar bên trái, sau đó chọn <strong>Conversion event</strong> trong mục General → Shop.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-021.png\" alt=\"Configuration page with Conversion event highlighted\" loading=\"lazy\"></div>\n      <div class=\"ui-mock\">Đường dẫn: Settings → General → Shop → <span class=\"action-tag\">Conversion event</span></div>\n    "
+    },
+    "39": {
+      "title": "Bật đồng bộ sự kiện về Facebook",
+      "subtitle": "Bật toggle và thêm sự kiện tùy chỉnh.",
+      "content": "\n      <p>Trên trang Conversion event:</p>\n      <ul>\n        <li>Bật toggle <strong>Sync events to Facebook</strong>.</li>\n        <li>Nhấn <strong>+ Add custom events</strong> ở bên phải.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/img-022.png\" alt=\"Sync events to Facebook toggle and Add custom events button\" loading=\"lazy\"></div>\n      <div class=\"callout info\">\n        <div class=\"callout-icon\">📊</div>\n        <div>Mặc định, Pancake đồng bộ <code>Initiated Checkout</code> khi đơn POS mới được tạo, và <code>Purchase</code> khi đơn ở trạng thái Confirmed được tạo. Bạn có thể thêm các quy tắc tùy chỉnh phía trên.</div>\n      </div>\n    "
+    },
+    "40": {
+      "title": "Map trạng thái đơn với sự kiện Meta",
+      "subtitle": "Cho Pancake biết khi nào gửi tín hiệu Purchase.",
+      "content": "\n      <p>Trong hộp thoại <strong>Add custom events</strong>:</p>\n      <ul>\n        <li><strong>When order status is</strong> — chọn trạng thái đơn kích hoạt sự kiện (ví dụ <code>Confirmed</code>).</li>\n        <li><strong>Sync event</strong> — chọn sự kiện Meta sẽ gửi đi (ví dụ <code>Purchase (Meta purchases)</code>).</li>\n        <li><strong>Default value</strong> — giá trị fallback tùy chọn, theo tiền tệ địa phương của bạn.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/img-023.png\" alt=\"Add custom events dialog\" loading=\"lazy\"></div>\n      <div class=\"callout tip\">\n        <div class=\"callout-icon\">💡</div>\n        <div>Ví dụ trong playbook map trạng thái đơn <strong>\"Confirmed\"</strong> → sự kiện <strong>\"Purchase\"</strong>. Hãy điều chỉnh để khớp với quy trình fulfillment của bạn.</div>\n      </div>\n    "
+    },
+    "41": {
+      "title": "Lưu cấu hình",
+      "subtitle": "Nhấn OK để hoàn tất thiết lập CAPI.",
+      "content": "\n      <p>Nhấn <strong>OK</strong> để lưu mapping sự kiện tùy chỉnh. Cấu hình của bạn đã được kích hoạt.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-024.png\" alt=\"Configuration with Purchase Confirmed event\" loading=\"lazy\"></div>\n      <div class=\"screenshot\"><img src=\"assets/img-025.png\" alt=\"List of dataset after signal transmission\" loading=\"lazy\"></div>\n      <div class=\"callout success\">\n        <div class=\"callout-icon\">✅</div>\n        <div><strong>Hoàn tất thiết lập CAPI!</strong> Khi bạn tạo đơn hàng đầu tiên từ khách CTWA, Pancake sẽ tự động gửi tín hiệu về Meta. Dataset (gồm platform, page, dataset ID và timestamp) sẽ hiển thị trong mục <em>List of dataset</em> sau khi tín hiệu đầu tiên được truyền thành công.</div>\n      </div>\n    "
+    },
+    "42": {
+      "title": "Chọn mục tiêu chiến dịch",
+      "subtitle": "Tham khảo: thiết lập quảng cáo Click-to-WhatsApp trong Meta Ads Manager.",
+      "content": "\n      <p>Đối với quảng cáo Click-to-WhatsApp, bạn có thể dùng bất kỳ mục tiêu chiến dịch nào sau đây:</p>\n      <ul>\n        <li><strong>Engagement</strong> — Lấy thêm tin nhắn, lượt xem video, tương tác bài viết hoặc lượt thích page.</li>\n        <li><strong>Leads</strong> — Thu lead qua hội thoại WhatsApp.</li>\n        <li><strong>Sales</strong> — Thúc đẩy mua hàng qua hội thoại nhắn tin.</li>\n      </ul>\n      <div class=\"screenshot\"><img src=\"assets/img-026.png\" alt=\"Choose a campaign objective in Meta Ads Manager\" loading=\"lazy\"></div>\n      <div class=\"callout tip\">\n        <div class=\"callout-icon\">🎯</div>\n        <div>Trong ví dụ ở playbook này, chúng ta dùng <strong>Engagement</strong>. Các bước thiết lập tương tự giữa cả ba mục tiêu.</div>\n      </div>\n    "
+    },
+    "43": {
+      "title": "Chọn kiểu thiết lập",
+      "subtitle": "Streamlined hay Manual — tùy bạn.",
+      "content": "\n      <p>Meta sẽ đưa ra hai hướng thiết lập:</p>\n      <ul>\n        <li><strong>Streamlined</strong> — Cài đặt được khuyến nghị với Advantage+ audience và placement áp dụng sẵn.</li>\n        <li><strong>Manual setup</strong> — Xây chiến dịch từ đầu bằng thiết lập tiêu chuẩn.</li>\n      </ul>\n      <p>Trong playbook này, chúng ta dùng <strong>Manual setup</strong> để kiểm soát toàn diện. Chọn <em>\"Manual engagement campaign\"</em> và nhấn <strong>Continue</strong>.</p>\n      <div class=\"screenshot\"><img src=\"assets/img-027.png\" alt=\"Choose a campaign setup - Manual setup highlighted\" loading=\"lazy\"></div>\n    "
+    },
+    "44": {
+      "title": "Cấu hình Ad Set",
+      "subtitle": "Liên kết page và chọn WhatsApp làm ứng dụng nhắn tin.",
+      "content": "\n      <p>Trong <strong>Ad Set</strong>, cấu hình các trường quan trọng sau:</p>\n      <ul>\n        <li><strong>Facebook Page</strong> — Chọn page đã liên kết với số WhatsApp của bạn.</li>\n        <li><strong>Messaging apps</strong> — Tick <strong>WhatsApp</strong>, sau đó chọn số WhatsApp đã xác minh từ dropdown.</li>\n      </ul>\n      <div class=\"callout info\">\n        <div class=\"callout-icon\">📌</div>\n        <div>Bạn có thể kết nối tối đa <strong>50 số WhatsApp cho mỗi Facebook Page</strong>. Quản lý các số này tại Business Manager → Page settings.</div>\n      </div>\n      <div class=\"screenshot\"><img src=\"assets/img-028.png\" alt=\"Engagement Ad Set with WhatsApp messaging app selected\" loading=\"lazy\"></div>\n      <p>Sau đó thiết lập audience, ngân sách, lịch chạy và creative như bình thường. Khi quảng cáo bắt đầu chạy, các tin nhắn từ click CTWA sẽ đổ thẳng vào hộp thư WhatsApp trên Pancake của bạn.</p>\n    "
+    },
+    "45": {
+      "title": "🎉 Bạn đã hoàn tất!",
+      "subtitle": "CTWA & CAPI đã được cấu hình đầy đủ.",
+      "content": "\n      <div class=\"completion\">\n        <div class=\"completion-icon\">✓</div>\n        <h2 style=\"font-size: 26px; margin-bottom: 8px;\">Thiết lập hoàn tất</h2>\n        <p style=\"color: var(--text-muted); max-width: 480px; margin: 0 auto 12px;\">Hệ sinh thái Pancake của bạn đã được kết nối, WhatsApp Business API đang hoạt động và CAPI đang gửi tín hiệu mua hàng về Meta. Các chiến dịch CTWA của bạn đã sẵn sàng khởi chạy.</p>\n      </div>\n      <h3 style=\"font-size: 16px; margin: 24px 0 12px;\">Tài nguyên bổ sung</h3>\n      <div class=\"resources-grid\">\n        <a href=\"https://docs.pancake.biz/pos/st-f2/st-p1?lang=en\" target=\"_blank\" class=\"resource-card\">\n          <div class=\"label\">Pancake POS</div>\n          <div class=\"title\">Thiết lập Kho &amp; Sản phẩm →</div>\n        </a>\n        <a href=\"https://docs.pancake.biz/pos/st-f2/st-p3/st-s1/st-ss5?lang=en\" target=\"_blank\" class=\"resource-card\">\n          <div class=\"label\">Tích hợp</div>\n          <div class=\"title\">Kết nối Shopify →</div>\n        </a>\n        <a href=\"https://docs.pancake.biz/pos/st-f2/st-p3/st-s4?lang=en\" target=\"_blank\" class=\"resource-card\">\n          <div class=\"label\">Tích hợp</div>\n          <div class=\"title\">Đồng bộ sản phẩm Shopify sang POS →</div>\n        </a>\n        <a href=\"https://docs.pancake.biz/botcake/st-f4/st-p5\" target=\"_blank\" class=\"resource-card\">\n          <div class=\"label\">Automation</div>\n          <div class=\"title\">Thiết lập Botcake AI →</div>\n        </a>\n      </div>\n      <div class=\"callout info\" style=\"margin-top: 24px;\">\n        <div class=\"callout-icon\">📨</div>\n        <div>Cần hỗ trợ? Liên hệ Pancake hoặc Meta trực tiếp để biết thêm thông tin.</div>\n      </div>\n    "
+    }
+  }
+}
