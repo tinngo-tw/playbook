@@ -1164,6 +1164,56 @@
     </div>
   </div>
 
+  <!-- SCREEN: WhatsApp diagnostic Q1 — Have you used WA API before? -->
+  <div id="screen-wa-used-before" class="picker-card hidden">
+    <span class="picker-eyebrow" data-i18n="wa_q1_eyebrow">WhatsApp · Question 1 of 2</span>
+    <h2 class="picker-title" data-i18n="wa_q1_title">Have you used WhatsApp API before?</h2>
+    <p class="picker-subtitle" data-i18n="wa_q1_subtitle">This determines whether you'll set up fresh, migrate, or use Co-Existence.</p>
+    <div class="platform-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+      <button class="platform-card" data-wa-used="yes">
+        <div class="platform-icon" style="background: linear-gradient(135deg, #10b981, #059669);">✓</div>
+        <div class="platform-name" data-i18n="wa_yes">Yes</div>
+        <div class="platform-desc" data-i18n="wa_q1_yes_desc">My WhatsApp number is already on a Business Solution Provider (BSP) or Meta Cloud API</div>
+      </button>
+      <button class="platform-card" data-wa-used="no">
+        <div class="platform-icon" style="background: linear-gradient(135deg, #64748b, #475569);">—</div>
+        <div class="platform-name" data-i18n="wa_no">No</div>
+        <div class="platform-desc" data-i18n="wa_q1_no_desc">This is my first time setting up WhatsApp API</div>
+      </button>
+    </div>
+    <div style="margin-top: 28px;">
+      <button class="btn btn-ghost" onclick="showScreen('ads')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        <span data-i18n="back">Back</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCREEN: WhatsApp diagnostic Q2 — depends on Q1 answer -->
+  <div id="screen-wa-current-status" class="picker-card hidden">
+    <span class="picker-eyebrow" data-i18n="wa_q2_eyebrow">WhatsApp · Question 2 of 2</span>
+    <h2 class="picker-title" id="waQ2Title">Question 2</h2>
+    <p class="picker-subtitle" id="waQ2Subtitle"></p>
+    <div class="platform-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+      <button class="platform-card" data-wa-status="yes">
+        <div class="platform-icon" style="background: linear-gradient(135deg, #10b981, #059669);">✓</div>
+        <div class="platform-name" data-i18n="wa_yes">Yes</div>
+        <div class="platform-desc" id="waQ2YesDesc"></div>
+      </button>
+      <button class="platform-card" data-wa-status="no">
+        <div class="platform-icon" style="background: linear-gradient(135deg, #64748b, #475569);">—</div>
+        <div class="platform-name" data-i18n="wa_no">No</div>
+        <div class="platform-desc" id="waQ2NoDesc"></div>
+      </button>
+    </div>
+    <div style="margin-top: 28px;">
+      <button class="btn btn-ghost" onclick="goToWaUsedBefore()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        <span data-i18n="back">Back</span>
+      </button>
+    </div>
+  </div>
+
   <!-- SCREEN: Vertical picker -->
   <div id="screen-vertical" class="picker-card hidden">
     <span class="picker-eyebrow">Step 3 of 3</span>
@@ -1203,6 +1253,8 @@
       </div>
 
       <div id="recAddons" style="margin-bottom: 24px;"></div>
+
+      <div id="recWaPathCallout"></div>
 
       <div class="rec-reorder-hint" id="recReorderHint"></div>
 
@@ -1425,7 +1477,12 @@ const state = {
   verticalName: null,
   flowIndex: 0,
   enabledSections: null,   // computed by computeEnabledSections()
-  moduleOrder: null        // user-defined ordering, loaded from localStorage
+  moduleOrder: null,       // user-defined ordering, loaded from localStorage
+  // WhatsApp-only diagnostic state — only set if WhatsApp is in platforms
+  whatsappUsedBefore: null,    // true | false | null
+  whatsappOnAnotherBSP: null,  // true | false | null (if used before)
+  whatsappOnBusinessApp: null, // true | false | null (if NOT used before)
+  whatsappPath: null           // 'api' | 'migration' | 'co_existence' | null
 };
 
 // =============== i18n ===============
@@ -2649,7 +2706,7 @@ const whatsappSteps = [
 // =============== SCREEN MANAGEMENT ===============
 function showScreen(name) {
   state.screen = name;
-  ['country', 'platform', 'business', 'ads', 'vertical', 'recommendation', 'coming-soon', 'flow', 'resources'].forEach(s => {
+  ['country', 'platform', 'business', 'ads', 'wa-used-before', 'wa-current-status', 'vertical', 'recommendation', 'coming-soon', 'flow', 'resources'].forEach(s => {
     const el = document.getElementById('screen-' + s);
     if (el) el.classList.toggle('hidden', s !== name);
   });
@@ -2684,6 +2741,8 @@ function updateHeader() {
     right.innerHTML = `<div class="selection-chips">${countryChip}${platformsChip}${langChip}</div>`;
   } else if (state.screen === 'ads') {
     right.innerHTML = `<div class="selection-chips">${countryChip}${platformsChip}${businessChip}${langChip}</div>`;
+  } else if (state.screen === 'wa-used-before' || state.screen === 'wa-current-status') {
+    right.innerHTML = `<div class="selection-chips">${countryChip}${platformsChip}${businessChip}<span class="chip" style="background:#dcfce7;color:#166534;">📱 WhatsApp</span>${langChip}</div>`;
   } else if (state.screen === 'recommendation') {
     right.innerHTML = `<div class="selection-chips">${countryChip}${platformsChip}${businessChip}${langChip}</div>`;
   } else if (state.screen === 'resources') {
@@ -2699,12 +2758,20 @@ function flagFor(code) {
 }
 
 // =============== NAVIGATION ===============
+function resetWaDiagnostic() {
+  state.whatsappUsedBefore = null;
+  state.whatsappOnAnotherBSP = null;
+  state.whatsappOnBusinessApp = null;
+  state.whatsappPath = null;
+}
+
 function goToCountry() {
   state.country = null;
   state.platforms = [];
   state.business = null;
   state.ads = null;
   state.flowIndex = 0;
+  resetWaDiagnostic();
   showScreen('country');
 }
 
@@ -2713,6 +2780,7 @@ function goToPlatform() {
   state.business = null;
   state.ads = null;
   state.flowIndex = 0;
+  resetWaDiagnostic();
   updatePlatformContinueBtn();
   showScreen('platform');
 }
@@ -2720,11 +2788,13 @@ function goToPlatform() {
 function goToBusiness() {
   state.business = null;
   state.ads = null;
+  resetWaDiagnostic();
   showScreen('business');
 }
 
 function goToAds() {
   state.ads = null;
+  resetWaDiagnostic();
   showScreen('ads');
 }
 
@@ -2783,8 +2853,15 @@ function computeEnabledSections() {
     enabled[11] = 'essential';   // Instagram detailed connection
   }
   if (state.platforms.includes('whatsapp')) {
-    enabled[6] = 'essential';    // WhatsApp API
-    enabled[12] = 'recommended'; // WhatsApp Co-Existence (alternative)
+    // Decide which WhatsApp module(s) based on the diagnostic answers
+    if (state.whatsappPath === 'co_existence') {
+      enabled[12] = 'essential';   // WhatsApp Co-Existence only
+    } else if (state.whatsappPath === 'migration') {
+      enabled[6] = 'essential';    // WhatsApp API (with migration callout)
+    } else {
+      // 'api' or no answer yet — show standard API
+      enabled[6] = 'essential';    // WhatsApp API
+    }
   }
 
   // ===== SETUPS =====
@@ -3046,6 +3123,49 @@ function renderRecommendation() {
     </div>
   ` : '';
 
+  // WhatsApp path callout — only shown if WhatsApp is in the bundle and a path was determined
+  const waPathBox = document.getElementById('recWaPathCallout');
+  if (waPathBox) {
+    if (state.platforms.includes('whatsapp') && state.whatsappPath) {
+      const isVi = state.language === 'vi';
+      const pathInfo = {
+        api: {
+          icon: '🚀',
+          color: 'info',
+          title: isVi ? 'Phương pháp: WhatsApp API tiêu chuẩn' : 'Path: Standard WhatsApp API onboarding',
+          body: isVi
+            ? 'Bạn sẽ kết nối qua Embedded Signup của Meta. Theo Phần 06 (WhatsApp API & CAPI).'
+            : 'You\'ll connect via Meta\'s Embedded Signup. Follow Section 06 (WhatsApp API & CAPI).'
+        },
+        migration: {
+          icon: '🔄',
+          color: 'warning',
+          title: isVi ? 'Phương pháp: Migration từ BSP khác' : 'Path: Migration from another BSP',
+          body: isVi
+            ? '<strong>Trước khi bắt đầu:</strong> Liên hệ BSP hiện tại để được "release" số điện thoại của bạn (thường mất 1–7 ngày làm việc). Sau đó làm theo Phần 06 — Embedded Signup sẽ phát hiện số đang được migration và yêu cầu xác minh thêm.'
+            : '<strong>Before you start:</strong> Contact your current BSP to release your phone number (usually 1–7 business days). Then follow Section 06 — Embedded Signup will detect the migration and ask for additional verification.'
+        },
+        co_existence: {
+          icon: '📱',
+          color: 'tip',
+          title: isVi ? 'Phương pháp: WhatsApp Co-Existence' : 'Path: WhatsApp Co-Existence',
+          body: isVi
+            ? 'Bạn sẽ giữ ứng dụng WhatsApp Business trên điện thoại và đồng bộ với Pancake. Theo Phần 12 (WhatsApp Co-Existence).'
+            : 'You\'ll keep using the WhatsApp Business mobile app alongside Pancake. Follow Section 12 (WhatsApp Co-Existence).'
+        }
+      };
+      const info = pathInfo[state.whatsappPath];
+      waPathBox.innerHTML = `
+        <div class="callout ${info.color}" style="margin-bottom: 20px;">
+          <div class="callout-icon">${info.icon}</div>
+          <div><strong>${info.title}</strong><br>${info.body}</div>
+        </div>
+      `;
+    } else {
+      waPathBox.innerHTML = '';
+    }
+  }
+
   // Section list — show in user-defined module order (drag-and-droppable)
   const order = getModuleOrder();
   const sections = [];
@@ -3238,10 +3358,84 @@ document.querySelectorAll('#screen-business .platform-card').forEach(card => {
   });
 });
 
-// Ads click
+// Ads click — branch to WhatsApp diagnostic if WhatsApp is selected
 document.querySelectorAll('#screen-ads .platform-card').forEach(card => {
   card.addEventListener('click', () => {
     state.ads = card.dataset.ads === 'yes';
+    if (state.platforms.includes('whatsapp')) {
+      goToWaUsedBefore();
+    } else {
+      goToRecommendation();
+    }
+  });
+});
+
+// =============== WHATSAPP DIAGNOSTIC ===============
+function goToWaUsedBefore() {
+  state.whatsappUsedBefore = null;
+  state.whatsappOnAnotherBSP = null;
+  state.whatsappOnBusinessApp = null;
+  state.whatsappPath = null;
+  showScreen('wa-used-before');
+}
+
+function goToWaCurrentStatus() {
+  // Render Q2 dynamically based on Q1 answer
+  const q2Title = document.getElementById('waQ2Title');
+  const q2Sub = document.getElementById('waQ2Subtitle');
+  const q2YesDesc = document.getElementById('waQ2YesDesc');
+  const q2NoDesc = document.getElementById('waQ2NoDesc');
+  const isVi = state.language === 'vi';
+
+  if (state.whatsappUsedBefore) {
+    q2Title.textContent = isVi
+      ? 'Số đó hiện đang được onboard ở một BSP khác chứ?'
+      : 'Is the number onboarded on another BSP now?';
+    q2Sub.textContent = isVi
+      ? 'BSP = Business Solution Provider (đối tác cung cấp WhatsApp API).'
+      : 'BSP = Business Solution Provider (a WhatsApp API partner).';
+    q2YesDesc.textContent = isVi
+      ? 'Vâng, đang ở một BSP khác — cần migration'
+      : 'Yes, on another BSP — needs migration';
+    q2NoDesc.textContent = isVi
+      ? 'Không, số đã sẵn sàng để kết nối với Pancake'
+      : 'No, the number is free to onboard with Pancake';
+  } else {
+    q2Title.textContent = isVi
+      ? 'Số WhatsApp bạn muốn onboard có đang dùng trên ứng dụng WhatsApp Business không?'
+      : 'Is the WhatsApp number you\'re onboarding registered on the WhatsApp Business app now?';
+    q2Sub.textContent = isVi
+      ? 'Nếu có, bạn có thể dùng phương pháp Co-Existence để giữ luôn ứng dụng trên điện thoại.'
+      : 'If yes, you can use Co-Existence to keep using the mobile app at the same time.';
+    q2YesDesc.textContent = isVi
+      ? 'Có, đang dùng app WhatsApp Business trên điện thoại'
+      : 'Yes, the number is on the WhatsApp Business mobile app';
+    q2NoDesc.textContent = isVi
+      ? 'Không, số chưa được đăng ký ở đâu cả'
+      : 'No, the number is not registered anywhere yet';
+  }
+  showScreen('wa-current-status');
+}
+
+// Q1 click handler
+document.querySelectorAll('#screen-wa-used-before .platform-card').forEach(card => {
+  card.addEventListener('click', () => {
+    state.whatsappUsedBefore = card.dataset.waUsed === 'yes';
+    goToWaCurrentStatus();
+  });
+});
+
+// Q2 click handler — computes final whatsappPath
+document.querySelectorAll('#screen-wa-current-status .platform-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const yes = card.dataset.waStatus === 'yes';
+    if (state.whatsappUsedBefore) {
+      state.whatsappOnAnotherBSP = yes;
+      state.whatsappPath = yes ? 'migration' : 'api';
+    } else {
+      state.whatsappOnBusinessApp = yes;
+      state.whatsappPath = yes ? 'co_existence' : 'api';
+    }
     goToRecommendation();
   });
 });
